@@ -8,6 +8,7 @@ import java.io.*;
 
 public class DanhSachSanPham implements IThemSuaXoa {
     private ArrayList<SanPham> dsSanPham;
+    private final String URL = "C:\\Users\\Bao\\IdeaProjects\\Restaurant\\Main\\src\\Data\\ListSanPham";
 
     public DanhSachSanPham() {
         dsSanPham = new ArrayList<>();
@@ -99,26 +100,42 @@ public class DanhSachSanPham implements IThemSuaXoa {
     }
 
     // 6. Đọc file
-    public void docFile(String filename) {
-        try (Scanner sc = new Scanner(new File(filename))) {
+    public void docFile() {
+
+        try {
             dsSanPham.clear();
-            while (sc.hasNextLine()) {
-                String line = sc.nextLine().trim();
-                if (line.isEmpty()) continue;
+            File input = new File(URL);
 
-                String[] p = line.split(";");
-                int ma = Integer.parseInt(p[0]);
-                String ten = p[1];
-                double gia = Double.parseDouble(p[2]);
-                String loai = p[3];
-
-                SanPham sp = loai.equalsIgnoreCase("MonAn") ? new MonAn() : new DoUong();
-                sp.setMaSanPham(ma);
-                sp.setTenSanPham(ten);
-                sp.setGiaSanPham(gia);
-                dsSanPham.add(sp);
+            if (!input.exists()) {
+                input.createNewFile();
             }
-            System.out.println("Đọc file thành công!");
+
+            Scanner sc = new Scanner(System.in);
+            String[] data = new String[1001];
+            int n = 0;
+
+            while (sc.hasNextLine()) {
+                data[n] = sc.nextLine();
+                n++;
+            }
+
+            for (int i = 0; i < n; i++) {
+                String[] dataThanhPhan = data[i].split(",");
+                String tenSanPham = dataThanhPhan[1];
+                double giaSanPham = Double.parseDouble(dataThanhPhan[2]);
+                String loaiSanPham = dataThanhPhan[3];
+
+                SanPham new_sanPham = null;
+                if ("Mon_An".equalsIgnoreCase(loaiSanPham)) {
+                    String viMonAn = dataThanhPhan[4];
+                    new_sanPham = new MonAn(tenSanPham, giaSanPham, viMonAn);
+                } else if ("Do_Uong".equalsIgnoreCase(loaiSanPham)) {
+                    int dungTich = Integer.parseInt(dataThanhPhan[4]);
+                    new_sanPham = new DoUong(tenSanPham, giaSanPham, dungTich);
+                }
+                dsSanPham.add(new_sanPham);
+            }
+            System.out.println("Đọc file thành công!!");
         } catch (Exception e) {
             System.out.println("Lỗi đọc file: " + e.getMessage());
         }
@@ -127,20 +144,24 @@ public class DanhSachSanPham implements IThemSuaXoa {
 
     // 7. Ghi file
     public void ghiFile(String fileName) {
-        if (dsSanPham.isEmpty()) {
-            System.out.println("️Danh sách rỗng, không thể ghi file!");
-            return;
-        }
-        try (PrintWriter pw = new PrintWriter(new FileWriter(fileName))) {
-            for (SanPham sp : dsSanPham) {
-                pw.println(sp.getMaSanPham() + ";" +
-                        sp.getTenSanPham() + ";" +
-                        sp.getGiaSanPham() + ";" +
-                        sp.getClass().getSimpleName());
+        try {
+            File output = new File(URL);
+
+            if (!output.exists()) {
+                output.createNewFile();
             }
-            System.out.println("Ghi file thành công!");
+
+            PrintWriter pw = new PrintWriter(output);
+
+            for (SanPham sp : dsSanPham) {
+                if (sp != null)
+                    pw.println(sp);
+            }
+
+            System.out.println("File đã được cập nhật.");
+            pw.close();
         } catch (IOException e) {
-            System.out.println("Lỗi ghi file: " + e.getMessage());
+            throw new RuntimeException(e);
         }
     }
 

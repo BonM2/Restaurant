@@ -195,7 +195,6 @@ public class DanhSachNhanVien implements IThemSuaXoa {
 
             for (int i = 0; i < n; i++) {
                 String[] dataThanhPhan = data[i].split(",");
-                int maNhanVien = Integer.parseInt(dataThanhPhan[0]);
                 String tenNhanVien = dataThanhPhan[1];
 
                 String[] sinhNhat = dataThanhPhan[2].split("/");

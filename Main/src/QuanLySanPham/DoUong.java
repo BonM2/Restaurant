@@ -14,6 +14,7 @@ public class DoUong extends SanPham implements INhapXuat {
 
     public DoUong(String tenSanPham, double giaSanPham, int dungTich) {
         super(tenSanPham, giaSanPham);
+        this.loaiSanPham = "Do_Uong";
         this.dungTich = dungTich;
     }
 
@@ -22,13 +23,17 @@ public class DoUong extends SanPham implements INhapXuat {
     }
 
     public void setDungTich(int dungTich) {
-        this.dungTich = dungTich;
+        if (dungTich < 0) {
+            System.out.println("Dung tích phải là số dương!!!");
+        } else
+            this.dungTich = dungTich;
     }
 
     @Override
     public void nhapThongTin(Scanner sc) {
         super.nhapThongTin(sc);
-        System.out.println("Nhập dung tích: ");
+        this.loaiSanPham = "Do_Uong";
+        System.out.println("Nhập dung tích (ml): ");
         dungTich = sc.nextInt();
     }
 
@@ -69,9 +74,5 @@ public class DoUong extends SanPham implements INhapXuat {
                 setDungTich(dungTich);
             }
         } while (choice != 0);
-    }
-
-    public void moTaChiTiet() {
-        System.out.println("Đây là một đồ uống có dung tích: " + this.dungTich + "ml");
     }
 }

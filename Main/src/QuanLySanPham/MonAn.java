@@ -5,38 +5,40 @@ import Interface_XuLy.INhapXuat;
 import java.util.Scanner;
 
 public class MonAn extends SanPham implements INhapXuat {
-    private String loaiMonAn;
+    private String viMonAn;
 
     public MonAn() {
         super();
-        loaiMonAn = "";
+        viMonAn = "";
     }
 
-    public MonAn(String ten, double gia, String loaiMonAn) {
+    public MonAn(String ten, double gia, String viMonAn) {
         super(ten, gia);
-        this.loaiMonAn = loaiMonAn;
+        this.loaiSanPham = "MON_AN";
+        this.viMonAn = viMonAn;
     }
 
-    public String getLoaiMon() {
-        return loaiMonAn;
+    public String getViMon() {
+        return viMonAn;
     }
 
-    public void setLoaiMon(String loaiMonAn) {
-        this.loaiMonAn = loaiMonAn;
+    public void setViMon(String loaiMonAn) {
+        this.viMonAn = loaiMonAn;
     }
 
     //1.them mon moi
     @Override
     public void nhapThongTin(Scanner sc) {
         super.nhapThongTin(sc);
+        loaiSanPham = "MON_AN";
         System.out.println("Nhập loại món:");
-        loaiMonAn = sc.nextLine();
+        viMonAn = sc.nextLine();
     }
 
     @Override
     public void xuatThongTin() {
         super.xuatThongTin();
-        System.out.println(loaiMonAn);
+        System.out.println("Vị món ăn: " + viMonAn);
     }
 
     @Override
@@ -49,7 +51,7 @@ public class MonAn extends SanPham implements INhapXuat {
             System.out.println("-------Bảng thuộc tính--------");
             System.out.println("1. Tên món ăn.");
             System.out.println("2. Giá món ăn.");
-            System.out.println("3. Loại món ăn.");
+            System.out.println("3. Vị món ăn.");
             System.out.println("0. Thoát");
             System.out.println("------------------------------");
             System.out.print("Lựa chọn: ");
@@ -67,13 +69,9 @@ public class MonAn extends SanPham implements INhapXuat {
                 setGiaSanPham(giaSP);
             } else if (choice == 3) {
                 System.out.print("Nhập loại món ăn mới: ");
-                String loaiMonAn = sc.nextLine();
-                setLoaiMon(loaiMonAn);
+                String viMonAn = sc.nextLine();
+                setViMon(viMonAn);
             }
         } while (choice != 0);
-    }
-
-    public void moTaChiTiet() {
-        System.out.println("Đây là một món ăn thuộc loại: " + this.loaiMonAn);
     }
 }

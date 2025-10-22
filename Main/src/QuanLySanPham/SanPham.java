@@ -9,6 +9,7 @@ public abstract class SanPham implements INhapXuat {
     protected int maSanPham = 0;
     protected String tenSanPham;
     protected double giaSanPham;
+    protected String loaiSanPham;
 
     SanPham() {
         tenSanPham = "";
@@ -45,6 +46,11 @@ public abstract class SanPham implements INhapXuat {
         this.giaSanPham = giaSanPham;
     }
 
+    public String getLoaiSanPham() {
+        return loaiSanPham;
+    }
+
+
     @Override
     public void nhapThongTin(Scanner sc) {
         maSanPham++;
@@ -56,10 +62,8 @@ public abstract class SanPham implements INhapXuat {
 
     @Override
     public void xuatThongTin() {
-        System.out.print("Mã sản phẩm: " + maSanPham + "| Tên: " + tenSanPham + "| Giá: " + giaSanPham);
+        System.out.print("Mã sản phẩm: " + maSanPham + "| Loại sản phẩm: " + loaiSanPham +"| Tên: " + tenSanPham + "| Giá: " + giaSanPham);
     }
 
     public abstract void menuThuocTinh();
-
-    public abstract void moTaChiTiet();
 }
