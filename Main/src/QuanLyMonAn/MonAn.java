@@ -1,6 +1,6 @@
 package QuanLyMonAn;
 
-import java.sql.SQLOutput;
+import Interface_XuLy.INhapXuat;
 import java.util.Scanner;
 
 public abstract class MonAn implements INhapXuat {
