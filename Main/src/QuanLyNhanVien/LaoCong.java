@@ -33,26 +33,12 @@ public class LaoCong extends NhanVien {
 
     @Override
     public double tinhLuongThucTe() {
-
         Scanner sc = new Scanner(System.in);
-        System.out.print("Tháng cần tìm: ");
-        byte thang = sc.nextByte();
-        System.out.print("Năm cần tìm: ");
-        short nam = sc.nextShort();
 
-        BangChamCong bangChamCongThangNay = timBangChamCong(thang, nam);
+        System.out.print("Mời nhập số điểm tháng: ");
+        int tongDiem = sc.nextInt();
 
-        int soNgayDiLamThucTe = 0;
-        if (bangChamCongThangNay != null) {
-            soNgayDiLamThucTe = bangChamCongThangNay.getSoNgayDiLamThucTe();
-        }
-
-        if (soNgayDiLamThucTe < 26) {
-            System.out.println("Do không làm đủ số ngày nên sẽ không được nhận phụ cấp.");
-            return (1.0 * luongCoBan / 26) * soNgayDiLamThucTe;
-        }
-
-        return (1.0 * luongCoBan / 26) * soNgayDiLamThucTe + phuCapChuyenCan;
+        return 1.0 * luongCoBan + (tongDiem * 10000);
     }
 
     public static int getSoLuongLaoCong() {

@@ -7,14 +7,14 @@ import java.util.Scanner;
 public class DoUong extends SanPham implements INhapXuat {
     private int dungTich;
 
-    DoUong() {
+    public DoUong() {
         super();
         dungTich = 0;
     }
 
     public DoUong(String tenSanPham, double giaSanPham, int dungTich) {
         super(tenSanPham, giaSanPham);
-        this.loaiSanPham = "Do_Uong";
+        this.loaiSanPham = "DO_UONG";
         this.dungTich = dungTich;
     }
 
@@ -32,7 +32,7 @@ public class DoUong extends SanPham implements INhapXuat {
     @Override
     public void nhapThongTin(Scanner sc) {
         super.nhapThongTin(sc);
-        this.loaiSanPham = "Do_Uong";
+        this.loaiSanPham = "DO_UONG";
         System.out.println("Nhập dung tích (ml): ");
         dungTich = sc.nextInt();
     }

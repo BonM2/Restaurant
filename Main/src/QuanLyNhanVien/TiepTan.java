@@ -1,15 +1,14 @@
 package QuanLyNhanVien;
 
 import DateTime.Date;
-import QuanLyNgayCong.BangChamCong;
+import QuanLyHoaDon.DanhSachHoaDon;
+import QuanLyHoaDon.HoaDon;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TiepTan extends NhanVien{
     private static int soLuong = 0;
     private final int luongCoBan = 6_500_000;
-    private final int phuCapTrachNhiem = 200_000;
 
     public TiepTan() {
         super();
@@ -38,19 +37,17 @@ public class TiepTan extends NhanVien{
     @Override
     public double tinhLuongThucTe() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Tháng cần tìm: ");
-        byte thang = sc.nextByte();
-        System.out.print("Năm cần tìm: ");
-        short nam = sc.nextShort();
 
-        BangChamCong bangChamCongThangNay = timBangChamCong(thang, nam);
+        DanhSachHoaDon dsHoaDon = new DanhSachHoaDon();
 
-        int soNgayDiLamThucTe = 0;
-        if (bangChamCongThangNay != null) {
-            soNgayDiLamThucTe = bangChamCongThangNay.getSoNgayDiLamThucTe();
+        int soHoaDonTiepNhan = 0;
+
+        for (HoaDon hoaDon : dsHoaDon.getDsHoaDon()) {
+            if (hoaDon.getTenNhanVienTao().equalsIgnoreCase(tenNhanVien)) {
+                soHoaDonTiepNhan++;
+            }
         }
-
-        return (1.0 * luongCoBan / 26) * soNgayDiLamThucTe + phuCapTrachNhiem;
+        return 1.0 * luongCoBan + (soHoaDonTiepNhan * 15000);
     }
 
     public static int getSoLuongTiepTan() {

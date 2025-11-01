@@ -1,11 +1,11 @@
 package QuanLyNhanVien;
 
-import java.util.ArrayList;
+
 import java.util.Scanner;
 
 import DateTime.Date;
 import Interface_XuLy.INhapXuat;
-import QuanLyNgayCong.BangChamCong;
+
 import XuLyString.StringUtils;
 
 public abstract class NhanVien implements INhapXuat {
@@ -14,22 +14,11 @@ public abstract class NhanVien implements INhapXuat {
     protected Date ngaySinh;
     protected String gioiTinh;
     protected String chucVu;
-    protected ArrayList<BangChamCong> danhSachBangChamCong;
-
-    public String getChucVu() {
-        return chucVu;
-    }
-
-    public void setChucVu(String chucVu) {
-        this.chucVu = chucVu;
-    }
-
     public NhanVien() {
         this.tenNhanVien = "";
         this.ngaySinh = new Date();
         this.gioiTinh = "";
         this.chucVu = "";
-        this.danhSachBangChamCong = new ArrayList<>();
     }
 
     public NhanVien(String tenNhanVien, Date ngaySinh, String gioiTinh, String chucVu) {
@@ -38,7 +27,6 @@ public abstract class NhanVien implements INhapXuat {
         this.ngaySinh = ngaySinh;
         this.gioiTinh = gioiTinh;
         this.chucVu = chucVu;
-        this.danhSachBangChamCong = new ArrayList<>();
     }
 
     // Hàm tính lương cho nhân viên.
@@ -106,15 +94,6 @@ public abstract class NhanVien implements INhapXuat {
         } while (choice != 0);
     }
 
-    public BangChamCong timBangChamCong(byte thang, short nam) {
-        for (BangChamCong bangChamCong : danhSachBangChamCong) {
-            if (bangChamCong.getThang() == thang && bangChamCong.getNam() == nam) {
-                return bangChamCong;
-            }
-        }
-        return null;
-    }
-
     public int getMaNhanVien() {
         return maNhanVien;
     }
@@ -135,15 +114,19 @@ public abstract class NhanVien implements INhapXuat {
         this.gioiTinh = gioiTinh;
     }
 
-    public ArrayList<BangChamCong> getDanhSachBangChamCong() {
-        return danhSachBangChamCong;
-    }
-
     public Date getNgaySinh() {
         return ngaySinh;
     }
 
     public void setNgaySinh(Date ngaySinh) {
         this.ngaySinh = ngaySinh;
+    }
+
+    public String getChucVu() {
+        return chucVu;
+    }
+
+    public void setChucVu(String chucVu) {
+        this.chucVu = chucVu;
     }
 }

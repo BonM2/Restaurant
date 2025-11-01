@@ -1,8 +1,6 @@
 package QuanLyNhanVien;
 
 import DateTime.Date;
-import QuanLyNgayCong.BangChamCong;
-
 import java.util.Scanner;
 
 public class DauBep extends NhanVien{
@@ -32,21 +30,12 @@ public class DauBep extends NhanVien{
 
     @Override
     public double tinhLuongThucTe() {
-
         Scanner sc = new Scanner(System.in);
-        System.out.print("Tháng cần tìm: ");
-        byte thang = sc.nextByte();
-        System.out.print("Năm cần tìm: ");
-        short nam = sc.nextShort();
 
-        BangChamCong bangChamCongThangNay = timBangChamCong(thang, nam);
+        System.out.print("Số lượng món đầu bếp đã nấu: ");
+        int soLuongMonDaNau = sc.nextInt();
 
-        int soNgayDiLamThucTe = 0;
-        if (bangChamCongThangNay != null) {
-            soNgayDiLamThucTe = bangChamCongThangNay.getSoNgayDiLamThucTe();
-        }
-
-        return (1.0 * luongCoBan / 26) * soNgayDiLamThucTe + phuCapTayNghe;
+        return 1.0 * luongCoBan + phuCapTayNghe + (soLuongMonDaNau * 5000);
     }
 
     public static int getSoLuongDauBep() {

@@ -5,7 +5,7 @@ import Interface_XuLy.INhapXuat;
 import java.util.Scanner;
 
 public class BanAn implements INhapXuat {
-    private static int maBan = 0;
+    private int maBan = 0;
     private byte soLuongChoNgoi;
     private boolean trangThai;
 
@@ -16,6 +16,12 @@ public class BanAn implements INhapXuat {
 
     public BanAn(byte soLuongChoNgoi, boolean trangThai) {
         maBan++;
+        this.soLuongChoNgoi = soLuongChoNgoi;
+        this.trangThai = trangThai;
+    }
+
+    public BanAn(int maBan, byte soLuongChoNgoi, boolean trangThai) {
+        this.maBan = maBan;
         this.soLuongChoNgoi = soLuongChoNgoi;
         this.trangThai = trangThai;
     }

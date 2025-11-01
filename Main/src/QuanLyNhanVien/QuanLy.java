@@ -1,10 +1,9 @@
 package QuanLyNhanVien;
 
 import DateTime.Date;
-import Interface_XuLy.INhapXuat;
-import QuanLyNgayCong.BangChamCong;
+import QuanLyHoaDon.DanhSachHoaDon;
+import QuanLyHoaDon.HoaDon;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class QuanLy extends NhanVien {
@@ -39,20 +38,16 @@ public class QuanLy extends NhanVien {
     // (Lương cơ bản / số ngày đi làm thực tế) * số ngày đi làm thực tế + phụ cấp + thưởng doanh thu.
     @Override
     public double tinhLuongThucTe() {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Tháng cần tìm: ");
-        byte thang = sc.nextByte();
-        System.out.print("Năm cần tìm: ");
-        short nam = sc.nextShort();
 
-        BangChamCong bangChamCongThangNay = timBangChamCong(thang, nam);
+        DanhSachHoaDon dsHoaDon = new DanhSachHoaDon();
 
-        int soNgayDiLamThucTe = 0;
-        if (bangChamCongThangNay != null) {
-            soNgayDiLamThucTe = bangChamCongThangNay.getSoNgayDiLamThucTe();
+        double tongDoanhThu = 0.0;
+
+        for (HoaDon hoaDon : dsHoaDon.getDsHoaDon()) {
+            tongDoanhThu += hoaDon.getTongTien();
         }
 
-        return (1.0 * luongCoBan / 26) * soNgayDiLamThucTe + phuCap;
+        return 1.0 * luongCoBan + (tongDoanhThu * 0.03);
     }
 
     public static int getSoLuongQuanLy() {

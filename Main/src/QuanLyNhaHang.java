@@ -1,6 +1,4 @@
-import QuanLyNhanVien.*;
-
-public class Main {
+public class QuanLyNhaHang {
     public static void main(String[] args) {
 
     }

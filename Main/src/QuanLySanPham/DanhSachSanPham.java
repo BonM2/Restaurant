@@ -126,10 +126,10 @@ public class DanhSachSanPham implements IThemSuaXoa {
                 String loaiSanPham = dataThanhPhan[3];
 
                 SanPham new_sanPham = null;
-                if ("Mon_An".equalsIgnoreCase(loaiSanPham)) {
+                if ("MON_AN".equalsIgnoreCase(loaiSanPham)) {
                     String viMonAn = dataThanhPhan[4];
                     new_sanPham = new MonAn(tenSanPham, giaSanPham, viMonAn);
-                } else if ("Do_Uong".equalsIgnoreCase(loaiSanPham)) {
+                } else if ("DO_UONG".equalsIgnoreCase(loaiSanPham)) {
                     int dungTich = Integer.parseInt(dataThanhPhan[4]);
                     new_sanPham = new DoUong(tenSanPham, giaSanPham, dungTich);
                 }
@@ -164,5 +164,4 @@ public class DanhSachSanPham implements IThemSuaXoa {
             throw new RuntimeException(e);
         }
     }
-
 }

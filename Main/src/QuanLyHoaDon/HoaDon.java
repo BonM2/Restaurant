@@ -1,52 +1,216 @@
 package QuanLyHoaDon;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import DateTime.Date;
 import DateTime.Time;
 import Interface_XuLy.INhapXuat;
 import KhachHang.KhachHang;
-import QuanLyBanAn.BanAn;
-import QuanLyDatBan.DatBan;
-import QuanLyNhanVien.NhanVien;
-import QuanLyMonAn.MonAn;
-import QuanLyNhanVien.TiepTan;
+import QuanLySanPham.DanhSachSanPham;
+import QuanLySanPham.DoUong;
+import QuanLySanPham.MonAn;
+import QuanLySanPham.SanPham;
 
-public abstract class HoaDon implements INhapXuat{
-    private int maHoaDon = 0 ;
-    private BanAn banAn;
-    private ArrayList<ChiTietHoaDon> dsChiTiet;
+public class HoaDon implements INhapXuat {
+    private int maHoaDon = 0;
+    private int maBanAn;
+    private ChiTietHoaDon chiTietHoaDon;
     private double tongTien;
     private boolean coVoucher;
-    private double phieuGiamGia;
-    private NhanVien nhanVienTao;
-    private KhachHang loaiKhachHang;
+    private int phieuGiamGia;
+    private String tenNhanVienTao;
     private Time thoiGianTao;
+    private Date ngayTao;
 
-    public HoaDon(){
-        banAn = new BanAn();
-        dsChiTiet=new ArrayList<>();
-        tongTien=0;
-        coVoucher=false;
-        phieuGiamGia=0;
-        nhanVienTao=new TiepTan();
-        loaiKhachHang=new KhachHang();
-        thoiGianTao=new Time();
-
+    public HoaDon() {
+        maBanAn = -1;
+        chiTietHoaDon = new ChiTietHoaDon();
+        tongTien = 0.0;
+        coVoucher = false;
+        phieuGiamGia = 0;
+        tenNhanVienTao = "";
+        thoiGianTao = new Time();
+        ngayTao = new Date();
     }
-    public HoaDon(int maHoaDon, BanAn banAn, ArrayList<ChiTietHoaDon> dsChiTiet, double tongTien, boolean coVoucher, double phieuGiamGia, NhanVien nhanVienTao, KhachHang loaiKhachHang, Time thoiGianTao) {
+
+    public HoaDon(int maBanAn, ChiTietHoaDon chiTietHoaDon, double tongTien, boolean coVoucher, int phieuGiamGia, String tenNhanVienTao, Time thoiGianTao, Date ngayTao) {
         maHoaDon++;
-        this.banAn = banAn;
-        this.dsChiTiet = dsChiTiet;
+        this.maBanAn = maBanAn;
+        this.chiTietHoaDon = chiTietHoaDon;
         this.tongTien = tongTien;
         this.coVoucher = coVoucher;
         this.phieuGiamGia = phieuGiamGia;
-        this.nhanVienTao = nhanVienTao;
-        this.loaiKhachHang = loaiKhachHang;
+        this.tenNhanVienTao = tenNhanVienTao;
         this.thoiGianTao = thoiGianTao;
+        this.ngayTao = ngayTao;
     }
 
+    // nhập thông tin hóa đơn
+    public void nhapThongTin(Scanner sc) {
+        maHoaDon++;
+
+        System.out.print("Nhập mã bàn ăn: ");
+        maBanAn = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Nhập tên nhân viên tạo hóa đơn: ");
+        tenNhanVienTao = sc.nextLine();
+
+        System.out.print("Có voucher hay không ? (1 = có /0 = không) ");
+        int isTrue = sc.nextInt();
+        coVoucher = (isTrue == 1);
+
+        if (coVoucher) {
+            System.out.print("Nhập giá trị của voucher (%): ");
+            phieuGiamGia = sc.nextInt();
+            sc.nextLine();
+        }
+
+        System.out.println("Nhập chi tiết thông tin hóa đơn: ");
+
+        while (true) {
+
+            System.out.println("-----------------------");
+            System.out.println("1. Món ăn.");
+            System.out.println("2. Đồ uống.");
+            System.out.println("0. Thoát.");
+            System.out.println("-----------------------");
+            int choice = sc.nextInt();
+
+            DanhSachSanPham danhSachSanPham = new DanhSachSanPham();
+            danhSachSanPham.hienthiSanPham();
+
+            if (choice == 1) {
+                SanPham sanPham = new MonAn();
+                sanPham.nhapThongTin(sc);
+
+                System.out.print("Mời nhập số lượng món ăn: ");
+                int soLuong = sc.nextInt();
+
+                chiTietHoaDon.nhapThongTin(sanPham, soLuong);
+            } else if (choice == 2) {
+                SanPham sanPham = new DoUong();
+                sanPham.nhapThongTin(sc);
+
+                System.out.print("Mời nhập số lượng đồ uống: ");
+                int soLuong = sc.nextInt();
+
+                chiTietHoaDon.nhapThongTin(sanPham, soLuong);
+            } else if (choice == 0) {
+                break;
+            }
+        }
+
+        System.out.print("Nhập thời gian tạo hóa đơn: ");
+        thoiGianTao = new Time();
+        thoiGianTao.nhapTime(sc);
+
+        System.out.print("Nhập ngày tạo hóa đơn: ");
+        ngayTao = new Date();
+        ngayTao.nhapDate(sc);
+    }
+
+    // xuất thông tin hóa đơn
+    public void xuatThongTin() {
+        System.out.println("______________________________");
+        System.out.println("Mã hóa đơn: " + maHoaDon);
+        System.out.println("Mã bàn ăn: " + maBanAn);
+        System.out.println("Tình trạng voucher: ");
+        if (coVoucher)
+            System.out.println("Có voucher và giảm giá " + phieuGiamGia + "%");
+        else
+            System.out.println("Không có voucher");
+        System.out.println("Thời gian tạo hóa đơn: " + thoiGianTao.toString());
+        System.out.println("Ngày tạo hóa đơn: " + ngayTao.toString());
+        chiTietHoaDon.xuatThongTin();
+        System.out.println("Tổng tiền: " + capNhatTongTien());
+        System.out.println("______________________________");
+    }
+
+    //các lựa chọn để thực hiện
+    public void menuThuocTinh() {
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("-------Bảng thuộc tính--------");
+            System.out.println("1. Mã bàn ăn.");
+            System.out.println("2. Tên nhân viên tạo.");
+            System.out.println("3. Tình trạng voucher.");
+            System.out.println("4. Thời gian tạo hóa đơn.");
+            System.out.println("5. Ngày tạo hóa đơn.");
+            System.out.println("6. Chỉnh sửa chi tiết hóa đơn");
+            System.out.println("0. Thoát");
+            System.out.println("------------------------------");
+            System.out.println("Lựa chọn: ");
+
+            choice = sc.nextInt();
+            sc.nextLine();
+            if (choice == 1) {
+                System.out.print("Mời nhập mã bàn ăn mới: ");
+                int new_maBan = sc.nextInt();
+                setMaBanAn(new_maBan);
+            } else if (choice == 2) {
+                System.out.print("Mời nhập tên mới của nhân viên tạo hóa đơn: ");
+                String new_name = sc.nextLine();
+                setTenNhanVienTao(new_name);
+            } else if (choice == 3) {
+                System.out.print("Mời nhập tình trạng voucher (1 = có / 0 = không): ");
+                int isTrue = sc.nextInt();
+                boolean new_Voucher = (isTrue == 1);
+
+                if (new_Voucher) {
+                    System.out.print("Nhập phần trăm giảm giá của phiếu mới (%): ");
+                    int new_phieuGiamGia = sc.nextInt();
+                    setCoVoucher(true);
+                    setPhieuGiamGia(new_phieuGiamGia);
+                    System.out.print("Đã áp dụng giảm giá " + new_phieuGiamGia + "%");
+                } else {
+                    setCoVoucher(false);
+                    setPhieuGiamGia(0);
+                    System.out.println("Không thay đổi về tình trạng voucher đối với hóa đơn này!");
+                }
+            } else if (choice == 4) {
+                System.out.println("Mời nhập thời gian mới: ");
+                Time new_time = new Time();
+                new_time.nhapTime(sc);
+                setThoiGianTao(new_time);
+            } else if (choice == 5) {
+                System.out.println("Mời nhập ngày tạo mới: ");
+                Date new_date = new Date();
+                new_date.nhapDate(sc);
+                setNgayTao(new_date);
+            } else if (choice == 6) {
+                System.out.println("1. Sửa tên.");
+                System.out.println("2. Sửa số lượng.");
+                System.out.print("Mời nhập lựa chọn: ");
+                int select = sc.nextInt();
+
+                if (select == 1) {
+                    System.out.println("Mời nhập tên mới: ");
+                    String tenSP = sc.nextLine();
+
+                } else if (select == 2) {
+                    System.out.println("Mời nhập số lượng mới: ");
+                    int soLuong = sc.nextInt();
+
+                }
+            }
+        } while (choice != 0);
+    }
+
+    public double capNhatTongTien() {
+        double tongTien = chiTietHoaDon.tinhThanhTien();
+
+        if (coVoucher) {
+            return tongTien * (double) ((100 - phieuGiamGia) / 100);
+        }
+
+        return tongTien;
+    }
+    public ChiTietHoaDon getChiTietHoaDon() {
+        return chiTietHoaDon;
+    }
     public int getMaHoaDon() {
         return maHoaDon;
     }
@@ -55,20 +219,20 @@ public abstract class HoaDon implements INhapXuat{
         this.maHoaDon = maHoaDon;
     }
 
-    public BanAn getBanAn() {
-        return banAn;
+    public int getMaBanAn() {
+        return maBanAn;
     }
 
-    public void setBanAn(BanAn banAn) {
-        this.banAn = banAn;
+    public void setMaBanAn(int maBanAn) {
+        this.maBanAn = maBanAn;
     }
 
-    public ArrayList<ChiTietHoaDon> getDsChiTiet() {
-        return dsChiTiet;
+    public Date getNgayTao() {
+        return ngayTao;
     }
 
-    public void setDsChiTiet(ArrayList<ChiTietHoaDon> dsChiTiet) {
-        this.dsChiTiet = dsChiTiet;
+    public void setNgayTao(Date ngayTao) {
+        this.ngayTao = ngayTao;
     }
 
     public double getTongTien() {
@@ -87,28 +251,20 @@ public abstract class HoaDon implements INhapXuat{
         this.coVoucher = coVoucher;
     }
 
-    public double getPhieuGiamGia() {
+    public int getPhieuGiamGia() {
         return phieuGiamGia;
     }
 
-    public void setPhieuGiamGia(double phieuGiamGia) {
+    public void setPhieuGiamGia(int phieuGiamGia) {
         this.phieuGiamGia = phieuGiamGia;
     }
 
-    public NhanVien getNhanVienTao() {
-        return nhanVienTao;
+    public String getTenNhanVienTao() {
+        return tenNhanVienTao;
     }
 
-    public void setNhanVienTao(NhanVien nhanVienTao) {
-        this.nhanVienTao = nhanVienTao;
-    }
-
-    public KhachHang getLoaiKhachHang() {
-        return loaiKhachHang;
-    }
-
-    public void setLoaiKhachHang(KhachHang loaiKhachHang) {
-        this.loaiKhachHang = loaiKhachHang;
+    public void setTenNhanVienTao(String tenNhanVienTao) {
+        this.tenNhanVienTao = tenNhanVienTao;
     }
 
     public Time getThoiGianTao() {
@@ -118,134 +274,12 @@ public abstract class HoaDon implements INhapXuat{
     public void setThoiGianTao(Time thoiGianTao) {
         this.thoiGianTao = thoiGianTao;
     }
-    // nhập thông tin hóa đơn
-    public void nhapThongTin(Scanner sc){
-        maHoaDon++;
 
-        System.out.println("Nhập bàn ăn: ");
-        banAn=new BanAn();
-        banAn.nhapThongTin(sc);
-
-        System.out.println("Nhập nhân viên tạo hóa đơn: ");
-        nhanVienTao=new TiepTan();
-        nhanVienTao.nhapThongTin(sc);
-
-        System.out.println("Nhập loại khách hàng: ");
-        loaiKhachHang=new KhachHang();
-        String loai=sc.nextLine();
-        loaiKhachHang.setLoaiKhach(loai);
-
-        System.out.println("Nhập có voucher hay không ? (true = có /false = không) ");
-        coVoucher=sc.nextBoolean();
-        if(coVoucher){
-            System.out.println("Nhập giá trị của voucher (%): ");
-            phieuGiamGia=sc.nextDouble();sc.nextLine();
-        }
-
-//        System.out.println("Nhập các món ăn trong hóa đơn: ");
-//        String process;
-//        do {
-//            MonAn monAn=new MonAn();
-//        }while{
-//
-//        }
-
-        // Có cần thêm ngày tạo không b ?
-        System.out.println("Nhập thời gian tạo hóa đơn: ");
-        thoiGianTao=new Time();
-        thoiGianTao.nhapTime(sc);
+    public short getThangTao() {
+        return ngayTao.getThang();
     }
 
-    // xuất thông tin hóa đơn
-    public void xuatThongTin(){
-        System.out.println("______________________________");
-        System.out.println("Mã hóa đơn: "+ maHoaDon);
-        System.out.println("Bàn ăn: ");banAn.xuatThongTin();
-        System.out.println("Loại khách hàng: ");loaiKhachHang.getLoaiKhach();
-        System.out.printf("Tình trạng voucher: ");
-            if(coVoucher) System.out.println("Có voucher và giảm giá "+phieuGiamGia+"%");
-                else System.out.println("Không có voucher");
-
-
-                // các sản phẩm trong hóa đơn ..........................................
-
-
-        System.out.println("Thời gian tạo hóa đơn: "+thoiGianTao.toString());
+    public short getNamTao() {
+        return ngayTao.getNam();
     }
-
-    //các lựa chọn để thực hiện
-    public void menuThuocTinh(){
-        Scanner sc=new Scanner(System.in);
-        int choice;
-
-        do {
-            System.out.println("-------Bảng thuộc tính--------");
-            System.out.println("1. Thông tin bàn ăn.");
-            System.out.println("2. Thông tin nhân viên tạo.");
-            System.out.println("3. Thông tin loại khách hàng.");
-            System.out.println("4. Tình trạng voucher.");
-
-            // sửa các loại sản phẩm trong hóa đơn .......
-
-            System.out.println("5. Thời gian tạo hóa đơn.");
-            System.out.println("0. Thoát");
-            System.out.println("------------------------------");
-            System.out.println("Lựa chọn: ");
-
-            choice = sc.nextInt();sc.nextLine();
-            if (choice == 1) {
-                System.out.print("Mời nhập lựa chọn muốn sửa: ");
-                BanAn new_banAn = new BanAn();
-                new_banAn.menuThuocTinh();
-                setBanAn(new_banAn);
-            } else if (choice == 2) {
-                System.out.println("Mời nhập lựa chọn muốn sửa: ");
-                NhanVien new_nhanVienTao = new TiepTan();
-                new_nhanVienTao.menuThuocTinh();
-                setNhanVienTao(new_nhanVienTao);
-            } else if (choice == 3) {
-                System.out.println("Mời nhập lựa chọn muốn sửa: ");
-                KhachHang new_khachHang = new KhachHang();
-                String loai=sc.nextLine();
-                new_khachHang.setLoaiKhach(loai);
-                setLoaiKhachHang(new_khachHang);
-            } else if (choice == 4) {
-                System.out.println("Mời nhập tình trạng voucher (true = có / false = không): ");
-                boolean new_Voucher = sc.nextBoolean();
-
-                if(new_Voucher){
-                    System.out.println("Nhập phần trăm giảm giá của phiếu mới (%): ");
-                    double new_phieuGiamGia= sc.nextDouble();
-                    setCoVoucher(true);
-                    setPhieuGiamGia(new_phieuGiamGia);
-                    System.out.println("Đã áp dụng giảm giá "+new_phieuGiamGia+"%");
-                }else{
-                    setCoVoucher(false);
-                    setPhieuGiamGia(0);
-                    System.out.println("Không thay đổi về tình trạng voucher đối với hóa đơn này!");
-                }
-            }  else if (choice == 5) {
-                System.out.println("Mời nhập thời gian mới: ");
-                Time new_time = new Time();
-                new_time.nhapTime(sc);
-                setThoiGianTao(new_time);
-            }
-        } while (choice != 0);
-    }
-
-    public void capNhatTongTien(){
-        for(ChiTietHoaDon dsct : dsChiTiet){
-            tongTien += dsct.tinhThanhTien();
-        }
-        if(coVoucher){
-            tongTien *= ((100 - phieuGiamGia)/100);
-        }
-    }
-
-    //public void themSanPham (MonAn monAn,int soLuong){}
-
-
 }
-
-
-

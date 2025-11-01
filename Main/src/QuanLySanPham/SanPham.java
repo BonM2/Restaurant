@@ -62,7 +62,7 @@ public abstract class SanPham implements INhapXuat {
 
     @Override
     public void xuatThongTin() {
-        System.out.print("Mã sản phẩm: " + maSanPham + "| Loại sản phẩm: " + loaiSanPham +"| Tên: " + tenSanPham + "| Giá: " + giaSanPham);
+        System.out.print("Mã sản phẩm: " + maSanPham + "| Loại sản phẩm: " + loaiSanPham + "| Tên: " + tenSanPham + "| Giá: " + giaSanPham);
     }
 
     public abstract void menuThuocTinh();

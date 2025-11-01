@@ -1,42 +1,31 @@
 package KhachHang;
 
-import DateTime.Date;
 import Interface_XuLy.INhapXuat;
 import XuLyString.StringUtils;
 import java.util.Scanner;
 
 public class KhachHang implements INhapXuat {
-    private static int maKhachHang = 0;
+    private int maKhachHang = 0;
     private String tenKhachHang;
     private String phoneNumber;
 
-    private Date ngaySinhKhachHang;
-    private String loaiKhach;
-
     public KhachHang() {
         tenKhachHang = "";
-        ngaySinhKhachHang = new Date();
         phoneNumber = "";
-        loaiKhach = "";
     }
 
-    public KhachHang(String tenKhachHang, Date ngaySinhKhachHang, String phoneNumber, String loaiKhach) {
+    public KhachHang(String tenKhachHang, String phoneNumber) {
         maKhachHang++;
         this.tenKhachHang = tenKhachHang;
         this.phoneNumber = phoneNumber;
-        this.ngaySinhKhachHang = ngaySinhKhachHang;
-        this.loaiKhach = loaiKhach;
     }
 
     @Override
     public void nhapThongTin(Scanner sc) {
         System.out.print("Nhập tên khách hàng: ");
         this.tenKhachHang = sc.nextLine();
-        System.out.print("Nhập ngày sinh khách hàng: ");
-        ngaySinhKhachHang = new Date();
-        ngaySinhKhachHang.nhapDate(sc);
-        System.out.print("Nhập loại khách hàng (Vip/Standard): ");
-        this.loaiKhach = sc.nextLine();
+        System.out.print("Nhập số điện thoại khách hàng: ");
+        phoneNumber = sc.nextLine();
     }
 
     @Override
@@ -46,25 +35,15 @@ public class KhachHang implements INhapXuat {
 
     @Override
     public String toString() {
-        return "Mã khách hàng: " + maKhachHang + "| Tên khách hàng: " + StringUtils.chuanHoaThongTin(tenKhachHang) + "| SĐT: " + phoneNumber
-                + "| Loại khách hàng: " + loaiKhach + "| Ngày sinh: " + ngaySinhKhachHang;
+        return "Mã khách hàng: " + maKhachHang + "| Tên khách hàng: " + StringUtils.chuanHoaThongTin(tenKhachHang) + "| SĐT: " + phoneNumber;
     }
 
-    public static int getMaKhachHang() {
+    public int getMaKhachHang() {
         return maKhachHang;
     }
 
-
     public String getPhoneNumber() {
         return phoneNumber;
-    }
-
-    public Date getNgaySinhKhachHang() {
-        return ngaySinhKhachHang;
-    }
-
-    public void setNgaySinhKhachHang(Date ngaySinhKhachHang) {
-        this.ngaySinhKhachHang = ngaySinhKhachHang;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -79,14 +58,6 @@ public class KhachHang implements INhapXuat {
         this.tenKhachHang = tenKhachHang;
     }
 
-    public String getLoaiKhach() {
-        return loaiKhach;
-    }
-
-    public void setLoaiKhach(String loaiKhach) {
-        this.loaiKhach = loaiKhach;
-    }
-
     public void menuThuocTinh() {
         Scanner sc = new Scanner(System.in);
         int choice;
@@ -94,8 +65,6 @@ public class KhachHang implements INhapXuat {
             System.out.println("-------Bảng thuộc tính--------");
             System.out.println("1. Tên khách hàng.");
             System.out.println("2. Số điện thoại.");
-            System.out.println("3. Loại khách hàng.");
-            System.out.println("4. Tuổi khách hàng.");
             System.out.println("0. Thoát");
             System.out.println("------------------------------");
             System.out.println("Lựa chọn: ");
@@ -109,14 +78,6 @@ public class KhachHang implements INhapXuat {
                 System.out.print("Mời nhập số điện thoại mới: ");
                 String new_phoneNumber = sc.nextLine();
                 setPhoneNumber(new_phoneNumber);
-            } else if (choice == 3) {
-                System.out.print("Mời nhập loại khách hàng mới (Vip/ Standard): ");
-                String new_loaiKhach = sc.nextLine();
-                setLoaiKhach(new_loaiKhach);
-            } else if (choice == 4) {
-                System.out.print("Mời nhập ngày sinh mới: ");
-                Date date = new Date();
-                date.nhapDate(sc);
             }
         } while(choice != 0);
     }

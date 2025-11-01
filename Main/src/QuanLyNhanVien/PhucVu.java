@@ -1,9 +1,7 @@
 package QuanLyNhanVien;
 
 import DateTime.Date;
-import QuanLyNgayCong.BangChamCong;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PhucVu extends NhanVien{
@@ -35,22 +33,11 @@ public class PhucVu extends NhanVien{
     @Override
     public double tinhLuongThucTe() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Tháng cần tìm: ");
-        byte thang = sc.nextByte();
-        System.out.print("Năm cần tìm: ");
-        short nam = sc.nextShort();
-
-        BangChamCong bangChamCongThangNay = timBangChamCong(thang, nam);
-
-        int soNgayDiLamThucTe = 0;
-        if (bangChamCongThangNay != null) {
-            soNgayDiLamThucTe = bangChamCongThangNay.getSoNgayDiLamThucTe();
-        }
 
         System.out.print("Số tiền tip nhân viên nhận được trong tháng: ");
         soTienTip = sc.nextInt();
 
-        return (1.0 * luongCoBan / 26) * soNgayDiLamThucTe + phuCap + soTienTip;
+        return 1.0 * luongCoBan + phuCap + soTienTip;
     }
 
     public static int getSoLuongPhucVu() {
