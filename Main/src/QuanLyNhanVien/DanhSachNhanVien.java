@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class DanhSachNhanVien implements IThemSuaXoa {
     ArrayList<NhanVien> dsNhanVien;
-    final String URL_NhanVien = "C:\\Users\\Bao\\IdeaProjects\\Restaurant\\Main\\src\\ListNhanVien";
+    final String URL_NhanVien = "C:\\Users\\Bao\\IdeaProjects\\Restaurant\\Main\\src\\Data\\ListNhanVien";
 
     public DanhSachNhanVien() {
         dsNhanVien = new ArrayList<>();
@@ -48,8 +48,9 @@ public class DanhSachNhanVien implements IThemSuaXoa {
             menuLoaiNhanVien();
             System.out.print("Chọn loại nhân viên muốn thêm (1-5): ");
             choice = sc.nextInt();
+            sc.nextLine();
 
-            NhanVien nvMoi = null;
+            NhanVien nvMoi;
             if (choice == 1) {
                 nvMoi = new DauBep();
                 nvMoi.nhapThongTin(sc);
@@ -153,6 +154,7 @@ public class DanhSachNhanVien implements IThemSuaXoa {
             System.out.println("6. Xem tất cả.");
             System.out.println("Chọn loại nhân viên cần xem số lượng (1 - 5) hoặc xem tất cả (6): ");
             choice = sc.nextInt();
+            sc.nextLine();
 
             if (choice == 1) {
                 System.out.println("Số lượng đầu bếp: " + DauBep.getSoLuongDauBep());

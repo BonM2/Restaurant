@@ -20,8 +20,14 @@ public class Date {
         while (!valid) {
             try {
                 // Nhập ngày
-                System.out.print("Nhập ngày: ");
+                System.out.print("\nNhập ngày: ");
                 this.ngay = sc.nextShort();
+
+                System.out.print("Nhập tháng: ");
+                this.thang = sc.nextShort();
+
+                System.out.print("Nhập năm: ");
+                this.nam = sc.nextShort();
 
                 // Kiểm tra ngày có hợp lệ không
                 if (ngay > 31 || ngay < 1) {
@@ -29,8 +35,6 @@ public class Date {
                 }
 
                 // Nhập tháng
-                System.out.print("Nhập tháng: ");
-                this.thang = sc.nextShort();
 
                 // Kiểm tra tháng có hợp lệ không
                 if (thang > 12 || thang < 1) {
@@ -52,10 +56,6 @@ public class Date {
                         throw new RuntimeException("Ngày không hợp lệ!!!");
                     }
                 }
-
-                // Nhập năm
-                System.out.print("Nhập năm: ");
-                this.nam = sc.nextShort();
 
                 valid = true;
 

@@ -41,7 +41,7 @@ public abstract class NhanVien implements INhapXuat {
         System.out.print("Nhập ngày sinh nhân viên: ");
         ngaySinh.nhapDate(sc);
         sc.nextLine();
-        System.out.print("Nhập giới tính nhân viên: ");
+        System.out.print("Nhập giới tính nhân viên (F/ M): ");
         this.gioiTinh = sc.nextLine();
         System.out.print("Nhập chức vụ nhân viên: ");
         this.chucVu = sc.nextLine();
@@ -55,7 +55,7 @@ public abstract class NhanVien implements INhapXuat {
         System.out.println("Họ và tên: " + StringUtils.chuanHoaThongTin(tenNhanVien));
         System.out.println("Ngày sinh: " + ngaySinh);
         System.out.println("Giới tính: " + StringUtils.chuanHoaThongTin(gioiTinh));
-        System.out.println("Chức vụ: " + StringUtils.chuanHoaThongTin(chucVu));
+        System.out.println("Chức vụ: " + chucVu);
     }
 
     // Hàm tùy chọn thuộc tính cần sửa của nhân viên

@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class QuanLyNhaHang {
     private static String matKhau = "";
-    private static final String URL_MatKhau = "C:\\Users\\Bao\\IdeaProjects\\Restaurant\\out\\production\\Main\\Data\\MatKhau";
+    private static final String URL_MatKhau = "C:\\Users\\Bao\\IdeaProjects\\Restaurant\\Main\\src\\Data\\MatKhau";
     private static final String tenCuaHang = "SGU Corner";
     private static final String diaChiCuaHang = "273 An Dương Vương, Phường Chợ Quán, Hồ Chí Minh";
     private static final DanhSachNhanVien dsNhanVien = new DanhSachNhanVien();
@@ -381,7 +381,7 @@ public class QuanLyNhaHang {
                     System.out.print("Mời nhập lựa chọn: ");
                     nhanVienChoice = sc.nextInt();
                     sc.nextLine();
-                    luaChonChucNangNhanVien(choice);
+                    luaChonChucNangNhanVien(nhanVienChoice);
                 } while (nhanVienChoice != 0);
             } else if (choice == 2) {
                 int banAnChoice;
@@ -390,6 +390,7 @@ public class QuanLyNhaHang {
                     System.out.print("Mời nhập lựa chọn: ");
                     banAnChoice = sc.nextInt();
                     sc.nextLine();
+                    luaChonChucNangBanAn(banAnChoice);
                 } while (banAnChoice != 0);
             }  else if (choice == 3) {
                 int datBanChoice;
@@ -397,7 +398,7 @@ public class QuanLyNhaHang {
                     menuChucNangDatBan();
                     System.out.print("Mời nhập lựa chọn: ");
                     datBanChoice = sc.nextInt();
-                    sc.nextLine();
+                    luaChonChucNangDatBan(datBanChoice);
                 } while (datBanChoice != 0);
             } else if (choice == 4) {
                 int sanPhamChoice;
@@ -406,6 +407,7 @@ public class QuanLyNhaHang {
                     System.out.print("Mời nhập lựa chọn: ");
                     sanPhamChoice = sc.nextInt();
                     sc.nextLine();
+                    luaChonChucNangSanPham(sanPhamChoice);
                 } while (sanPhamChoice != 0);
             } else if (choice == 5) {
                 int hoaDonChoice;
@@ -414,6 +416,7 @@ public class QuanLyNhaHang {
                     System.out.print("Mời nhập lựa chọn: ");
                     hoaDonChoice = sc.nextInt();
                     sc.nextLine();
+                    luaChonChucNangHoaDon(hoaDonChoice);
                 } while (hoaDonChoice != 0);
             } else if (choice == 6) {
                 doiMatKhau();
