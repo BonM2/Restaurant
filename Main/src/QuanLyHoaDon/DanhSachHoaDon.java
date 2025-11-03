@@ -100,7 +100,7 @@ public class DanhSachHoaDon implements IThemSuaXoa {
         double tongTien = chiTietHoaDon.tinhThanhTien();
 
         if (coVoucher) {
-            tongTien *= ((100 - phieuGiamGia) / 100);
+            tongTien *= ((double) (100 - phieuGiamGia) / 100);
         }
 
         System.out.println("Nhập thời gian tạo hóa đơn: ");
@@ -157,7 +157,7 @@ public class DanhSachHoaDon implements IThemSuaXoa {
     }
 
     //5.Hien thi danh sach hoa don
-    public void hienThiHoaDon() {
+    public void hienThiDanhSachHoaDon() {
         System.out.println("Hiển thị danh sách hóa đơn.");
 
         for (HoaDon bill : dsHoaDon) {

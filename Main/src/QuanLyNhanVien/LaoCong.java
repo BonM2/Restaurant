@@ -1,9 +1,7 @@
 package QuanLyNhanVien;
 
 import DateTime.Date;
-import QuanLyNgayCong.BangChamCong;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class LaoCong extends NhanVien {

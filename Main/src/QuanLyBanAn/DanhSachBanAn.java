@@ -53,8 +53,7 @@ public class DanhSachBanAn implements IThemSuaXoa {
         if (b != null) {
             b.setTrangThai(trangThai);
             System.out.println("Đã cập nhật trạng thái bàn ăn!");
-        }
-        else
+        } else
             System.out.println("Không tìm thấy bàn ăn!");
     }
 
@@ -106,8 +105,7 @@ public class DanhSachBanAn implements IThemSuaXoa {
         if (b != null) {
             dsBanAn.remove(b);
             System.out.printf("Đã xóa bàn ăn có mã %d thành công!!!\n", maBan);
-        }
-        else
+        } else
             System.out.println("Không tìm thấy bàn ăn với mã bàn: " + maBan);
     }
 
@@ -178,6 +176,7 @@ public class DanhSachBanAn implements IThemSuaXoa {
             throw new RuntimeException(e);
         }
     }
+
     public int getSoLuongBanAn() {
         return dsBanAn.size();
     }

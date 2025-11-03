@@ -143,7 +143,7 @@ public class DanhSachSanPham implements IThemSuaXoa {
 
 
     // 7. Ghi file
-    public void ghiFile(String fileName) {
+    public void ghiFile() {
         try {
             File output = new File(URL);
 
