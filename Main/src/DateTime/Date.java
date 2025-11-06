@@ -19,7 +19,6 @@ public class Date {
 
         while (!valid) {
             try {
-                // Nhập ngày
                 System.out.print("\nNhập ngày: ");
                 this.ngay = sc.nextShort();
 
@@ -29,47 +28,40 @@ public class Date {
                 System.out.print("Nhập năm: ");
                 this.nam = sc.nextShort();
 
-                // Kiểm tra ngày có hợp lệ không
-                if (ngay > 31 || ngay < 1) {
-                    throw new RuntimeException("Ngày không hợp lệ!!!");
-                }
-
-                // Nhập tháng
-
-                // Kiểm tra tháng có hợp lệ không
-                if (thang > 12 || thang < 1) {
+                if (thang < 1 || thang > 12)
                     throw new RuntimeException("Tháng không hợp lệ!!!");
-                }
 
-                if ((thang == 1 || thang == 3 || thang == 5 || thang == 7 || thang == 8 || thang == 10 || thang == 12)) {
-                    if (ngay > 31 || ngay < 1) {
-                        throw new RuntimeException("Ngày không hợp lệ!!!");
-                    }
-                } else if ((thang == 4 || thang == 6 || thang == 9 || thang == 11)) {
-                    if (ngay > 30 || ngay < 1) {
-                        throw new RuntimeException("Ngày không hợp lệ!!!");
-                    }
-                } else {
-                    if (kiemTraNamNhuan() && (ngay > 29 || ngay < 1)) {
-                        throw new RuntimeException("Ngày không hợp lệ!!!");
-                    } else if (!kiemTraNamNhuan() && (ngay > 28 || ngay < 1)) {
-                        throw new RuntimeException("Ngày không hợp lệ!!!");
-                    }
-                }
+                if (ngay < 1 || ngay > soNgayTrongThang(thang, nam))
+                    throw new RuntimeException("Ngày không hợp lệ!!!");
+
+                if (nam < 0)
+                    throw new RuntimeException("Năm không hợp lệ!!!");
 
                 valid = true;
 
-            } catch (InputMismatchException e) {
-                System.out.println("Lỗi: input không hợp lệ. Vui lòng nhập lại.");
+            } catch (Exception e) {
+                System.out.println(e.getMessage() + " Vui lòng nhập lại!");
                 sc.nextLine();
             }
         }
     }
 
+    private int soNgayTrongThang(int thang, int nam) {
+        switch (thang) {
+            case 1: case 3: case 5: case 7: case 8: case 10: case 12:
+                return 31;
+            case 4: case 6: case 9: case 11:
+                return 30;
+            case 2:
+                return kiemTraNamNhuan() ? 29 : 28;
+        }
+        return 0;
+    }
+
     // Hàm toString để in thông tin
     @Override
     public String toString() {
-        return String.format("Ngày %d, tháng %d, năm %d", ngay, thang, nam);
+        return String.format("%d/%d/%d", ngay, thang, nam);
     }
 
     // Hàm kiểm tra năm nhuận

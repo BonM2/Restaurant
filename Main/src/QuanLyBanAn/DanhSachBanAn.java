@@ -84,12 +84,9 @@ public class DanhSachBanAn implements IThemSuaXoa {
     public void themThongTin() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Nhập số lượng chỗ ngồi: ");
-        byte soLuongChoNgoi = sc.nextByte();
-        System.out.print("Nhập trạng thái của bàn ăn: (1. Đã đặt/ 0. Trống)");
-        boolean trangThai = (sc.nextInt() == 1);
+        BanAn banAn = new BanAn();
+        banAn.nhapThongTin(sc);
 
-        BanAn banAn = new BanAn(soLuongChoNgoi, trangThai);
         dsBanAn.add(banAn);
 
         soLuongBanAn++;
@@ -112,15 +109,15 @@ public class DanhSachBanAn implements IThemSuaXoa {
     @Override
     public void suaThongTin(int maBan) {
 
-        try (Scanner sc = new Scanner(System.in)) {
+        try {
             BanAn b = timBanAn(maBan);
             if (b != null) {
                 b.menuThuocTinh();
             } else {
                 System.out.println("Không tồn tại mã bàn ăn này.");
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (NumberFormatException | InputMismatchException e) {
+            System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
         }
     }
 
@@ -130,17 +127,18 @@ public class DanhSachBanAn implements IThemSuaXoa {
 
             if (!output.exists()) {
                 output.createNewFile();
-
-                PrintWriter pw = new PrintWriter(output);
-                for (BanAn banAn : dsBanAn) {
-                    if (banAn != null)
-                        pw.println(banAn);
-                }
-
-                pw.close();
             }
+
+            PrintWriter pw = new PrintWriter(output);
+            for (BanAn banAn : dsBanAn) {
+                if (banAn != null)
+                    pw.println(banAn);
+            }
+
+            pw.close();
+            System.out.println("Ghi file thành công!!!");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("Lỗi ghi file. Vui lòng xem lại!!!");
         }
     }
 
@@ -153,7 +151,7 @@ public class DanhSachBanAn implements IThemSuaXoa {
                 input.createNewFile();
             }
 
-            Scanner sc = new Scanner(System.in);
+            Scanner sc = new Scanner(input);
             String[] data = new String[1001];
             int n = 0;
 
@@ -168,16 +166,13 @@ public class DanhSachBanAn implements IThemSuaXoa {
                 byte soLuongChoNgoi = Byte.parseByte(dataThanhPhan[1]);
                 boolean trangThai = Boolean.parseBoolean(dataThanhPhan[2]);
 
-                BanAn banAn = new BanAn(soLuongChoNgoi, trangThai);
+                BanAn banAn = new BanAn(maBan, soLuongChoNgoi, trangThai);
                 dsBanAn.add(banAn);
             }
 
+            System.out.println("Đọc file thành công!!!");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Lỗi đọc file. Vui lòng xem lại!!!");
         }
-    }
-
-    public int getSoLuongBanAn() {
-        return dsBanAn.size();
     }
 }

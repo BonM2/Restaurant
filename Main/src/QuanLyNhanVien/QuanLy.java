@@ -13,10 +13,19 @@ public class QuanLy extends NhanVien {
 
     public QuanLy() {
         super();
+        chucVu = "QL";
+        soLuong++;
     }
 
-    public QuanLy(String tenNhanVien, Date ngaySinh, String gioiTinh, String chucVu) {
-        super(tenNhanVien, ngaySinh, gioiTinh, chucVu);
+    public QuanLy(String tenNhanVien, Date ngaySinh, String gioiTinh) {
+        super(tenNhanVien, ngaySinh, gioiTinh);
+        chucVu = "QL";
+        soLuong++;
+    }
+
+    public QuanLy(int maNhanVien, String tenNhanVien, Date ngaySinh, String gioiTinh) {
+        super(maNhanVien, tenNhanVien, ngaySinh, gioiTinh);
+        chucVu = "QL";
         soLuong++;
     }
 

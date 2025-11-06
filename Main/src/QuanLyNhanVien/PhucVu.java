@@ -12,12 +12,22 @@ public class PhucVu extends NhanVien{
 
     public PhucVu() {
         super();
-    }
-
-    public PhucVu(String tenNhanVien, Date ngaySinh, String gioiTinh, String chucVu) {
-        super(tenNhanVien, ngaySinh, gioiTinh, chucVu);
+        chucVu = "PV";
         soLuong++;
     }
+
+    public PhucVu(String tenNhanVien, Date ngaySinh, String gioiTinh) {
+        super(tenNhanVien, ngaySinh, gioiTinh);
+        chucVu = "PV";
+        soLuong++;
+    }
+
+    public PhucVu(int maNhanVien, String tenNhanVien, Date ngaySinh, String gioiTinh) {
+        super(maNhanVien, tenNhanVien, ngaySinh, gioiTinh);
+        chucVu = "PV";
+        soLuong++;
+    }
+
 
     public void nhapThongTin(Scanner sc) {
         super.nhapThongTin(sc);

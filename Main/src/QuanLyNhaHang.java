@@ -13,10 +13,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class QuanLyNhaHang {
     private static String matKhau = "";
+    private static final Scanner sc = new Scanner(System.in);
     private static final String URL_MatKhau = "C:\\Users\\Bao\\IdeaProjects\\Restaurant\\Main\\src\\Data\\MatKhau";
     private static final String tenCuaHang = "SGU Corner";
     private static final String diaChiCuaHang = "273 An Dương Vương, Phường Chợ Quán, Hồ Chí Minh";
@@ -36,10 +38,10 @@ public class QuanLyNhaHang {
         System.out.println("4/ Quản lý sản phẩm");
         System.out.println("5/ Quản lý hóa đơn");
         System.out.println("6/ Đổi mật khẩu");
+        System.out.println("0/ Thoát chương trình!!!");
     }
 
     public static void doiMatKhau() {
-        Scanner sc = new Scanner(System.in);
         System.out.print("Nhập mật khẩu mới: ");
         matKhau = sc.nextLine();
 
@@ -67,39 +69,47 @@ public class QuanLyNhaHang {
     }
 
     public static void luaChonChucNangNhanVien(int choice) {
-        if (choice == 1) {
-            dsNhanVien.themThongTin();
-        } else if (choice == 2) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập mã nhân viên muốn sửa thông tin: ");
-            int maNhanVien = sc.nextInt();
-            dsNhanVien.suaThongTin(maNhanVien);
-        } else if (choice == 3) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập mã nhân viên muốn xóa: ");
-            int maNhanVien = sc.nextInt();
-            dsNhanVien.xoaThongTin(maNhanVien);
-        } else if (choice == 4) {
-            dsNhanVien.hienThiDanhSachNhanVien();
-        } else if (choice == 5) {
-            dsNhanVien.xuatBangLuongNhanVien();
-        } else if (choice == 6) {
-            dsNhanVien.inSoLuongNhanVienTheoChucVu();
-        } else if (choice == 7) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập mã nhân viên muốn tìm: ");
-            int maNhanVien = sc.nextInt();
-            NhanVien nv = dsNhanVien.timNhanVienTheoMa(maNhanVien);
+        while (true) {
+            try {
+                if (choice == 1) {
+                    dsNhanVien.themThongTin();
+                } else if (choice == 2) {
+                    System.out.print("Nhập mã nhân viên muốn sửa thông tin: ");
+                    int maNhanVien = sc.nextInt();
+                    sc.nextLine();
+                    dsNhanVien.suaThongTin(maNhanVien);
+                } else if (choice == 3) {
+                    System.out.print("Nhập mã nhân viên muốn xóa: ");
+                    int maNhanVien = sc.nextInt();
+                    sc.nextLine();
+                    dsNhanVien.xoaThongTin(maNhanVien);
+                } else if (choice == 4) {
+                    dsNhanVien.hienThiDanhSachNhanVien();
+                } else if (choice == 5) {
+                    dsNhanVien.xuatBangLuongNhanVien();
+                } else if (choice == 6) {
+                    dsNhanVien.inSoLuongNhanVienTheoChucVu();
+                } else if (choice == 7) {
+                    System.out.print("Nhập mã nhân viên muốn tìm: ");
+                    int maNhanVien = sc.nextInt();
+                    NhanVien nv = dsNhanVien.timNhanVienTheoMa(maNhanVien);
 
-            if (nv != null) {
-                nv.xuatThongTin();
-            } else {
-                System.out.println("Không tồn tại mã số nhân viên này!!!");
+                    if (nv != null) {
+                        nv.xuatThongTin();
+                    } else {
+                        System.out.println("Không tồn tại mã số nhân viên này!!!");
+                    }
+                } else if (choice == 8) {
+                    dsNhanVien.docFile();
+                } else if (choice == 9) {
+                    dsNhanVien.ghiFile();
+                } else if (choice == 0) {
+                    break;
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                sc.nextLine();
             }
-        } else if (choice == 8) {
-            dsNhanVien.docFile();
-        } else if (choice == 9) {
-            dsNhanVien.ghiFile();
         }
     }
 
@@ -116,27 +126,34 @@ public class QuanLyNhaHang {
     }
 
     public static void luaChonChucNangBanAn(int choice) {
-        if (choice == 1) {
-            dsBanAn.themThongTin();
-        } else if (choice == 2) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập mã bàn ăn cần sửa: ");
-            int maBanAn = sc.nextInt();
-            dsBanAn.suaThongTin(maBanAn);
-        } else if (choice == 3) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập mã bàn ăn cần xóa: ");
-            int maBanAn = sc.nextInt();
-            dsBanAn.xoaThongTin(maBanAn);
-        } else if (choice == 4) {
-            dsBanAn.hienThiDanhSachBanAn();
-        } else if (choice == 5) {
-            int soLuongBanTrong = dsBanAn.soLuongBanTrong();
-            System.out.println("Số lượng bàn ăn trống: " + soLuongBanTrong);
-        } else if (choice == 6) {
-            dsBanAn.docFile();
-        } else if (choice == 7) {
-            dsBanAn.ghiFile();
+        while (true) {
+            try {
+                if (choice == 1) {
+                    dsBanAn.themThongTin();
+                } else if (choice == 2) {
+                    System.out.print("Nhập mã bàn ăn cần sửa: ");
+                    int maBanAn = sc.nextInt();
+                    dsBanAn.suaThongTin(maBanAn);
+                } else if (choice == 3) {
+                    System.out.print("Nhập mã bàn ăn cần xóa: ");
+                    int maBanAn = sc.nextInt();
+                    dsBanAn.xoaThongTin(maBanAn);
+                } else if (choice == 4) {
+                    dsBanAn.hienThiDanhSachBanAn();
+                } else if (choice == 5) {
+                    int soLuongBanTrong = dsBanAn.soLuongBanTrong();
+                    System.out.println("Số lượng bàn ăn trống: " + soLuongBanTrong);
+                } else if (choice == 6) {
+                    dsBanAn.docFile();
+                } else if (choice == 7) {
+                    dsBanAn.ghiFile();
+                } else if (choice == 0) {
+                    break;
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                sc.nextLine();
+            }
         }
     }
 
@@ -153,35 +170,44 @@ public class QuanLyNhaHang {
     }
 
     public static void luaChonChucNangDatBan(int choice) {
-        if (choice == 1) {
-            dsDatBan.themThongTin();
-        } else if (choice == 2) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập mã đặt bàn muốn xóa: ");
-            int maDatBan = sc.nextInt();
-            dsDatBan.xoaThongTin(maDatBan);
-        } else if (choice == 3) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập mã đặt bàn để sửa thông tin: ");
-            int maDatBan = sc.nextInt();
-            dsDatBan.suaThongTin(maDatBan);
-        } else if (choice == 4) {
-            dsDatBan.hienThiDanhSachDatBan();
-        } else if (choice == 5) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập mã đặt bàn muốn tìm: ");
-            int maDatBan = sc.nextInt();
-            DatBan datBan = dsDatBan.timThongTinDatBan(maDatBan);
+        while (true) {
+            try {
+                if (choice == 1) {
+                    dsDatBan.themThongTin();
+                } else if (choice == 2) {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Nhập mã đặt bàn muốn xóa: ");
+                    int maDatBan = sc.nextInt();
+                    dsDatBan.xoaThongTin(maDatBan);
+                } else if (choice == 3) {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Nhập mã đặt bàn để sửa thông tin: ");
+                    int maDatBan = sc.nextInt();
+                    dsDatBan.suaThongTin(maDatBan);
+                } else if (choice == 4) {
+                    dsDatBan.hienThiDanhSachDatBan();
+                } else if (choice == 5) {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Nhập mã đặt bàn muốn tìm: ");
+                    int maDatBan = sc.nextInt();
+                    DatBan datBan = dsDatBan.timThongTinDatBan(maDatBan);
 
-            if (datBan != null) {
-                datBan.xuatThongTin();
-            } else {
-                System.out.println("Không tồn tại mã đặt bàn này!!!");
+                    if (datBan != null) {
+                        datBan.xuatThongTin();
+                    } else {
+                        System.out.println("Không tồn tại mã đặt bàn này!!!");
+                    }
+                } else if (choice == 6) {
+                    dsDatBan.docFile();
+                } else if (choice == 7) {
+                    dsDatBan.ghiFile();
+                } else if (choice == 0) {
+                    break;
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                sc.nextLine();
             }
-        } else if (choice == 6) {
-            dsDatBan.docFile();
-        } else if (choice == 7) {
-            dsDatBan.ghiFile();
         }
     }
 
@@ -198,35 +224,44 @@ public class QuanLyNhaHang {
     }
 
     public static void luaChonChucNangSanPham(int choice) {
-        if (choice == 1) {
-            dsSanPham.themThongTin();
-        } else if (choice == 2) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập mã sản phẩm muốn sửa thông tin: ");
-            int maSanPham = sc.nextInt();
-            dsSanPham.suaThongTin(maSanPham);
-        } else if (choice == 3) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập mã sản phẩm muốn xóa: ");
-            int maSanPham = sc.nextInt();
-            dsSanPham.xoaThongTin(maSanPham);
-        } else if (choice == 4) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập mã sản phẩm muốn tìm: ");
-            int maSanPham = sc.nextInt();
-            SanPham sp = dsSanPham.timSanPham(maSanPham);
+        while (true) {
+            try {
+                if (choice == 1) {
+                    dsSanPham.themThongTin();
+                } else if (choice == 2) {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Nhập mã sản phẩm muốn sửa thông tin: ");
+                    int maSanPham = sc.nextInt();
+                    dsSanPham.suaThongTin(maSanPham);
+                } else if (choice == 3) {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Nhập mã sản phẩm muốn xóa: ");
+                    int maSanPham = sc.nextInt();
+                    dsSanPham.xoaThongTin(maSanPham);
+                } else if (choice == 4) {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Nhập mã sản phẩm muốn tìm: ");
+                    int maSanPham = sc.nextInt();
+                    SanPham sp = dsSanPham.timSanPham(maSanPham);
 
-            if (sp != null) {
-                sp.xuatThongTin();
-            } else {
-                System.out.println("Không tồn tại mã sản phẩm này.");
+                    if (sp != null) {
+                        sp.xuatThongTin();
+                    } else {
+                        System.out.println("Không tồn tại mã sản phẩm này.");
+                    }
+                } else if (choice == 5) {
+                    dsSanPham.hienthiSanPham();
+                } else if (choice == 6) {
+                    dsSanPham.docFile();
+                } else if (choice == 7) {
+                    dsSanPham.ghiFile();
+                } else if (choice == 0) {
+                    break;
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                sc.nextLine();
             }
-        } else if (choice == 5) {
-            dsSanPham.hienthiSanPham();
-        } else if (choice == 6) {
-            dsSanPham.docFile();
-        } else if (choice == 7) {
-            dsSanPham.ghiFile();
         }
     }
 
@@ -247,77 +282,88 @@ public class QuanLyNhaHang {
     }
 
     public static void luaChonChucNangHoaDon(int choice) {
-        if (choice == 1) {
-            dsHoaDon.themThongTin();
-        } else if (choice == 2) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập mã hóa đơn muốn xóa: ");
-            int maHoaDon = sc.nextInt();
-            dsHoaDon.xoaThongTin(maHoaDon);
-        } else if (choice == 3) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập mã hóa đơn cần sửa thông tin: ");
-            int maHoaDon = sc.nextInt();
-            dsHoaDon.suaThongTin(maHoaDon);
-        } else if (choice == 4) {
-            dsHoaDon.hienThiDanhSachHoaDon();
-        } else if (choice == 5) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập tháng và năm cần tìm: ");
+        while (true) {
+            try {
 
-            short thang = sc.nextShort();
-            short nam = sc.nextShort();
 
-            ArrayList<HoaDon> dsHoaDonTheoThang = dsHoaDon.timHoaDonTheoThang(thang, nam);
+                if (choice == 1) {
+                    dsHoaDon.themThongTin();
+                } else if (choice == 2) {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Nhập mã hóa đơn muốn xóa: ");
+                    int maHoaDon = sc.nextInt();
+                    dsHoaDon.xoaThongTin(maHoaDon);
+                } else if (choice == 3) {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Nhập mã hóa đơn cần sửa thông tin: ");
+                    int maHoaDon = sc.nextInt();
+                    dsHoaDon.suaThongTin(maHoaDon);
+                } else if (choice == 4) {
+                    dsHoaDon.hienThiDanhSachHoaDon();
+                } else if (choice == 5) {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Nhập tháng và năm cần tìm: ");
 
-            System.out.println("Thông tin danh sách hóa đơn theo tháng: ");
-            for (HoaDon hoaDon : dsHoaDonTheoThang) {
-                hoaDon.xuatThongTin();
+                    short thang = sc.nextShort();
+                    short nam = sc.nextShort();
+
+                    ArrayList<HoaDon> dsHoaDonTheoThang = dsHoaDon.timHoaDonTheoThang(thang, nam);
+
+                    System.out.println("Thông tin danh sách hóa đơn theo tháng: ");
+                    for (HoaDon hoaDon : dsHoaDonTheoThang) {
+                        hoaDon.xuatThongTin();
+                    }
+                } else if (choice == 6) {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Nhập ngày, tháng và năm cần tìm: ");
+
+                    Date ngayCanTim = new Date();
+                    ngayCanTim.nhapDate(sc);
+
+                    ArrayList<HoaDon> dsHoaDonTheoNgay = dsHoaDon.timHoaDonTheoNgay(ngayCanTim);
+
+                    System.out.println("Danh sách hóa đơn theo ngày: ");
+                    for (HoaDon hoaDon : dsHoaDonTheoNgay) {
+                        hoaDon.xuatThongTin();
+                    }
+                } else if (choice == 7) {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.println("Nhập mã hóa đơn cần tìm: ");
+                    int maHoaDon = sc.nextInt();
+                    HoaDon hoaDon = dsHoaDon.timHoaDon(maHoaDon);
+
+                    if (hoaDon != null) {
+                        hoaDon.xuatThongTin();
+                    } else {
+                        System.out.println("Không tồn tại mã hóa đơn này!!!");
+                    }
+                } else if (choice == 8) {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Nhập tháng và năm cần tính: ");
+
+                    short thang = sc.nextShort();
+                    short nam = sc.nextShort();
+
+                    System.out.println("Doanh thu theo tháng " + thang + "/" + nam + ": " + dsHoaDon.tinhDoanhThuTheoThang(thang, nam));
+                } else if (choice == 9) {
+                    Scanner sc = new Scanner(System.in);
+                    System.out.print("Nhập ngày, tháng và năm cần tính: ");
+
+                    Date ngayCanTinh = new Date();
+                    ngayCanTinh.nhapDate(sc);
+
+                    System.out.println("Doanh thu theo " + ngayCanTinh + ": " + dsHoaDon.tinhDoanhThuTheoNgay(ngayCanTinh));
+                } else if (choice == 10) {
+                    dsHoaDon.docFile();
+                } else if (choice == 11) {
+                    dsHoaDon.ghiFile();
+                } else if (choice == 0) {
+                    break;
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                sc.nextLine();
             }
-        } else if (choice == 6) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập ngày, tháng và năm cần tìm: ");
-
-            Date ngayCanTim = new Date();
-            ngayCanTim.nhapDate(sc);
-
-            ArrayList<HoaDon> dsHoaDonTheoNgay = dsHoaDon.timHoaDonTheoNgay(ngayCanTim);
-
-            System.out.println("Danh sách hóa đơn theo ngày: ");
-            for (HoaDon hoaDon : dsHoaDonTheoNgay) {
-                hoaDon.xuatThongTin();
-            }
-        } else if (choice == 7) {
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Nhập mã hóa đơn cần tìm: ");
-            int maHoaDon = sc.nextInt();
-            HoaDon hoaDon = dsHoaDon.timHoaDon(maHoaDon);
-
-            if (hoaDon != null) {
-                hoaDon.xuatThongTin();
-            } else {
-                System.out.println("Không tồn tại mã hóa đơn này!!!");
-            }
-        } else if (choice == 8) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập tháng và năm cần tính: ");
-
-            short thang = sc.nextShort();
-            short nam = sc.nextShort();
-
-            System.out.println("Doanh thu theo tháng " + thang + "/" + nam + ": " + dsHoaDon.tinhDoanhThuTheoThang(thang, nam));
-        } else if (choice == 9) {
-            Scanner sc = new Scanner(System.in);
-            System.out.print("Nhập ngày, tháng và năm cần tính: ");
-
-            Date ngayCanTinh = new Date();
-            ngayCanTinh.nhapDate(sc);
-
-            System.out.println("Doanh thu theo " + ngayCanTinh + ": " + dsHoaDon.tinhDoanhThuTheoNgay(ngayCanTinh));
-        } else if (choice == 10) {
-            dsHoaDon.docFile();
-        } else if (choice == 11) {
-            dsHoaDon.ghiFile();
         }
     }
 
@@ -334,6 +380,7 @@ public class QuanLyNhaHang {
             throw new RuntimeException("Không tồn tại file mật khẩu!!!");
         }
     }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         layMatKhau();
@@ -349,8 +396,7 @@ public class QuanLyNhaHang {
                 if (matKhau.equals(password)) {
                     System.out.println("Đăng nhập thành công!!!");
                     break;
-                }
-                else {
+                } else {
                     attempt--;
                     System.out.printf("Bạn còn %d lần nhập\n", attempt);
                 }
@@ -364,63 +410,97 @@ public class QuanLyNhaHang {
             }
         }
 
-        int choice = 0;
+        int choice = -1;
         do {
             menuChucNangChinh();
             try {
                 System.out.print("Mời nhập lựa chọn: ");
                 choice = sc.nextInt();
                 sc.nextLine();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                sc.nextLine();
+                continue;
             }
+
             if (choice == 1) {
-                int nhanVienChoice;
+                int nhanVienChoice = -1;
                 do {
                     menuChucNangNhanVien();
-                    System.out.print("Mời nhập lựa chọn: ");
-                    nhanVienChoice = sc.nextInt();
-                    sc.nextLine();
+                    try {
+                        System.out.print("Mời nhập lựa chọn: ");
+                        nhanVienChoice = sc.nextInt();
+                        sc.nextLine();
+                    } catch (NumberFormatException | InputMismatchException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                        sc.nextLine();
+                        continue;
+                    }
                     luaChonChucNangNhanVien(nhanVienChoice);
                 } while (nhanVienChoice != 0);
             } else if (choice == 2) {
-                int banAnChoice;
+                int banAnChoice = -1;
                 do {
                     menuChucNangBanAn();
-                    System.out.print("Mời nhập lựa chọn: ");
-                    banAnChoice = sc.nextInt();
-                    sc.nextLine();
+                    try {
+                        System.out.print("Mời nhập lựa chọn: ");
+                        banAnChoice = sc.nextInt();
+                        sc.nextLine();
+                    } catch (NumberFormatException | InputMismatchException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                        sc.nextLine();
+                        continue;
+                    }
                     luaChonChucNangBanAn(banAnChoice);
                 } while (banAnChoice != 0);
-            }  else if (choice == 3) {
-                int datBanChoice;
+            } else if (choice == 3) {
+                int datBanChoice = -1;
                 do {
                     menuChucNangDatBan();
-                    System.out.print("Mời nhập lựa chọn: ");
-                    datBanChoice = sc.nextInt();
+                    try {
+                        System.out.print("Mời nhập lựa chọn: ");
+                        datBanChoice = sc.nextInt();
+                        sc.nextLine();
+                    } catch (NumberFormatException | InputMismatchException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                        sc.nextLine();
+                        continue;
+                    }
                     luaChonChucNangDatBan(datBanChoice);
                 } while (datBanChoice != 0);
             } else if (choice == 4) {
-                int sanPhamChoice;
+                int sanPhamChoice = -1;
                 do {
                     menuChucNangSanPham();
-                    System.out.print("Mời nhập lựa chọn: ");
-                    sanPhamChoice = sc.nextInt();
-                    sc.nextLine();
+                    try {
+                        System.out.print("Mời nhập lựa chọn: ");
+                        sanPhamChoice = sc.nextInt();
+                        sc.nextLine();
+                    } catch (NumberFormatException | InputMismatchException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                        sc.nextLine();
+                        continue;
+                    }
                     luaChonChucNangSanPham(sanPhamChoice);
                 } while (sanPhamChoice != 0);
             } else if (choice == 5) {
-                int hoaDonChoice;
+                int hoaDonChoice = -1;
                 do {
                     menuChucNangHoaDon();
-                    System.out.print("Mời nhập lựa chọn: ");
-                    hoaDonChoice = sc.nextInt();
-                    sc.nextLine();
+                    try {
+                        System.out.print("Mời nhập lựa chọn: ");
+                        hoaDonChoice = sc.nextInt();
+                        sc.nextLine();
+                    } catch (NumberFormatException | InputMismatchException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                        sc.nextLine();
+                        continue;
+                    }
                     luaChonChucNangHoaDon(hoaDonChoice);
                 } while (hoaDonChoice != 0);
             } else if (choice == 6) {
                 doiMatKhau();
             }
-        } while(choice != 0);
+        } while (choice != 0);
     }
 }

@@ -5,7 +5,6 @@ import java.util.Scanner;
 import DateTime.Date;
 import DateTime.Time;
 import Interface_XuLy.INhapXuat;
-import KhachHang.KhachHang;
 import QuanLySanPham.DanhSachSanPham;
 import QuanLySanPham.DoUong;
 import QuanLySanPham.MonAn;

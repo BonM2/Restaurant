@@ -8,10 +8,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DanhSachNhanVien implements IThemSuaXoa {
-    ArrayList<NhanVien> dsNhanVien;
+    private ArrayList<NhanVien> dsNhanVien;
     final String URL_NhanVien = "C:\\Users\\Bao\\IdeaProjects\\Restaurant\\Main\\src\\Data\\ListNhanVien";
 
     public DanhSachNhanVien() {
@@ -34,7 +35,6 @@ public class DanhSachNhanVien implements IThemSuaXoa {
         System.out.println("4. Tiếp tân");
         System.out.println("5. Phục vụ");
         System.out.println("0. Thoát");
-        System.out.println("______________________________________");
     }
 
     // 1. Thêm nhân viên mới
@@ -49,7 +49,6 @@ public class DanhSachNhanVien implements IThemSuaXoa {
             System.out.print("Chọn loại nhân viên muốn thêm (1-5): ");
             choice = sc.nextInt();
             sc.nextLine();
-
             NhanVien nvMoi;
             if (choice == 1) {
                 nvMoi = new DauBep();
@@ -97,7 +96,7 @@ public class DanhSachNhanVien implements IThemSuaXoa {
 
         if (nv != null) {
             dsNhanVien.remove(nv);
-            System.out.printf("Nhân viên có mã số %d đã được xóa", maNhanVien);
+            System.out.printf("Nhân viên có mã số %d đã được xóa\n", maNhanVien);
         } else {
             System.out.println("Không tồn tại mã nhân viên này.");
         }
@@ -107,7 +106,7 @@ public class DanhSachNhanVien implements IThemSuaXoa {
     @Override
     public void suaThongTin(int maNhanVien) {
 
-        try (Scanner sc = new Scanner(System.in)) {
+        try {
             NhanVien nv = timNhanVienTheoMa(maNhanVien);
             if (nv != null) {
                 nv.menuThuocTinh();
@@ -136,10 +135,10 @@ public class DanhSachNhanVien implements IThemSuaXoa {
         DecimalFormat df = new DecimalFormat("#.00");
         int i = 1;
         for (NhanVien nhanVien : dsNhanVien) {
-            System.out.println("STT: " + i + ": ");
+            System.out.print(i + "/ ");
             double salary = nhanVien.tinhLuongThucTe();
             String formatSalary = df.format(salary);
-            System.out.println("Mã nhân viên: " + nhanVien.getMaNhanVien() + "Tên: " + nhanVien.getTenNhanVien() +
+            System.out.println("Mã nhân viên: " + nhanVien.getMaNhanVien() + "| Tên: " + nhanVien.getTenNhanVien() +
                     "| Chức vụ: " + nhanVien.getChucVu() + "| Lương: " + formatSalary);
             i++;
         }
@@ -150,9 +149,10 @@ public class DanhSachNhanVien implements IThemSuaXoa {
         Scanner sc = new Scanner(System.in);
         int choice;
         do {
-            menuLoaiNhanVien();
             System.out.println("6. Xem tất cả.");
-            System.out.println("Chọn loại nhân viên cần xem số lượng (1 - 5) hoặc xem tất cả (6): ");
+            System.out.println("______________________________________");
+            menuLoaiNhanVien();
+            System.out.print("Chọn loại nhân viên cần xem số lượng (1 - 5) hoặc xem tất cả (6): ");
             choice = sc.nextInt();
             sc.nextLine();
 
@@ -180,13 +180,13 @@ public class DanhSachNhanVien implements IThemSuaXoa {
     public void docFile() {
         try {
             dsNhanVien.clear();
-            File inputNhanVien = new File(URL_NhanVien);
+            File input = new File(URL_NhanVien);
 
-            if (!inputNhanVien.exists()) {
-                inputNhanVien.createNewFile();
+            if (!input.exists()) {
+                input.createNewFile();
             }
 
-            Scanner sc = new Scanner(System.in);
+            Scanner sc = new Scanner(input);
             String[] data = new String[1001];
             int n = 0;
 
@@ -197,6 +197,8 @@ public class DanhSachNhanVien implements IThemSuaXoa {
 
             for (int i = 0; i < n; i++) {
                 String[] dataThanhPhan = data[i].split(",");
+
+                int maNhanVien = Integer.parseInt(dataThanhPhan[0]);
                 String tenNhanVien = dataThanhPhan[1];
 
                 String[] sinhNhat = dataThanhPhan[2].split("/");
@@ -208,23 +210,25 @@ public class DanhSachNhanVien implements IThemSuaXoa {
                 String gioiTinh = dataThanhPhan[3];
                 String chucVu = dataThanhPhan[4];
 
-                NhanVien nvMoi = null;
+                NhanVien nvMoi;
                 if (chucVu.equals("QL")) {
-                    nvMoi = new QuanLy(tenNhanVien, ngaySinh, gioiTinh, chucVu);
+                    nvMoi = new QuanLy(maNhanVien, tenNhanVien, ngaySinh, gioiTinh);
                 } else if (chucVu.equals("DB")) {
-                    nvMoi = new DauBep(tenNhanVien, ngaySinh, gioiTinh, chucVu);
+                    nvMoi = new DauBep(maNhanVien, tenNhanVien, ngaySinh, gioiTinh);
                 } else if (chucVu.equals("LC")) {
-                    nvMoi = new LaoCong(tenNhanVien, ngaySinh, gioiTinh, chucVu);
+                    nvMoi = new LaoCong(maNhanVien, tenNhanVien, ngaySinh, gioiTinh);
                 } else if (chucVu.equals("PV")) {
-                    nvMoi = new PhucVu(tenNhanVien, ngaySinh, gioiTinh, chucVu);
+                    nvMoi = new PhucVu(maNhanVien, tenNhanVien, ngaySinh, gioiTinh);
                 } else if (chucVu.equals("TT")) {
-                    nvMoi = new TiepTan(tenNhanVien, ngaySinh, gioiTinh, chucVu);
+                    nvMoi = new TiepTan(maNhanVien, tenNhanVien, ngaySinh, gioiTinh);
+                } else {
+                    nvMoi = null;
                 }
                 dsNhanVien.add(nvMoi);
             }
             System.out.println("Đọc file thành công!!!");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("Đọc file thất bại. Vui lòng xem lại hàm đọc file!!!");
         }
     }
 
@@ -241,13 +245,13 @@ public class DanhSachNhanVien implements IThemSuaXoa {
 
             for (NhanVien nv : dsNhanVien) {
                 if (nv != null)
-                    pw.println(nv);
+                    pw.println(nv.toString());
             }
 
             System.out.println("File đã được cập nhật.");
             pw.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Ghi file thất bại. Vui lòng kiểm tra lại hàm ghi file!!!");
         }
     }
 }

@@ -11,10 +11,19 @@ public class LaoCong extends NhanVien {
 
     public LaoCong() {
         super();
+        chucVu = "LC";
+        soLuong++;
     }
 
-    public LaoCong(String tenNhanVien, Date ngaySinh, String gioiTinh, String chucVu) {
-        super(tenNhanVien, ngaySinh, gioiTinh, chucVu);
+    public LaoCong(String tenNhanVien, Date ngaySinh, String gioiTinh) {
+        super(tenNhanVien, ngaySinh, gioiTinh);
+        chucVu = "LC";
+        soLuong++;
+    }
+
+    public LaoCong(int maNhanVien, String tenNhanVien, Date ngaySinh, String gioiTinh) {
+        super(maNhanVien, tenNhanVien, ngaySinh, gioiTinh);
+        chucVu = "LC";
         soLuong++;
     }
 

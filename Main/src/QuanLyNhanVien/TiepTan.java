@@ -12,10 +12,19 @@ public class TiepTan extends NhanVien{
 
     public TiepTan() {
         super();
+        chucVu = "TT";
+        soLuong++;
     }
 
-    public TiepTan(String tenNhanVien, Date ngaySinh, String gioiTinh, String chucVu) {
-        super(tenNhanVien, ngaySinh, gioiTinh, chucVu);
+    public TiepTan(String tenNhanVien, Date ngaySinh, String gioiTinh) {
+        super(tenNhanVien, ngaySinh, gioiTinh);
+        chucVu = "TT";
+        soLuong++;
+    }
+
+    public TiepTan(int maNhanVien, String tenNhanVien, Date ngaySinh, String gioiTinh) {
+        super(maNhanVien, tenNhanVien, ngaySinh, gioiTinh);
+        chucVu = "TT";
         soLuong++;
     }
 

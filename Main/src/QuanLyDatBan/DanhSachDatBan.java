@@ -113,7 +113,7 @@ public class DanhSachDatBan implements IThemSuaXoa {
                 input.createNewFile();
             }
 
-            Scanner sc = new Scanner(System.in);
+            Scanner sc = new Scanner(input);
             String[] data = new String[1001];
             int n = 0;
 

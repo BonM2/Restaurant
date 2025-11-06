@@ -230,7 +230,7 @@ public class DanhSachHoaDon implements IThemSuaXoa {
                 input.createNewFile();
             }
 
-            Scanner sc = new Scanner(System.in);
+            Scanner sc = new Scanner(input);
             String[] data = new String[1001];
             int n = 0;
 
@@ -259,9 +259,9 @@ public class DanhSachHoaDon implements IThemSuaXoa {
                 Date ngayTao = new Date(ngay, thang, nam);
 
                 String[] time = dataThanhPhan[7].split(":");
-                byte gio = Byte.parseByte(date[0]);
-                byte phut = Byte.parseByte(date[1]);
-                byte giay = Byte.parseByte(date[2]);
+                byte gio = Byte.parseByte(time[0]);
+                byte phut = Byte.parseByte(time[1]);
+                byte giay = Byte.parseByte(time[2]);
 
                 Time thoiGianTao = new Time(gio, phut, giay);
 
@@ -291,15 +291,15 @@ public class DanhSachHoaDon implements IThemSuaXoa {
 
                     chiTietHoaDon.nhapThongTin(sp, soLuong);
 
-                    HoaDon hd = new HoaDon(maBanAn, chiTietHoaDon, tongTien, coVoucher, phieuGiamGia, tenNhanVienTao, thoiGianTao, ngayTao);
-                    dsHoaDon.add(hd);
                 }
 
-                sc.close();
+                HoaDon hd = new HoaDon(maBanAn, chiTietHoaDon, tongTien, coVoucher, phieuGiamGia, tenNhanVienTao, thoiGianTao, ngayTao);
+                dsHoaDon.add(hd);
+
                 System.out.println("Đọc file thành công!" );
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("Lỗi đọc file!!!");
         }
     }
     //9.Ghi File
