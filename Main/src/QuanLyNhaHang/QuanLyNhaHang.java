@@ -1,3 +1,5 @@
+package QuanLyNhaHang;
+
 import DateTime.Date;
 import QuanLyBanAn.DanhSachBanAn;
 import QuanLyDatBan.DanhSachDatBan;
@@ -18,7 +20,7 @@ import java.util.Scanner;
 
 public class QuanLyNhaHang {
     private static String matKhau = "";
-    private static final Scanner sc = new Scanner(System.in);
+    public static Scanner sc = new Scanner(System.in);
     private static final String URL_MatKhau = "C:\\Users\\Bao\\IdeaProjects\\Restaurant\\Main\\src\\Data\\MatKhau";
     private static final String tenCuaHang = "SGU Corner";
     private static final String diaChiCuaHang = "273 An Dương Vương, Phường Chợ Quán, Hồ Chí Minh";
@@ -69,49 +71,62 @@ public class QuanLyNhaHang {
     }
 
     public static void luaChonChucNangNhanVien(int choice) {
-        while (true) {
-            try {
-                if (choice == 1) {
+        try {
+            switch (choice) {
+                case 1:
                     dsNhanVien.themThongTin();
-                } else if (choice == 2) {
+                    break;
+                case 2:
                     System.out.print("Nhập mã nhân viên muốn sửa thông tin: ");
-                    int maNhanVien = sc.nextInt();
+                    int maNhanVienSua = sc.nextInt();
                     sc.nextLine();
-                    dsNhanVien.suaThongTin(maNhanVien);
-                } else if (choice == 3) {
+                    dsNhanVien.suaThongTin(maNhanVienSua);
+                    break;
+                case 3:
                     System.out.print("Nhập mã nhân viên muốn xóa: ");
-                    int maNhanVien = sc.nextInt();
+                    int maNhanVienXoa = sc.nextInt();
                     sc.nextLine();
-                    dsNhanVien.xoaThongTin(maNhanVien);
-                } else if (choice == 4) {
+                    dsNhanVien.xoaThongTin(maNhanVienXoa);
+                    break;
+                case 4:
                     dsNhanVien.hienThiDanhSachNhanVien();
-                } else if (choice == 5) {
+                    break;
+                case 5:
                     dsNhanVien.xuatBangLuongNhanVien();
-                } else if (choice == 6) {
+                    break;
+                case 6:
                     dsNhanVien.inSoLuongNhanVienTheoChucVu();
-                } else if (choice == 7) {
+                    break;
+                case 7:
                     System.out.print("Nhập mã nhân viên muốn tìm: ");
-                    int maNhanVien = sc.nextInt();
-                    NhanVien nv = dsNhanVien.timNhanVienTheoMa(maNhanVien);
+                    int maNhanVienTim = sc.nextInt();
+                    sc.nextLine();
+
+                    NhanVien nv = dsNhanVien.timNhanVienTheoMa(maNhanVienTim);
 
                     if (nv != null) {
                         nv.xuatThongTin();
                     } else {
                         System.out.println("Không tồn tại mã số nhân viên này!!!");
                     }
-                } else if (choice == 8) {
-                    dsNhanVien.docFile();
-                } else if (choice == 9) {
-                    dsNhanVien.ghiFile();
-                } else if (choice == 0) {
                     break;
-                }
-            } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
-                sc.nextLine();
+                case 8:
+                    dsNhanVien.docFile();
+                    break;
+                case 9:
+                    dsNhanVien.ghiFile();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Lỗi: Chỉ nhập từ 0 đến 9!");
             }
+        } catch (NumberFormatException | InputMismatchException e) {
+            System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+            sc.nextLine();
         }
     }
+
 
     public static void menuChucNangBanAn() {
         System.out.println("----------Quản lý bàn ăn---------");
@@ -122,40 +137,53 @@ public class QuanLyNhaHang {
         System.out.println("5/ Hiển thị số lượng bàn ăn trống");
         System.out.println("6/ Đọc file");
         System.out.println("7/ Ghi file");
+        System.out.println("8/ Hiển thị số lượng bàn ăn hiện tại");
         System.out.println("0/ Thoát");
     }
 
     public static void luaChonChucNangBanAn(int choice) {
-        while (true) {
-            try {
-                if (choice == 1) {
+        try {
+            switch (choice) {
+                case 1:
                     dsBanAn.themThongTin();
-                } else if (choice == 2) {
+                    break;
+                case 2:
                     System.out.print("Nhập mã bàn ăn cần sửa: ");
-                    int maBanAn = sc.nextInt();
-                    dsBanAn.suaThongTin(maBanAn);
-                } else if (choice == 3) {
+                    int maBanAnSua = sc.nextInt();
+                    sc.nextLine();
+                    dsBanAn.suaThongTin(maBanAnSua);
+                    break;
+                case 3:
                     System.out.print("Nhập mã bàn ăn cần xóa: ");
-                    int maBanAn = sc.nextInt();
-                    dsBanAn.xoaThongTin(maBanAn);
-                } else if (choice == 4) {
+                    int maBanAnXoa = sc.nextInt();
+                    sc.nextLine();
+                    dsBanAn.xoaThongTin(maBanAnXoa);
+                    break;
+                case 4:
                     dsBanAn.hienThiDanhSachBanAn();
-                } else if (choice == 5) {
+                    break;
+                case 5:
                     int soLuongBanTrong = dsBanAn.soLuongBanTrong();
                     System.out.println("Số lượng bàn ăn trống: " + soLuongBanTrong);
-                } else if (choice == 6) {
-                    dsBanAn.docFile();
-                } else if (choice == 7) {
-                    dsBanAn.ghiFile();
-                } else if (choice == 0) {
                     break;
-                }
-            } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
-                sc.nextLine();
+                case 6:
+                    dsBanAn.docFile();
+                    break;
+                case 7:
+                    dsBanAn.ghiFile();
+                    break;
+                case 8:
+                    dsBanAn.hienThiSoLuongBanAnHienTai();
+                    break;
+                case 0:
+                    break;
             }
+        } catch (NumberFormatException | InputMismatchException e) {
+            System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+            sc.nextLine();
         }
     }
+
 
     public static void menuChucNangDatBan() {
         System.out.println("----------Quản lý đặt bàn----------");
@@ -170,46 +198,56 @@ public class QuanLyNhaHang {
     }
 
     public static void luaChonChucNangDatBan(int choice) {
-        while (true) {
-            try {
-                if (choice == 1) {
+        try {
+            switch (choice) {
+                case 1:
                     dsDatBan.themThongTin();
-                } else if (choice == 2) {
-                    Scanner sc = new Scanner(System.in);
+                    break;
+                case 2:
                     System.out.print("Nhập mã đặt bàn muốn xóa: ");
-                    int maDatBan = sc.nextInt();
-                    dsDatBan.xoaThongTin(maDatBan);
-                } else if (choice == 3) {
-                    Scanner sc = new Scanner(System.in);
+                    int maDatBanXoa = sc.nextInt();
+                    sc.nextLine();
+                    dsDatBan.xoaThongTin(maDatBanXoa);
+                    break;
+                case 3:
                     System.out.print("Nhập mã đặt bàn để sửa thông tin: ");
-                    int maDatBan = sc.nextInt();
-                    dsDatBan.suaThongTin(maDatBan);
-                } else if (choice == 4) {
+                    int maDatBanSua = sc.nextInt();
+                    sc.nextLine();
+                    dsDatBan.suaThongTin(maDatBanSua);
+                    break;
+                case 4:
                     dsDatBan.hienThiDanhSachDatBan();
-                } else if (choice == 5) {
-                    Scanner sc = new Scanner(System.in);
+                    break;
+                case 5:
                     System.out.print("Nhập mã đặt bàn muốn tìm: ");
-                    int maDatBan = sc.nextInt();
-                    DatBan datBan = dsDatBan.timThongTinDatBan(maDatBan);
+                    int maDatBanTim = sc.nextInt();
+                    sc.nextLine();
+                    DatBan datBan = dsDatBan.timThongTinDatBan(maDatBanTim);
 
                     if (datBan != null) {
                         datBan.xuatThongTin();
                     } else {
                         System.out.println("Không tồn tại mã đặt bàn này!!!");
                     }
-                } else if (choice == 6) {
-                    dsDatBan.docFile();
-                } else if (choice == 7) {
-                    dsDatBan.ghiFile();
-                } else if (choice == 0) {
+
                     break;
-                }
-            } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
-                sc.nextLine();
+                case 6:
+                    dsDatBan.docFile();
+                    break;
+                case 7:
+                    dsDatBan.ghiFile();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Lỗi: Chỉ nhập từ 0 đến 7!");
             }
+        } catch (NumberFormatException | InputMismatchException e) {
+            System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+            sc.nextLine();
         }
     }
+
 
     public static void menuChucNangSanPham() {
         System.out.println("---------Quản lý sản phẩm----------");
@@ -224,46 +262,54 @@ public class QuanLyNhaHang {
     }
 
     public static void luaChonChucNangSanPham(int choice) {
-        while (true) {
-            try {
-                if (choice == 1) {
+        try {
+            switch (choice) {
+                case 1:
                     dsSanPham.themThongTin();
-                } else if (choice == 2) {
-                    Scanner sc = new Scanner(System.in);
+                    break;
+                case 2:
                     System.out.print("Nhập mã sản phẩm muốn sửa thông tin: ");
-                    int maSanPham = sc.nextInt();
-                    dsSanPham.suaThongTin(maSanPham);
-                } else if (choice == 3) {
-                    Scanner sc = new Scanner(System.in);
+                    int maSanPhamSua = sc.nextInt();
+                    sc.nextLine();
+                    dsSanPham.suaThongTin(maSanPhamSua);
+                    break;
+                case 3:
                     System.out.print("Nhập mã sản phẩm muốn xóa: ");
-                    int maSanPham = sc.nextInt();
-                    dsSanPham.xoaThongTin(maSanPham);
-                } else if (choice == 4) {
-                    Scanner sc = new Scanner(System.in);
+                    int maSanPhamXoa = sc.nextInt();
+                    sc.nextLine();
+                    dsSanPham.xoaThongTin(maSanPhamXoa);
+                    break;
+                case 4:
                     System.out.print("Nhập mã sản phẩm muốn tìm: ");
-                    int maSanPham = sc.nextInt();
-                    SanPham sp = dsSanPham.timSanPham(maSanPham);
-
+                    int maSanPhamTim = sc.nextInt();
+                    sc.nextLine();
+                    SanPham sp = dsSanPham.timSanPham(maSanPhamTim);
                     if (sp != null) {
                         sp.xuatThongTin();
                     } else {
                         System.out.println("Không tồn tại mã sản phẩm này.");
                     }
-                } else if (choice == 5) {
-                    dsSanPham.hienthiSanPham();
-                } else if (choice == 6) {
-                    dsSanPham.docFile();
-                } else if (choice == 7) {
-                    dsSanPham.ghiFile();
-                } else if (choice == 0) {
                     break;
-                }
-            } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
-                sc.nextLine();
+                case 5:
+                    dsSanPham.hienthiSanPham();
+                    break;
+                case 6:
+                    dsSanPham.docFile();
+                    break;
+                case 7:
+                    dsSanPham.ghiFile();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Lỗi: Chỉ nhập từ 0 đến 7!");
             }
+        } catch (NumberFormatException | InputMismatchException e) {
+            System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+            sc.nextLine();
         }
     }
+
 
     public static void menuChucNangHoaDon() {
         System.out.println("---------Quản lý hóa đơn----------");
@@ -282,90 +328,96 @@ public class QuanLyNhaHang {
     }
 
     public static void luaChonChucNangHoaDon(int choice) {
-        while (true) {
-            try {
-
-
-                if (choice == 1) {
+        try {
+            switch (choice) {
+                case 1:
                     dsHoaDon.themThongTin();
-                } else if (choice == 2) {
-                    Scanner sc = new Scanner(System.in);
+                    break;
+                case 2:
                     System.out.print("Nhập mã hóa đơn muốn xóa: ");
-                    int maHoaDon = sc.nextInt();
-                    dsHoaDon.xoaThongTin(maHoaDon);
-                } else if (choice == 3) {
-                    Scanner sc = new Scanner(System.in);
+                    int maHoaDonXoa = sc.nextInt();
+                    sc.nextLine();
+                    dsHoaDon.xoaThongTin(maHoaDonXoa);
+                    break;
+                case 3:
                     System.out.print("Nhập mã hóa đơn cần sửa thông tin: ");
-                    int maHoaDon = sc.nextInt();
-                    dsHoaDon.suaThongTin(maHoaDon);
-                } else if (choice == 4) {
+                    int maHoaDonSua = sc.nextInt();
+                    sc.nextLine();
+                    dsHoaDon.suaThongTin(maHoaDonSua);
+                    break;
+                case 4:
                     dsHoaDon.hienThiDanhSachHoaDon();
-                } else if (choice == 5) {
-                    Scanner sc = new Scanner(System.in);
+                    break;
+                case 5:
                     System.out.print("Nhập tháng và năm cần tìm: ");
-
-                    short thang = sc.nextShort();
-                    short nam = sc.nextShort();
-
-                    ArrayList<HoaDon> dsHoaDonTheoThang = dsHoaDon.timHoaDonTheoThang(thang, nam);
-
+                    short thangTim = sc.nextShort();
+                    short namTim = sc.nextShort();
+                    sc.nextLine();
+                    ArrayList<HoaDon> dsHoaDonTheoThang = dsHoaDon.timHoaDonTheoThang(thangTim, namTim);
                     System.out.println("Thông tin danh sách hóa đơn theo tháng: ");
-                    for (HoaDon hoaDon : dsHoaDonTheoThang) {
-                        hoaDon.xuatThongTin();
-                    }
-                } else if (choice == 6) {
-                    Scanner sc = new Scanner(System.in);
-                    System.out.print("Nhập ngày, tháng và năm cần tìm: ");
 
+                    for (HoaDon hd : dsHoaDonTheoThang) {
+                        if (hd != null) {
+                            hd.xuatThongTin();
+                        }
+                    }
+                    break;
+                case 6:
+                    System.out.print("Nhập ngày, tháng và năm cần tìm: ");
                     Date ngayCanTim = new Date();
                     ngayCanTim.nhapDate(sc);
-
                     ArrayList<HoaDon> dsHoaDonTheoNgay = dsHoaDon.timHoaDonTheoNgay(ngayCanTim);
 
                     System.out.println("Danh sách hóa đơn theo ngày: ");
-                    for (HoaDon hoaDon : dsHoaDonTheoNgay) {
-                        hoaDon.xuatThongTin();
+                    for (HoaDon hd : dsHoaDonTheoNgay) {
+                        if (hd != null) {
+                            hd.xuatThongTin();
+                        }
                     }
-                } else if (choice == 7) {
-                    Scanner sc = new Scanner(System.in);
-                    System.out.println("Nhập mã hóa đơn cần tìm: ");
-                    int maHoaDon = sc.nextInt();
-                    HoaDon hoaDon = dsHoaDon.timHoaDon(maHoaDon);
-
+                    break;
+                case 7:
+                    System.out.print("Nhập mã hóa đơn cần tìm: ");
+                    int maHoaDonTim = sc.nextInt();
+                    sc.nextLine();
+                    HoaDon hoaDon = dsHoaDon.timHoaDon(maHoaDonTim);
                     if (hoaDon != null) {
                         hoaDon.xuatThongTin();
                     } else {
                         System.out.println("Không tồn tại mã hóa đơn này!!!");
                     }
-                } else if (choice == 8) {
-                    Scanner sc = new Scanner(System.in);
+                    break;
+                case 8:
                     System.out.print("Nhập tháng và năm cần tính: ");
-
-                    short thang = sc.nextShort();
-                    short nam = sc.nextShort();
-
-                    System.out.println("Doanh thu theo tháng " + thang + "/" + nam + ": " + dsHoaDon.tinhDoanhThuTheoThang(thang, nam));
-                } else if (choice == 9) {
-                    Scanner sc = new Scanner(System.in);
+                    short thangTinh = sc.nextShort();
+                    short namTinh = sc.nextShort();
+                    sc.nextLine();
+                    System.out.println("Doanh thu theo tháng " + thangTinh + "/" + namTinh + ": " +
+                            dsHoaDon.tinhDoanhThuTheoThang(thangTinh, namTinh));
+                    break;
+                case 9:
                     System.out.print("Nhập ngày, tháng và năm cần tính: ");
-
                     Date ngayCanTinh = new Date();
                     ngayCanTinh.nhapDate(sc);
-
-                    System.out.println("Doanh thu theo " + ngayCanTinh + ": " + dsHoaDon.tinhDoanhThuTheoNgay(ngayCanTinh));
-                } else if (choice == 10) {
-                    dsHoaDon.docFile();
-                } else if (choice == 11) {
-                    dsHoaDon.ghiFile();
-                } else if (choice == 0) {
+                    System.out.println("Doanh thu theo " + ngayCanTinh + ": " +
+                            dsHoaDon.tinhDoanhThuTheoNgay(ngayCanTinh));
                     break;
-                }
-            } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
-                sc.nextLine();
+                case 10:
+                    dsHoaDon.docFile();
+                    break;
+                case 11:
+                    dsHoaDon.ghiFile();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("Lỗi: Chỉ nhập từ 0 đến 11!");
             }
+        } catch (NumberFormatException | InputMismatchException e) {
+            System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+            sc.nextLine();
         }
     }
+
 
     public static void layMatKhau() {
         try (Scanner sc = new Scanner(new File(URL_MatKhau))) {
@@ -502,5 +554,9 @@ public class QuanLyNhaHang {
                 doiMatKhau();
             }
         } while (choice != 0);
+    }
+
+    public static Scanner getSc() {
+        return sc;
     }
 }

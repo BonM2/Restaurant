@@ -1,14 +1,14 @@
 package QuanLyBanAn;
 
 import Interface_XuLy.INhapXuat;
-import QuanLyNhanVien.NhanVien;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BanAn implements INhapXuat {
     private static int count = 0;
     private int maBan;
-    private byte soLuongChoNgoi;
+    private int soLuongChoNgoi;
     private boolean trangThai;
 
     public BanAn() {
@@ -18,7 +18,7 @@ public class BanAn implements INhapXuat {
         trangThai = false;
     }
 
-    public BanAn(byte soLuongChoNgoi, boolean trangThai) {
+    public BanAn(int soLuongChoNgoi, boolean trangThai) {
         BanAn.count++;
         maBan = BanAn.count;
         this.soLuongChoNgoi = soLuongChoNgoi;
@@ -39,11 +39,11 @@ public class BanAn implements INhapXuat {
         return maBan;
     }
 
-    public byte getSoLuongChoNgoi() {
+    public int getSoLuongChoNgoi() {
         return soLuongChoNgoi;
     }
 
-    public void setSoLuongChoNgoi(byte soLuongChoNgoi) {
+    public void setSoLuongChoNgoi(int soLuongChoNgoi) {
         this.soLuongChoNgoi = soLuongChoNgoi;
     }
 
@@ -57,11 +57,35 @@ public class BanAn implements INhapXuat {
 
     @Override
     public void nhapThongTin(Scanner sc) {
-        System.out.print("Nhập số lượng chỗ ngồi: ");
-        soLuongChoNgoi = sc.nextByte();
-        System.out.print("Nhập trạng thái của bàn ăn: (1. Đã đặt/ 0. Trống): ");
-        trangThai = (sc.nextInt() == 1);
+
+        // Nhập số lượng chỗ ngồi
+        while (true) {
+            try {
+                System.out.print("Nhập số lượng chỗ ngồi: ");
+                soLuongChoNgoi = Integer.parseInt(sc.nextLine());
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+            }
+        }
+
+        // Nhập trạng thái bàn ăn
+        while (true) {
+            System.out.print("Nhập trạng thái của bàn ăn (1. Đã đặt / 0. Trống): ");
+            String input = sc.nextLine();
+
+            if (input.equals("1")) {
+                trangThai = true;
+                break;
+            } else if (input.equals("0")) {
+                trangThai = false;
+                break;
+            } else {
+                System.out.println("Lỗi: Chỉ nhập 1 hoặc 0. Nhập lại!");
+            }
+        }
     }
+
 
     @Override
     public void xuatThongTin() {
@@ -90,14 +114,31 @@ public class BanAn implements INhapXuat {
             sc.nextLine();
 
             if (choice == 1) {
-                System.out.print("Mời nhập số lượng chỗ ngồi mới của bàn ăn: ");
-                byte new_SoLuong = sc.nextByte();
-                sc.nextLine();
-                setSoLuongChoNgoi(new_SoLuong);
+                while (true) {
+                    try {
+                        System.out.print("Nhập số lượng chỗ ngồi mới: ");
+                        int new_SoLuong = Integer.parseInt(sc.nextLine());
+                        setSoLuongChoNgoi(new_SoLuong);
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                    }
+                }
             } else if (choice == 2) {
-                System.out.print("Mời nhập trạng thái của bàn ăn: (1. Đã đặt/ 0. Trống): ");
-                boolean new_TrangThai = (sc.nextInt() == 1);;
-                setTrangThai(new_TrangThai);
+                while (true) {
+                    System.out.print("Nhập trạng thái của bàn ăn (1. Đã đặt / 0. Trống): ");
+                    String input = sc.nextLine();
+
+                    if (input.equals("1")) {
+                        setTrangThai(true);
+                        break;
+                    } else if (input.equals("0")) {
+                        setTrangThai(false);
+                        break;
+                    } else {
+                        System.out.println("Lỗi: Chỉ nhập 1 hoặc 0. Nhập lại!");
+                    }
+                }
             }
         } while (choice != 0);
     }

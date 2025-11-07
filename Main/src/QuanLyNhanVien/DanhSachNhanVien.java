@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DanhSachNhanVien implements IThemSuaXoa {
@@ -149,7 +148,6 @@ public class DanhSachNhanVien implements IThemSuaXoa {
         Scanner sc = new Scanner(System.in);
         int choice;
         do {
-            System.out.println("6. Xem tất cả.");
             System.out.println("______________________________________");
             menuLoaiNhanVien();
             System.out.print("Chọn loại nhân viên cần xem số lượng (1 - 5) hoặc xem tất cả (6): ");

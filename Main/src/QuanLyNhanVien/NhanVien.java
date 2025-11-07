@@ -15,6 +15,7 @@ public abstract class NhanVien implements INhapXuat {
     protected Date ngaySinh;
     protected String gioiTinh;
     protected String chucVu;
+
     public NhanVien() {
         ++NhanVien.count;
         this.maNhanVien = NhanVien.count;
@@ -54,8 +55,17 @@ public abstract class NhanVien implements INhapXuat {
         System.out.print("Nhập ngày sinh nhân viên: ");
         ngaySinh.nhapDate(sc);
         sc.nextLine();
-        System.out.print("Nhập giới tính nhân viên (F/ M): ");
-        this.gioiTinh = sc.nextLine();
+
+        while (true) {
+            System.out.print("Nhập giới tính nhân viên (F/ M): ");
+            this.gioiTinh = sc.nextLine();
+
+            if (gioiTinh.equals("F") || gioiTinh.equals("M")) {
+                break;
+            } else {
+                System.out.println("Lỗi: Chỉ nhập F hoặc M. Nhập lại!");
+            }
+        }
     }
 
     // Hàm xuất thông tin của nhân viên
@@ -97,9 +107,17 @@ public abstract class NhanVien implements INhapXuat {
                 String hoTen = sc.nextLine();
                 setTenNhanVien(hoTen);
             } else if (choice == 2) {
-                System.out.print("Nhập giới tính mới (F/ M): ");
-                String gioiTinh = sc.nextLine();
-                setGioiTinh(gioiTinh);
+                while (true) {
+                    System.out.print("Nhập giới tính mới (F/ M): ");
+                    String new_gioiTinh = sc.nextLine();
+
+                    if (new_gioiTinh.equals("F") || new_gioiTinh.equals("M")) {
+                        setGioiTinh(new_gioiTinh);
+                        break;
+                    } else {
+                        System.out.println("Lỗi: Chỉ nhập F hoặc M. Nhập lại!");
+                    }
+                }
             } else if (choice == 3) {
                 System.out.print("Nhập ngày sinh mới: ");
                 Date ngaySinh = new Date();
@@ -112,18 +130,23 @@ public abstract class NhanVien implements INhapXuat {
     public int getMaNhanVien() {
         return maNhanVien;
     }
+
     public String getTenNhanVien() {
         return tenNhanVien;
     }
+
     public void setTenNhanVien(String tenNhanVien) {
         this.tenNhanVien = tenNhanVien;
     }
+
     public void setGioiTinh(String gioiTinh) {
         this.gioiTinh = gioiTinh;
     }
+
     public void setNgaySinh(Date ngaySinh) {
         this.ngaySinh = ngaySinh;
     }
+
     public String getChucVu() {
         return chucVu;
     }

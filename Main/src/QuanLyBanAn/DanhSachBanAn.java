@@ -1,7 +1,6 @@
 package QuanLyBanAn;
-
 import Interface_XuLy.IThemSuaXoa;
-import QuanLyNhanVien.NhanVien;
+import QuanLyNhaHang.QuanLyNhaHang;
 
 import java.util.*;
 import java.io.*;
@@ -9,19 +8,6 @@ import java.io.*;
 public class DanhSachBanAn implements IThemSuaXoa {
     private ArrayList<BanAn> dsBanAn;
     private String URL = "C:\\Users\\Bao\\IdeaProjects\\Restaurant\\Main\\src\\Data\\ListBanAn";
-    private static int soLuongBanAn = 20;
-
-    public ArrayList<BanAn> getDsBanAn() {
-        return dsBanAn;
-    }
-
-    public void setDsBanAn(ArrayList<BanAn> dsBanAn) {
-        this.dsBanAn = dsBanAn;
-    }
-
-    public static void setSoLuongBanAn(int soLuongBanAn) {
-        DanhSachBanAn.soLuongBanAn = soLuongBanAn;
-    }
 
     public DanhSachBanAn() {
         dsBanAn = new ArrayList<>();
@@ -47,14 +33,8 @@ public class DanhSachBanAn implements IThemSuaXoa {
         return null;
     }
 
-    public void capNhatTrangThai(int maBan, boolean trangThai) {
-        BanAn b = timBanAn(maBan);
-
-        if (b != null) {
-            b.setTrangThai(trangThai);
-            System.out.println("Đã cập nhật trạng thái bàn ăn!");
-        } else
-            System.out.println("Không tìm thấy bàn ăn!");
+    public void hienThiSoLuongBanAnHienTai() {
+        System.out.println("Số lượng bàn ăn hiện tại: " + dsBanAn.size());
     }
 
     public void hienThiDanhSachBanAn() {
@@ -82,14 +62,11 @@ public class DanhSachBanAn implements IThemSuaXoa {
 
     @Override
     public void themThongTin() {
-        Scanner sc = new Scanner(System.in);
 
         BanAn banAn = new BanAn();
-        banAn.nhapThongTin(sc);
+        banAn.nhapThongTin(QuanLyNhaHang.sc);
 
         dsBanAn.add(banAn);
-
-        soLuongBanAn++;
 
         System.out.println("Thêm bàn ăn thành công!!!");
     }
