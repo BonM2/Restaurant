@@ -1,7 +1,6 @@
 package QuanLySanPham;
 
 import Interface_XuLy.IThemSuaXoa;
-import QuanLyNhanVien.NhanVien;
 
 import java.util.*;
 import java.io.*;
@@ -33,10 +32,10 @@ public class DanhSachSanPham implements IThemSuaXoa {
 
         do {
             menuLoaiSanPham();
-            System.out.println("Chọn loại sản phẩm muốn thêm (1-2): ");
-            choice = sc.nextInt();
+            System.out.print("Chọn loại sản phẩm muốn thêm (1-2): ");
+            choice = sc.nextInt();sc.nextLine();
 
-            SanPham sanPham = null;
+            SanPham sanPham;
             if (choice == 1) {
                 sanPham = new MonAn();
                 sanPham.nhapThongTin(sc);
@@ -48,20 +47,16 @@ public class DanhSachSanPham implements IThemSuaXoa {
                 dsSanPham.add(sanPham);
                 System.out.println("Thêm đồ uống thành công!!!");
             }
-        } while(choice != 0);
+        } while (choice != 0);
     }
 
     //2.xoa Mon An
     public void xoaThongTin(int ma) {
         SanPham sp = timSanPham(ma);
         if (sp != null) {
-            for (SanPham sanPham : dsSanPham) {
-                dsSanPham.remove(sanPham);
-                System.out.println("Xóa sản phẩm với mã: " + ma + " thành công!!!");
-                return;
-            }
-        }
-        else {
+            dsSanPham.remove(sp);
+            System.out.println("Xóa sản phẩm với mã: " + ma + " thành công!!!");
+        } else {
             System.out.println("Không tìm thấy mã sản phẩm này!!!");
         }
     }
@@ -87,7 +82,7 @@ public class DanhSachSanPham implements IThemSuaXoa {
 
     //5.sua Thong tin mon an
     public void suaThongTin(int maSanPham) {
-        try (Scanner sc = new Scanner(System.in)) {
+        try {
             SanPham sp = timSanPham(maSanPham);
             if (sp != null) {
                 sp.menuThuocTinh();
@@ -110,7 +105,7 @@ public class DanhSachSanPham implements IThemSuaXoa {
                 input.createNewFile();
             }
 
-            Scanner sc = new Scanner(System.in);
+            Scanner sc = new Scanner(input);
             String[] data = new String[1001];
             int n = 0;
 
@@ -121,6 +116,7 @@ public class DanhSachSanPham implements IThemSuaXoa {
 
             for (int i = 0; i < n; i++) {
                 String[] dataThanhPhan = data[i].split(",");
+                int maSanPham = Integer.parseInt(dataThanhPhan[0]);
                 String tenSanPham = dataThanhPhan[1];
                 double giaSanPham = Double.parseDouble(dataThanhPhan[2]);
                 String loaiSanPham = dataThanhPhan[3];
@@ -128,10 +124,10 @@ public class DanhSachSanPham implements IThemSuaXoa {
                 SanPham new_sanPham = null;
                 if ("MON_AN".equalsIgnoreCase(loaiSanPham)) {
                     String viMonAn = dataThanhPhan[4];
-                    new_sanPham = new MonAn(tenSanPham, giaSanPham, viMonAn);
+                    new_sanPham = new MonAn(maSanPham,tenSanPham, giaSanPham, viMonAn);
                 } else if ("DO_UONG".equalsIgnoreCase(loaiSanPham)) {
                     int dungTich = Integer.parseInt(dataThanhPhan[4]);
-                    new_sanPham = new DoUong(tenSanPham, giaSanPham, dungTich);
+                    new_sanPham = new DoUong(maSanPham,tenSanPham, giaSanPham, dungTich);
                 }
                 dsSanPham.add(new_sanPham);
             }

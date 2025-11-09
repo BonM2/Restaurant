@@ -16,7 +16,7 @@ public class Time {
 
     @Override
     public String toString() {
-        return String.format("%02d:%02d:%02d\n", this.gio, this.phut, this.giay);
+        return String.format("%02d:%02d:%02d", this.gio, this.phut, this.giay);
     }
 
     public void nhapTime(Scanner sc) {
@@ -25,7 +25,7 @@ public class Time {
         while (!valid) {
             try {
                 // Nhập giờ
-                System.out.print("Nhập giờ: ");
+                System.out.print("\nNhập giờ: ");
                 this.gio = sc.nextByte();
 
                 // Kiểm tra giờ có hợp lệ không
@@ -58,17 +58,5 @@ public class Time {
                 sc.nextLine();
             }
         }
-    }
-
-    public byte getGio() {
-        return gio;
-    }
-
-    public byte getPhut() {
-        return phut;
-    }
-
-    public byte getGiay() {
-        return giay;
     }
 }

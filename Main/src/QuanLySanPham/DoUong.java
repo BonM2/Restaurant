@@ -2,6 +2,7 @@ package QuanLySanPham;
 
 import Interface_XuLy.INhapXuat;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DoUong extends SanPham implements INhapXuat {
@@ -12,14 +13,16 @@ public class DoUong extends SanPham implements INhapXuat {
         dungTich = 0;
     }
 
-    public DoUong(String tenSanPham, double giaSanPham, int dungTich) {
-        super(tenSanPham, giaSanPham);
+    public DoUong(String ten, double gia, int dungTich) {
+        super(ten, gia);
         this.loaiSanPham = "DO_UONG";
         this.dungTich = dungTich;
     }
 
-    public int getDungTich() {
-        return dungTich;
+    public DoUong(int ma, String ten, double gia, int dungTich) {
+        super(ma, ten, gia);
+        this.loaiSanPham = "DO_UONG";
+        this.dungTich = dungTich;
     }
 
     public void setDungTich(int dungTich) {
@@ -33,14 +36,27 @@ public class DoUong extends SanPham implements INhapXuat {
     public void nhapThongTin(Scanner sc) {
         super.nhapThongTin(sc);
         this.loaiSanPham = "DO_UONG";
-        System.out.println("Nhập dung tích (ml): ");
-        dungTich = sc.nextInt();
+
+        while (true) {
+            try {
+                System.out.print("Nhập dung tích (ml): ");
+                dungTich = sc.nextInt();
+
+                if (dungTich < 0) {
+                    System.out.println("Dung tích phải là số dương!!!");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+            }
+        }
     }
 
     @Override
     public void xuatThongTin() {
         super.xuatThongTin();
-        System.out.println("| Dung tích của đồ uống là: " + dungTich);
+        System.out.println("| Dung tích của đồ uống là (ml): " + dungTich);
     }
 
     @Override
@@ -62,17 +78,49 @@ public class DoUong extends SanPham implements INhapXuat {
 
             if (choice == 1) {
                 System.out.print("Nhập tên mới của đồ uống: ");
-                String tenSP = sc.nextLine();
-                setTenSanPham(tenSP);
+                tenSanPham = sc.nextLine();
+                setTenSanPham(tenSanPham);
             } else if (choice == 2) {
                 System.out.print("Nhập giá mới của đồ uống: ");
-                double giaSP = sc.nextDouble();
-                setGiaSanPham(giaSP);
+                while(true) {
+
+                    try {
+                        System.out.print("Nhập giá sản phẩm: ");
+                        giaSanPham = sc.nextDouble();
+                        sc.nextLine();
+
+                        if (giaSanPham < 0) {
+                            System.out.println("Giá sản phẩm phải là số dương!!!");
+                        } else {
+                            setGiaSanPham(giaSanPham);
+                            break;
+                        }
+                    } catch (NumberFormatException | InputMismatchException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                    }
+                }
             } else if (choice == 3) {
-                System.out.print("Nhập dung tích mới của đồ uống: ");
-                int dungTich = sc.nextInt();
-                setDungTich(dungTich);
+                while (true) {
+                    try {
+                        System.out.print("Nhập dung tích (ml): ");
+                        dungTich = sc.nextInt();
+
+                        if (dungTich < 0) {
+                            System.out.println("Dung tích phải là số dương!!!");
+                        } else {
+                            setDungTich(dungTich);
+                            break;
+                        }
+                    } catch (NumberFormatException | InputMismatchException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                    }
+                }
             }
         } while (choice != 0);
+    }
+
+    @Override
+    public String toString() {
+        return maSanPham + "," + tenSanPham + "," + giaSanPham + "," + loaiSanPham + "," + dungTich;
     }
 }

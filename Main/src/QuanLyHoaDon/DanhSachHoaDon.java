@@ -4,6 +4,7 @@ import DateTime.Date;
 import DateTime.Time;
 import Interface_XuLy.IThemSuaXoa;
 
+import QuanLyNhaHang.QuanLyNhaHang;
 import QuanLySanPham.DanhSachSanPham;
 import QuanLySanPham.DoUong;
 import QuanLySanPham.MonAn;
@@ -31,87 +32,12 @@ public class DanhSachHoaDon implements IThemSuaXoa {
         return dsHoaDon;
     }
 
-    public void setDsHoaDon(ArrayList<HoaDon> dsHoaDon) {
-        this.dsHoaDon = dsHoaDon;
-    }
-
     //1.Thêm hóa đơn
     public void themThongTin() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Tạo thông tin hóa đơn mới.");
 
-        System.out.println("Nhập mã bàn ăn: ");
-        int maBan = sc.nextInt();
+        HoaDon hoaDon = new HoaDon();
+        hoaDon.nhapThongTin(QuanLyNhaHang.sc);
 
-        sc.nextLine();
-
-        System.out.println("Nhập tên nhân viên tạo hóa đơn: ");
-        String tenNhanVienTao = sc.nextLine();
-
-        System.out.println("Nhập tình trạng voucher (1 = có / 0 = không): ");
-        int isTrue = sc.nextInt();
-        boolean coVoucher = (isTrue == 1);
-
-        int phieuGiamGia = 0;
-        if (coVoucher) {
-            System.out.println("Nhập ưu đãi được giảm giá từ voucher (%): ");
-            phieuGiamGia = sc.nextInt();
-
-            sc.nextLine();
-        } else {
-            System.out.println("Bạn không có mã giảm giá !");
-        }
-
-        ChiTietHoaDon chiTietHoaDon = new ChiTietHoaDon();
-
-        while (true) {
-
-            System.out.println("-----------------------");
-            System.out.println("1. Món ăn.");
-            System.out.println("2. Đồ uống.");
-            System.out.println("0. Thoát.");
-            System.out.println("-----------------------");
-            int choice = sc.nextInt();
-
-            DanhSachSanPham danhSachSanPham = new DanhSachSanPham();
-            danhSachSanPham.hienthiSanPham();
-
-            if (choice == 1) {
-                SanPham sanPham = new MonAn();
-                sanPham.nhapThongTin(sc);
-
-                System.out.print("Mời nhập số lượng món ăn: ");
-                int soLuong = sc.nextInt();
-
-                chiTietHoaDon.nhapThongTin(sanPham, soLuong);
-            } else if (choice == 2) {
-                SanPham sanPham = new DoUong();
-                sanPham.nhapThongTin(sc);
-
-                System.out.print("Mời nhập số lượng đồ uống: ");
-                int soLuong = sc.nextInt();
-
-                chiTietHoaDon.nhapThongTin(sanPham, soLuong);
-            } else if (choice == 0) {
-                break;
-            }
-        }
-
-        double tongTien = chiTietHoaDon.tinhThanhTien();
-
-        if (coVoucher) {
-            tongTien *= ((double) (100 - phieuGiamGia) / 100);
-        }
-
-        System.out.println("Nhập thời gian tạo hóa đơn: ");
-        Time thoiGianTao = new Time();
-        thoiGianTao.nhapTime(sc);
-
-        System.out.println("Nhập ngày tạo hóa đơn: ");
-        Date ngayTao = new Date();
-        ngayTao.nhapDate(sc);
-
-        HoaDon hoaDon = new HoaDon(maBan, chiTietHoaDon, tongTien, coVoucher, phieuGiamGia, tenNhanVienTao, thoiGianTao, ngayTao);
         dsHoaDon.add(hoaDon);
 
         System.out.println("Thêm hóa đơn mới thành công!!!");
@@ -123,7 +49,6 @@ public class DanhSachHoaDon implements IThemSuaXoa {
             if (bill.getMaHoaDon() == maHoaDon) {
                 return bill;
             }
-
         }
         return null;
     }
@@ -142,7 +67,7 @@ public class DanhSachHoaDon implements IThemSuaXoa {
 
     //4.Sửa hóa đơn
     public void suaThongTin(int maHoaDon) {
-        try (Scanner sc = new Scanner(System.in)) {
+        try {
             HoaDon bill = timHoaDon(maHoaDon);
 
             if (bill != null) {
@@ -299,7 +224,7 @@ public class DanhSachHoaDon implements IThemSuaXoa {
                 System.out.println("Đọc file thành công!" );
             }
         } catch (Exception e) {
-            System.out.println("Lỗi đọc file!!!");
+            System.out.println("Đọc file thất bại. Vui lòng xem lại hàm đọc file!!!");
         }
     }
     //9.Ghi File
@@ -318,10 +243,10 @@ public class DanhSachHoaDon implements IThemSuaXoa {
                     pw.println(hoaDon);
             }
 
-            System.out.println("File đã được cập nhật.");
+            System.out.println("Ghi file thành công!!!");
             pw.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Ghi file thất bại. Vui lòng xem lại hàm ghi file!!!");
         }
     }
 }

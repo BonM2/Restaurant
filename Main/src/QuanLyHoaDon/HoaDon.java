@@ -1,17 +1,20 @@
 package QuanLyHoaDon;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import DateTime.Date;
 import DateTime.Time;
 import Interface_XuLy.INhapXuat;
+import QuanLyNhaHang.QuanLyNhaHang;
 import QuanLySanPham.DanhSachSanPham;
 import QuanLySanPham.DoUong;
 import QuanLySanPham.MonAn;
 import QuanLySanPham.SanPham;
 
 public class HoaDon implements INhapXuat {
-    private int maHoaDon = 0;
+    private static int count = 0;
+    private int maHoaDon;
     private int maBanAn;
     private ChiTietHoaDon chiTietHoaDon;
     private double tongTien;
@@ -22,7 +25,9 @@ public class HoaDon implements INhapXuat {
     private Date ngayTao;
 
     public HoaDon() {
-        maBanAn = -1;
+        maBanAn = 0;
+        HoaDon.count++;
+        maHoaDon = HoaDon.count;
         chiTietHoaDon = new ChiTietHoaDon();
         tongTien = 0.0;
         coVoucher = false;
@@ -33,7 +38,8 @@ public class HoaDon implements INhapXuat {
     }
 
     public HoaDon(int maBanAn, ChiTietHoaDon chiTietHoaDon, double tongTien, boolean coVoucher, int phieuGiamGia, String tenNhanVienTao, Time thoiGianTao, Date ngayTao) {
-        maHoaDon++;
+        HoaDon.count++;
+        maHoaDon = HoaDon.count;
         this.maBanAn = maBanAn;
         this.chiTietHoaDon = chiTietHoaDon;
         this.tongTien = tongTien;
@@ -44,25 +50,79 @@ public class HoaDon implements INhapXuat {
         this.ngayTao = ngayTao;
     }
 
+    public HoaDon(int maHoaDon, int maBanAn, ChiTietHoaDon chiTietHoaDon, double tongTien, boolean coVoucher, int phieuGiamGia, String tenNhanVienTao, Time thoiGianTao, Date ngayTao) {
+        this.maHoaDon = maHoaDon;
+        this.maBanAn = maBanAn;
+        this.chiTietHoaDon = chiTietHoaDon;
+        this.tongTien = tongTien;
+        this.coVoucher = coVoucher;
+        this.phieuGiamGia = phieuGiamGia;
+        this.tenNhanVienTao = tenNhanVienTao;
+        this.thoiGianTao = thoiGianTao;
+        this.ngayTao = ngayTao;
+
+        if (maHoaDon > HoaDon.count) {
+            HoaDon.count = maHoaDon;
+        }
+    }
+
     // nhập thông tin hóa đơn
     public void nhapThongTin(Scanner sc) {
-        maHoaDon++;
 
-        System.out.print("Nhập mã bàn ăn: ");
-        maBanAn = sc.nextInt();
-        sc.nextLine();
+        while (true) {
+            try {
+                System.out.print("Nhập mã bàn ăn: ");
+                maBanAn = sc.nextInt();
+                sc.nextLine();
+
+                if (maBanAn < 0) {
+                    System.out.println("Mã bàn ăn phải là số dương!!!");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+            }
+        }
 
         System.out.print("Nhập tên nhân viên tạo hóa đơn: ");
         tenNhanVienTao = sc.nextLine();
 
-        System.out.print("Có voucher hay không ? (1 = có /0 = không) ");
-        int isTrue = sc.nextInt();
-        coVoucher = (isTrue == 1);
+        while (true) {
+            System.out.print("Có voucher hay không ? (1 = có /0 = không) ");
+            int isTrue = sc.nextInt();
+
+            try {
+                if (isTrue == 1) {
+                    coVoucher = true;
+                    break;
+                } else if (isTrue == 0) {
+                    coVoucher = false;
+                    break;
+                } else {
+                    System.out.println("Lỗi: Chỉ nhập 1 hoặc 0. Nhập lại");
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+            }
+        }
 
         if (coVoucher) {
-            System.out.print("Nhập giá trị của voucher (%): ");
-            phieuGiamGia = sc.nextInt();
-            sc.nextLine();
+            while (true) {
+                try {
+                    System.out.print("Nhập giá trị của voucher (%): ");
+                    phieuGiamGia = sc.nextInt();
+                    sc.nextLine();
+
+                    if (phieuGiamGia < 0) {
+                        System.out.println("Phần trăm giảm giá phải là số dương!!!");
+                    } else {
+                        break;
+                    }
+                } catch (NumberFormatException | InputMismatchException e) {
+                    System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                }
+            }
         }
 
         System.out.println("Nhập chi tiết thông tin hóa đơn: ");
@@ -76,25 +136,50 @@ public class HoaDon implements INhapXuat {
             System.out.println("-----------------------");
             int choice = sc.nextInt();
 
-            DanhSachSanPham danhSachSanPham = new DanhSachSanPham();
+            DanhSachSanPham danhSachSanPham = QuanLyNhaHang.getDanhSachSanPham();
             danhSachSanPham.hienthiSanPham();
 
             if (choice == 1) {
                 SanPham sanPham = new MonAn();
                 sanPham.nhapThongTin(sc);
 
-                System.out.print("Mời nhập số lượng món ăn: ");
-                int soLuong = sc.nextInt();
+                while (true) {
+                    try {
+                        System.out.print("Mời nhập số lượng món ăn: ");
+                        int soLuong = sc.nextInt();
+                        sc.nextLine();
 
-                chiTietHoaDon.nhapThongTin(sanPham, soLuong);
+                        if (soLuong < 0) {
+                            System.out.println("Số lượng món ăn phải là số dương!!!");
+                        } else {
+                            chiTietHoaDon.nhapThongTin(sanPham, soLuong);
+                            break;
+                        }
+                    } catch (NumberFormatException | InputMismatchException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                    }
+                }
             } else if (choice == 2) {
                 SanPham sanPham = new DoUong();
                 sanPham.nhapThongTin(sc);
 
-                System.out.print("Mời nhập số lượng đồ uống: ");
-                int soLuong = sc.nextInt();
+                while (true) {
+                    try {
+                        System.out.print("Mời nhập số lượng đồ uống: ");
+                        int soLuong = sc.nextInt();
+                        sc.nextLine();
 
-                chiTietHoaDon.nhapThongTin(sanPham, soLuong);
+                        if (soLuong < 0) {
+                            System.out.println("Số lượng món ăn phải là số dương!!!");
+                        } else {
+                            chiTietHoaDon.nhapThongTin(sanPham, soLuong);
+                            break;
+                        }
+                    } catch (NumberFormatException | InputMismatchException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                    }
+                }
+
             } else if (choice == 0) {
                 break;
             }
@@ -139,46 +224,85 @@ public class HoaDon implements INhapXuat {
             System.out.println("4. Thời gian tạo hóa đơn.");
             System.out.println("5. Ngày tạo hóa đơn.");
             System.out.println("6. Chỉnh sửa chi tiết hóa đơn");
+            System.out.println("7. Phần trăm giảm giá");
             System.out.println("0. Thoát");
             System.out.println("------------------------------");
             System.out.println("Lựa chọn: ");
 
             choice = sc.nextInt();
             sc.nextLine();
+
             if (choice == 1) {
-                System.out.print("Mời nhập mã bàn ăn mới: ");
-                int new_maBan = sc.nextInt();
-                setMaBanAn(new_maBan);
+                while (true) {
+                    try {
+                        System.out.print("Mời nhập mã bàn ăn mới: ");
+                        maBanAn = sc.nextInt();
+                        sc.nextLine();
+
+                        if (maBanAn < 0) {
+                            System.out.println("Mã bàn ăn phải là số dương!!!");
+                        } else {
+                            setMaBanAn(maBanAn);
+                            break;
+                        }
+                    } catch (NumberFormatException | InputMismatchException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                    }
+                }
             } else if (choice == 2) {
                 System.out.print("Mời nhập tên mới của nhân viên tạo hóa đơn: ");
-                String new_name = sc.nextLine();
-                setTenNhanVienTao(new_name);
+                tenNhanVienTao = sc.nextLine();
+                setTenNhanVienTao(tenNhanVienTao);
             } else if (choice == 3) {
-                System.out.print("Mời nhập tình trạng voucher (1 = có / 0 = không): ");
-                int isTrue = sc.nextInt();
-                boolean new_Voucher = (isTrue == 1);
 
-                if (new_Voucher) {
-                    System.out.print("Nhập phần trăm giảm giá của phiếu mới (%): ");
-                    int new_phieuGiamGia = sc.nextInt();
-                    setCoVoucher(true);
-                    setPhieuGiamGia(new_phieuGiamGia);
-                    System.out.print("Đã áp dụng giảm giá " + new_phieuGiamGia + "%");
-                } else {
-                    setCoVoucher(false);
-                    setPhieuGiamGia(0);
-                    System.out.println("Không thay đổi về tình trạng voucher đối với hóa đơn này!");
+                while (true) {
+                    System.out.print("Mời nhập tình trạng voucher (1 = có / 0 = không): ");
+                    int isTrue = sc.nextInt();
+
+                    try {
+                        if (isTrue == 1) {
+                            setCoVoucher(true);
+
+                            if (coVoucher) {
+                                while (true) {
+                                    try {
+                                        System.out.print("Nhập giá trị của voucher (%): ");
+                                        phieuGiamGia = sc.nextInt();
+                                        sc.nextLine();
+
+                                        if (phieuGiamGia < 0) {
+                                            System.out.println("Phần trăm giảm giá phải là số dương!!!");
+                                        } else {
+                                            break;
+                                        }
+                                    } catch (NumberFormatException | InputMismatchException e) {
+                                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                                    }
+                                }
+                            }
+
+                            break;
+                        } else if (isTrue == 0) {
+                            setCoVoucher(false);
+                            setPhieuGiamGia(0);
+                            break;
+                        } else {
+                            System.out.println("Lỗi: Chỉ nhập 1 hoặc 0. Nhập lại");
+                        }
+                    } catch (NumberFormatException | InputMismatchException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                    }
                 }
             } else if (choice == 4) {
-                System.out.println("Mời nhập thời gian mới: ");
-                Time new_time = new Time();
-                new_time.nhapTime(sc);
-                setThoiGianTao(new_time);
+                System.out.println("Mời nhập thời gian tạo hóa đơn mới: ");
+                thoiGianTao = new Time();
+                thoiGianTao.nhapTime(sc);
+                setThoiGianTao(thoiGianTao);
             } else if (choice == 5) {
-                System.out.println("Mời nhập ngày tạo mới: ");
-                Date new_date = new Date();
-                new_date.nhapDate(sc);
-                setNgayTao(new_date);
+                System.out.println("Mời nhập ngày tạo hóa đơn mới: ");
+                ngayTao = new Date();
+                ngayTao.nhapDate(sc);
+                setNgayTao(ngayTao);
             } else if (choice == 6) {
                 System.out.println("1. Sửa tên.");
                 System.out.println("2. Sửa số lượng.");
@@ -186,13 +310,55 @@ public class HoaDon implements INhapXuat {
                 int select = sc.nextInt();
 
                 if (select == 1) {
-                    System.out.println("Mời nhập tên mới: ");
-                    String tenSP = sc.nextLine();
+                    System.out.print("Mời nhập tên sản phẩm cần sửa: ");
+                    String tenCu = sc.nextLine();
+
+                    System.out.print("Mời nhập tên mới: ");
+                    String tenMoi = sc.nextLine();
+
+                    chiTietHoaDon.suaTenSanPham(tenCu, tenMoi);
 
                 } else if (select == 2) {
-                    System.out.println("Mời nhập số lượng mới: ");
-                    int soLuong = sc.nextInt();
+                    System.out.print("Mời nhập tên sản phẩm cần sửa số lượng: ");
+                    String tenSP = sc.nextLine();
 
+                    while (true) {
+                        try {
+                            System.out.print("Mời nhập số lượng mới: ");
+                            int soLuong = sc.nextInt();
+                            sc.nextLine();
+
+                            if (soLuong > 0) {
+                                chiTietHoaDon.suaSoLuongSanPham(tenSP, soLuong);
+                                break;
+                            } else {
+                                System.out.println("Số lượng phải là số dương!!!");
+                            }
+                        } catch (NumberFormatException | InputMismatchException e) {
+                            System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                            sc.nextLine();
+                        }
+                    }
+                }
+            } else if (choice == 7) {
+                if (coVoucher) {
+                    while (true) {
+                        try {
+                            System.out.print("Nhập giá trị mới của voucher (%): ");
+                            phieuGiamGia = sc.nextInt();
+                            sc.nextLine();
+
+                            if (phieuGiamGia < 0) {
+                                System.out.println("Phần trăm giảm giá phải là số dương!!!");
+                            } else {
+                                break;
+                            }
+                        } catch (NumberFormatException | InputMismatchException e) {
+                            System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                        }
+                    }
+                } else {
+                    System.out.println("Không có voucher nên không thể thay đổi mã giảm giá!!!");
                 }
             }
         } while (choice != 0);
@@ -202,24 +368,19 @@ public class HoaDon implements INhapXuat {
         double tongTien = chiTietHoaDon.tinhThanhTien();
 
         if (coVoucher) {
-            return tongTien * (double) ((100 - phieuGiamGia) / 100);
+            return tongTien * ((1.0 * 100 - phieuGiamGia) / 100);
         }
 
         return tongTien;
     }
-    public ChiTietHoaDon getChiTietHoaDon() {
-        return chiTietHoaDon;
+
+    @Override
+    public String toString() {
+        return maHoaDon + "," + maBanAn + "," + tenNhanVienTao + "," + coVoucher + "," + phieuGiamGia + "," + tongTien + "," + ngayTao.toString() + "," + thoiGianTao.toString() + "," + chiTietHoaDon.toString();
     }
+
     public int getMaHoaDon() {
         return maHoaDon;
-    }
-
-    public void setMaHoaDon(int maHoaDon) {
-        this.maHoaDon = maHoaDon;
-    }
-
-    public int getMaBanAn() {
-        return maBanAn;
     }
 
     public void setMaBanAn(int maBanAn) {
@@ -238,20 +399,8 @@ public class HoaDon implements INhapXuat {
         return tongTien;
     }
 
-    public void setTongTien(double tongTien) {
-        this.tongTien = tongTien;
-    }
-
-    public boolean isCoVoucher() {
-        return coVoucher;
-    }
-
     public void setCoVoucher(boolean coVoucher) {
         this.coVoucher = coVoucher;
-    }
-
-    public int getPhieuGiamGia() {
-        return phieuGiamGia;
     }
 
     public void setPhieuGiamGia(int phieuGiamGia) {
@@ -264,10 +413,6 @@ public class HoaDon implements INhapXuat {
 
     public void setTenNhanVienTao(String tenNhanVienTao) {
         this.tenNhanVienTao = tenNhanVienTao;
-    }
-
-    public Time getThoiGianTao() {
-        return thoiGianTao;
     }
 
     public void setThoiGianTao(Time thoiGianTao) {

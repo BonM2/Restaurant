@@ -2,6 +2,7 @@ package QuanLySanPham;
 
 import Interface_XuLy.INhapXuat;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MonAn extends SanPham implements INhapXuat {
@@ -18,8 +19,10 @@ public class MonAn extends SanPham implements INhapXuat {
         this.viMonAn = viMonAn;
     }
 
-    public String getViMon() {
-        return viMonAn;
+    public MonAn(int maSanPham, String ten, double gia, String viMonAn) {
+        super(maSanPham, ten, gia);
+        this.loaiSanPham = "MON_AN";
+        this.viMonAn = viMonAn;
     }
 
     public void setViMon(String loaiMonAn) {
@@ -31,14 +34,14 @@ public class MonAn extends SanPham implements INhapXuat {
     public void nhapThongTin(Scanner sc) {
         super.nhapThongTin(sc);
         loaiSanPham = "MON_AN";
-        System.out.println("Nhập loại món:");
+        System.out.print("Nhập vị món:");
         viMonAn = sc.nextLine();
     }
 
     @Override
     public void xuatThongTin() {
         super.xuatThongTin();
-        System.out.println("Vị món ăn: " + viMonAn);
+        System.out.println("| Vị món ăn: " + viMonAn);
     }
 
     @Override
@@ -61,17 +64,35 @@ public class MonAn extends SanPham implements INhapXuat {
 
             if (choice == 1) {
                 System.out.print("Nhập tên mới của món ăn: ");
-                String tenSP = sc.nextLine();
-                setTenSanPham(tenSP);
+                tenSanPham = sc.nextLine();
+                setTenSanPham(tenSanPham);
             } else if (choice == 2) {
-                System.out.print("Nhập giá mới của món ăn: ");
-                double giaSP = sc.nextDouble();
-                setGiaSanPham(giaSP);
+                while(true) {
+                    try {
+                        System.out.print("Nhập giá mới của món ăn: ");
+                        giaSanPham = sc.nextDouble();
+                        sc.nextLine();
+
+                        if (giaSanPham < 0) {
+                            System.out.println("Giá sản phẩm phải là số dương!!!");
+                        } else {
+                            setGiaSanPham(giaSanPham);
+                            break;
+                        }
+                    } catch (NumberFormatException | InputMismatchException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                    }
+                }
             } else if (choice == 3) {
                 System.out.print("Nhập loại món ăn mới: ");
-                String viMonAn = sc.nextLine();
+                viMonAn = sc.nextLine();
                 setViMon(viMonAn);
             }
         } while (choice != 0);
+    }
+
+    @Override
+    public String toString() {
+        return maSanPham + "," + tenSanPham + "," + giaSanPham + "," + loaiSanPham + "," + viMonAn;
     }
 }

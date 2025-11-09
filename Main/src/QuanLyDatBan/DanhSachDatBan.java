@@ -5,6 +5,7 @@ import DateTime.Time;
 import Interface_XuLy.IThemSuaXoa;
 import KhachHang.KhachHang;
 import QuanLyBanAn.BanAn;
+import QuanLyNhaHang.QuanLyNhaHang;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,37 +25,21 @@ public class DanhSachDatBan implements IThemSuaXoa {
         this.dsDatBan = dsDatBan;
     }
 
-    public ArrayList<DatBan> getDsDatBan() {
-        return dsDatBan;
-    }
-
-    public void setDsDatBan(ArrayList<DatBan> dsDatBan) {
-        this.dsDatBan = dsDatBan;
-    }
-
     @Override
     public void themThongTin() {
-        Scanner sc = new Scanner(System.in);
 
-        System.out.print("Nhập số lượng khách hàng: ");
-        byte soLuongKhach = sc.nextByte();
+        DatBan new_DatBan = new DatBan();
 
-        System.out.print("Nhập thông tin khách hàng: ");
-        KhachHang khachHang = new KhachHang();
-        khachHang.nhapThongTin(sc);
+        new_DatBan.nhapThongTin(QuanLyNhaHang.sc);
 
-        System.out.print("Nhập ngày đặt bàn: ");
-        Date ngayDatBan = new Date();
-        ngayDatBan.nhapDate(sc);
-
-        System.out.print("Nhập thời gian đặt bàn: ");
-        Time thoiGianDatBan = new Time();
-        thoiGianDatBan.nhapTime(sc);
-
-        DatBan new_DatBan = new DatBan(soLuongKhach, khachHang, ngayDatBan, thoiGianDatBan);
         dsDatBan.add(new_DatBan);
 
-        System.out.println("Thêm yêu cầu đặt bàn thành công!!!");
+        if (new_DatBan.getBanAn() != null) {
+            System.out.println("Thêm yêu cầu đặt bàn thành công!!!");
+        } else {
+            System.out.println("Thêm yêu cầu đặt bàn thất bại!!!");
+        }
+
     }
 
     public DatBan timThongTinDatBan(int maDatBan) {
@@ -80,7 +65,7 @@ public class DanhSachDatBan implements IThemSuaXoa {
 
     @Override
     public void suaThongTin(int maDatBan) {
-        try (Scanner sc = new Scanner(System.in)) {
+        try {
             DatBan datBan = timThongTinDatBan(maDatBan);
             if (datBan != null) {
                 datBan.menuThuocTinh();
@@ -96,8 +81,8 @@ public class DanhSachDatBan implements IThemSuaXoa {
         if (!dsDatBan.isEmpty()) {
             System.out.println("Danh sách đặt bàn: ");
             for (DatBan datBan : dsDatBan) {
-                if (datBan != null)
-                    System.out.println(datBan);
+                if (datBan != null && datBan.getBanAn() != null)
+                    datBan.xuatThongTin();
             }
             System.out.println("Hiển thị danh sách đặt bàn thành công!!!");
         } else
@@ -131,7 +116,7 @@ public class DanhSachDatBan implements IThemSuaXoa {
                 String tenKhachHang = dataThanhPhan[2];
                 String phoneNumber = dataThanhPhan[3];
 
-                String[] date = data[4].split("/");
+                String[] date = dataThanhPhan[4].split("/");
 
                 short ngay = Short.parseShort(date[0]);
                 short thang = Short.parseShort(date[1]);
@@ -139,7 +124,7 @@ public class DanhSachDatBan implements IThemSuaXoa {
 
                 Date ngayDatBan = new Date(ngay, thang, nam);
 
-                String[] time = data[5].split("/");
+                String[] time = dataThanhPhan[5].split(":");
 
                 byte gio = Byte.parseByte(time[0]);
                 byte phut = Byte.parseByte(time[1]);
@@ -147,20 +132,19 @@ public class DanhSachDatBan implements IThemSuaXoa {
 
                 Time thoiGianDatBan = new Time(gio, phut, giay);
 
-                byte sucChua = Byte.parseByte(data[6]);
+                int sucChua = Integer.parseInt(dataThanhPhan[6]);
 
                 DatBan datBan = new DatBan(maDatBan, new BanAn(maBanAn, sucChua, true), new KhachHang(tenKhachHang, phoneNumber), ngayDatBan, thoiGianDatBan);
                 dsDatBan.add(datBan);
             }
             System.out.println("Đọc file thành công!!!");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println("Lỗi đọc file. Vui lòng xem lại!!!");
         }
     }
 
     public void ghiFile() {
         try {
-            dsDatBan.clear();
             File output = new File(URL);
 
             if (!output.exists()) {
@@ -174,10 +158,11 @@ public class DanhSachDatBan implements IThemSuaXoa {
                     pw.println(datBan);
                 }
             }
+
             System.out.println("File đã được cập nhật!!!");
             pw.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Lỗi ghi file. Vui lòng xem lại!!!");
         }
     }
 }

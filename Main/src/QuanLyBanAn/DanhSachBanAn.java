@@ -25,7 +25,7 @@ public class DanhSachBanAn implements IThemSuaXoa {
         return null;
     }
 
-    public BanAn timBanTrong(byte soNguoi) {
+    public BanAn timBanTrong(int soNguoi) {
         for (BanAn b : dsBanAn) {
             if (!b.getTrangThai() && b.getSoLuongChoNgoi() >= soNguoi)
                 return b;

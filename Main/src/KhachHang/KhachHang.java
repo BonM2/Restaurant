@@ -5,19 +5,33 @@ import XuLyString.StringUtils;
 import java.util.Scanner;
 
 public class KhachHang implements INhapXuat {
-    private int maKhachHang = 0;
+    private static int count = 0;
+    private int maKhachHang;
     private String tenKhachHang;
     private String phoneNumber;
 
     public KhachHang() {
+        KhachHang.count++;
+        maKhachHang = KhachHang.count;
         tenKhachHang = "";
         phoneNumber = "";
     }
 
     public KhachHang(String tenKhachHang, String phoneNumber) {
-        maKhachHang++;
+        KhachHang.count++;
+        maKhachHang = KhachHang.count;
         this.tenKhachHang = tenKhachHang;
         this.phoneNumber = phoneNumber;
+    }
+
+    public KhachHang(int maKhachHang, String tenKhachHang, String phoneNumber) {
+        this.maKhachHang = maKhachHang;
+        this.tenKhachHang = tenKhachHang;
+        this.phoneNumber = phoneNumber;
+
+        if (maKhachHang > KhachHang.count) {
+            KhachHang.count = maKhachHang;
+        }
     }
 
     @Override
@@ -38,20 +52,16 @@ public class KhachHang implements INhapXuat {
         return "Mã khách hàng: " + maKhachHang + "| Tên khách hàng: " + StringUtils.chuanHoaThongTin(tenKhachHang) + "| SĐT: " + phoneNumber;
     }
 
-    public int getMaKhachHang() {
-        return maKhachHang;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public int getMaKhachHang() {
+        return maKhachHang;
     }
 
-    public String getTenKhachHang() {
-        return tenKhachHang;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setTenKhachHang(String tenKhachHang) {
@@ -67,8 +77,9 @@ public class KhachHang implements INhapXuat {
             System.out.println("2. Số điện thoại.");
             System.out.println("0. Thoát");
             System.out.println("------------------------------");
-            System.out.println("Lựa chọn: ");
+            System.out.print("Lựa chọn: ");
             choice = sc.nextInt();
+            sc.nextLine();
 
             if (choice == 1) {
                 System.out.print("Mời nhập tên mới: ");

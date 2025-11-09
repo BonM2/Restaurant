@@ -353,6 +353,7 @@ public class QuanLyNhaHang {
                     short thangTim = sc.nextShort();
                     short namTim = sc.nextShort();
                     sc.nextLine();
+
                     ArrayList<HoaDon> dsHoaDonTheoThang = dsHoaDon.timHoaDonTheoThang(thangTim, namTim);
                     System.out.println("Thông tin danh sách hóa đơn theo tháng: ");
 
@@ -418,7 +419,6 @@ public class QuanLyNhaHang {
         }
     }
 
-
     public static void layMatKhau() {
         try (Scanner sc = new Scanner(new File(URL_MatKhau))) {
             matKhau = "";
@@ -431,6 +431,14 @@ public class QuanLyNhaHang {
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Không tồn tại file mật khẩu!!!");
         }
+    }
+
+    public static DanhSachBanAn getDanhSachBanAn() {
+        return dsBanAn;
+    }
+
+    public static DanhSachSanPham getDanhSachSanPham() {
+        return dsSanPham;
     }
 
     public static void main(String[] args) {
@@ -554,9 +562,5 @@ public class QuanLyNhaHang {
                 doiMatKhau();
             }
         } while (choice != 0);
-    }
-
-    public static Scanner getSc() {
-        return sc;
     }
 }

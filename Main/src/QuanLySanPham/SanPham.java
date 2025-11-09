@@ -1,33 +1,44 @@
 package QuanLySanPham;
 
-import DateTime.Date;
 import Interface_XuLy.INhapXuat;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public abstract class SanPham implements INhapXuat {
-    protected int maSanPham = 0;
+    protected int maSanPham;
+    private static int count = 0;
     protected String tenSanPham;
     protected double giaSanPham;
     protected String loaiSanPham;
 
     SanPham() {
+        SanPham.count++;
+        maSanPham = SanPham.count;
         tenSanPham = "";
         giaSanPham = 0.0;
     }
 
     public SanPham(String tenSanPham, double giaSanPham) {
-        maSanPham++;
+        SanPham.count++;
+        this.maSanPham = SanPham.count;
         this.giaSanPham = giaSanPham;
         this.tenSanPham = tenSanPham;
     }
 
-    public int getMaSanPham() {
-        return maSanPham;
+    public SanPham(int maSanPham, String tenSanPham, double giaSanPham) {
+
+        this.maSanPham = maSanPham;
+        this.giaSanPham = giaSanPham;
+        this.tenSanPham = tenSanPham;
+
+        if (maSanPham > SanPham.count) {
+            SanPham.count = maSanPham;
+        }
     }
 
-    public void setMaSanPham(int maSanPham) {
-        this.maSanPham = maSanPham;
+    public int getMaSanPham() {
+        return maSanPham;
     }
 
     public String getTenSanPham() {
@@ -50,14 +61,28 @@ public abstract class SanPham implements INhapXuat {
         return loaiSanPham;
     }
 
-
     @Override
     public void nhapThongTin(Scanner sc) {
-        maSanPham++;
-        System.out.println("Nhập tên sản phẩm: ");
+
+        System.out.print("Nhập tên sản phẩm: ");
         tenSanPham = sc.nextLine();
-        System.out.println("Nhập giá sản phẩm: ");
-        giaSanPham = sc.nextDouble();
+
+        while(true) {
+
+            try {
+                System.out.print("Nhập giá sản phẩm: ");
+                giaSanPham = sc.nextDouble();
+                sc.nextLine();
+
+                if (giaSanPham < 0) {
+                    System.out.println("Giá sản phẩm phải là số dương!!!");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+            }
+        }
     }
 
     @Override
@@ -66,4 +91,10 @@ public abstract class SanPham implements INhapXuat {
     }
 
     public abstract void menuThuocTinh();
+
+    @Override
+    public String toString() {
+        return maSanPham + "," + tenSanPham + "," + giaSanPham + "," + loaiSanPham;
+    }
+
 }

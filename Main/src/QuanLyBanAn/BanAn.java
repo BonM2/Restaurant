@@ -25,7 +25,7 @@ public class BanAn implements INhapXuat {
         this.trangThai = trangThai;
     }
 
-    public BanAn(int maBan, byte soLuongChoNgoi, boolean trangThai) {
+    public BanAn(int maBan, int soLuongChoNgoi, boolean trangThai) {
         this.maBan = maBan;
         this.soLuongChoNgoi = soLuongChoNgoi;
         this.trangThai = trangThai;

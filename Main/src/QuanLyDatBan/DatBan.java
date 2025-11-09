@@ -6,27 +6,31 @@ import Interface_XuLy.INhapXuat;
 import KhachHang.KhachHang;
 import QuanLyBanAn.BanAn;
 import QuanLyBanAn.DanhSachBanAn;
+import QuanLyNhaHang.QuanLyNhaHang;
 
 import java.util.Scanner;
 
 public class DatBan implements INhapXuat {
-
-    private int maDatBan = 0;
+    private static int count = 0;
+    private int maDatBan;
     private BanAn banAn;
-    private byte soLuongKhach;
+    private int soLuongKhach;
     private KhachHang khachHang;
     private Date ngayDatBan;
     private Time thoiGianDatBan;
 
     public DatBan() {
+        DatBan.count++;
+        maDatBan = DatBan.count;
         banAn = new BanAn();
         khachHang = new KhachHang();
         ngayDatBan = new Date();
         thoiGianDatBan = new Time();
     }
 
-    public DatBan(byte soLuongKhach, KhachHang khachHang, Date ngayDatBan, Time thoiGianDatBan) {
-        maDatBan++;
+    public DatBan(int soLuongKhach, KhachHang khachHang, Date ngayDatBan, Time thoiGianDatBan) {
+        DatBan.count++;
+        maDatBan = DatBan.count;
         DanhSachBanAn danhSachBanAn = new DanhSachBanAn();
         banAn = danhSachBanAn.timBanTrong(soLuongKhach);
         this.khachHang = khachHang;
@@ -40,60 +44,37 @@ public class DatBan implements INhapXuat {
         this.khachHang = khachHang;
         this.ngayDatBan = ngayDatBan;
         this.thoiGianDatBan = thoiGianDatBan;
-    }
-    public int getMaDatBan() {
-        return maDatBan;
-    }
 
-    public BanAn getBanAn() {
-        return banAn;
-    }
-
-    public void setBanAn(BanAn banAn) {
-        this.banAn = banAn;
-    }
-
-    public KhachHang getKhachHang() {
-        return khachHang;
-    }
-
-    public void setKhachHang(KhachHang khachHang) {
-        this.khachHang = khachHang;
-    }
-
-    public Date getNgayDatBan() {
-        return ngayDatBan;
-    }
-
-    public void setNgayDatBan(Date ngayDatBan) {
-        this.ngayDatBan = ngayDatBan;
-    }
-
-    public Time getThoiGianDatBan() {
-        return thoiGianDatBan;
-    }
-
-    public byte getSoLuongKhach() {
-        return soLuongKhach;
-    }
-
-
-    public void setThoiGianDatBan(Time thoiGianDatBan) {
-        this.thoiGianDatBan = thoiGianDatBan;
+        if (maDatBan > DatBan.count) {
+            DatBan.count = maDatBan;
+        }
     }
 
     @Override
     public void nhapThongTin(Scanner sc) {
 
-        System.out.print("Nhập thông tin khách hàng: ");
+        System.out.println("Nhập thông tin khách hàng: ");
         khachHang = new KhachHang();
         khachHang.nhapThongTin(sc);
 
-        System.out.print("Nhập số lượng khách hàng: ");
-        soLuongKhach = sc.nextByte();
+        while (true) {
+            try {
+                System.out.print("Nhập số lượng khách hàng: ");
+                soLuongKhach = sc.nextInt();
+                sc.nextLine();
 
-        DanhSachBanAn danhSachBanAn = new DanhSachBanAn();
-        banAn = danhSachBanAn.timBanTrong(soLuongKhach);
+                if (soLuongKhach < 0) {
+                    System.out.println("Số lượng khách hàng phải là số dương!!!. Mời nhập lại");
+                } else {
+                    break;
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+            }
+        }
+
+        banAn = QuanLyNhaHang.getDanhSachBanAn().timBanTrong(soLuongKhach);
 
         if (banAn != null) {
             System.out.println("Tìm bàn ăn theo nhu cầu của khách hàng thành công!!!");
@@ -114,6 +95,7 @@ public class DatBan implements INhapXuat {
 
     @Override
     public void xuatThongTin() {
+        System.out.println("---------------------------------------");
         System.out.print("Mã đặt bàn: " + getMaDatBan() + "\n");
         System.out.println("Thông tin bàn ăn: ");
         banAn.xuatThongTin();
@@ -121,10 +103,7 @@ public class DatBan implements INhapXuat {
         khachHang.xuatThongTin();
         System.out.println("Ngày đặt bàn: " + ngayDatBan.toString());
         System.out.println("Thời gian đặt bàn: " + thoiGianDatBan.toString());
-    }
-
-    public void setSoLuongKhach(byte soLuongKhach) {
-        this.soLuongKhach = soLuongKhach;
+        System.out.println("---------------------------------------");
     }
 
     public void menuThuocTinh() {
@@ -139,29 +118,79 @@ public class DatBan implements INhapXuat {
             System.out.println("4. Số lượng khách hàng.");
             System.out.println("0. Thoát");
             System.out.println("------------------------------");
-            System.out.println("Lựa chọn: ");
+            System.out.print("Lựa chọn: ");
 
             choice = sc.nextInt();
+            sc.nextLine();
+
             if (choice == 1) {
-                System.out.println("Mời nhập lựa chọn muốn sửa: ");
-                KhachHang khachHang1 = new KhachHang();
-                khachHang1.menuThuocTinh();
-                setKhachHang(khachHang1);
+                khachHang.menuThuocTinh();
+                setKhachHang(khachHang);
             } else if (choice == 2) {
                 System.out.println("Mời nhập ngày mới: ");
-                Date date = new Date();
-                date.nhapDate(sc);
-                setNgayDatBan(date);
+                ngayDatBan.nhapDate(sc);
+                setNgayDatBan(ngayDatBan);
             } else if (choice == 3) {
                 System.out.println("Mời nhập thời gian mới: ");
-                Time time = new Time();
-                time.nhapTime(sc);
-                setThoiGianDatBan(time);
+                thoiGianDatBan.nhapTime(sc);
+                setThoiGianDatBan(thoiGianDatBan);
             } else if (choice == 4) {
-                System.out.print("Số lượng khách hàng mới: ");
-                byte new_soLuongKhachHang = sc.nextByte();
-                setSoLuongKhach(new_soLuongKhachHang);
+                while (true) {
+                    try {
+                        System.out.print("Số lượng khách hàng mới: ");
+                        soLuongKhach = sc.nextInt();
+
+                        if (soLuongKhach < 0) {
+                            System.out.println("Số lượng khách hàng phải là số dương!!!. Mời nhập lại");
+                        } else {
+                            BanAn banAnOld = banAn;
+                            banAn = QuanLyNhaHang.getDanhSachBanAn().timBanTrong(soLuongKhach);
+                            if (banAn != null) {
+                                setSoLuongKhach(soLuongKhach);
+                                banAn.setTrangThai(true);
+                                banAnOld.setTrangThai(false);
+                                System.out.println("Thay đổi số lượng khách hàng thành công!!!");
+                            } else {
+                                System.out.println("***Thay đổi số lượng khách hàng không thành công do không tồn tại bàn ăn phù hợp***");
+                            }
+                        }
+
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                    }
+                }
             }
         } while (choice != 0);
     }
+
+    @Override
+    public String toString() {
+        return maDatBan + "," + banAn.getMaBan() + "," + khachHang.getMaKhachHang() + "," + khachHang.getPhoneNumber() + "," + ngayDatBan.toString() + "," + thoiGianDatBan.toString() + "," + soLuongKhach;
+    }
+
+    public int getMaDatBan() {
+        return maDatBan;
+    }
+
+    public BanAn getBanAn() {
+        return banAn;
+    }
+
+    public void setKhachHang(KhachHang khachHang) {
+        this.khachHang = khachHang;
+    }
+
+    public void setNgayDatBan(Date ngayDatBan) {
+        this.ngayDatBan = ngayDatBan;
+    }
+
+    public void setThoiGianDatBan(Time thoiGianDatBan) {
+        this.thoiGianDatBan = thoiGianDatBan;
+    }
+
+    public void setSoLuongKhach(int soLuongKhach) {
+        this.soLuongKhach = soLuongKhach;
+    }
+
 }
