@@ -26,10 +26,7 @@ public class DoUong extends SanPham implements INhapXuat {
     }
 
     public void setDungTich(int dungTich) {
-        if (dungTich < 0) {
-            System.out.println("Dung tích phải là số dương!!!");
-        } else
-            this.dungTich = dungTich;
+        this.dungTich = dungTich;
     }
 
     @Override
@@ -41,6 +38,7 @@ public class DoUong extends SanPham implements INhapXuat {
             try {
                 System.out.print("Nhập dung tích (ml): ");
                 dungTich = sc.nextInt();
+                sc.nextLine();
 
                 if (dungTich < 0) {
                     System.out.println("Dung tích phải là số dương!!!");
@@ -81,11 +79,9 @@ public class DoUong extends SanPham implements INhapXuat {
                 tenSanPham = sc.nextLine();
                 setTenSanPham(tenSanPham);
             } else if (choice == 2) {
-                System.out.print("Nhập giá mới của đồ uống: ");
                 while(true) {
-
                     try {
-                        System.out.print("Nhập giá sản phẩm: ");
+                        System.out.print("Nhập giá mới của đồ uống: ");
                         giaSanPham = sc.nextDouble();
                         sc.nextLine();
 
@@ -97,6 +93,7 @@ public class DoUong extends SanPham implements INhapXuat {
                         }
                     } catch (NumberFormatException | InputMismatchException e) {
                         System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                        sc.nextLine();
                     }
                 }
             } else if (choice == 3) {
@@ -104,6 +101,7 @@ public class DoUong extends SanPham implements INhapXuat {
                     try {
                         System.out.print("Nhập dung tích (ml): ");
                         dungTich = sc.nextInt();
+                        sc.nextLine();
 
                         if (dungTich < 0) {
                             System.out.println("Dung tích phải là số dương!!!");
@@ -113,6 +111,7 @@ public class DoUong extends SanPham implements INhapXuat {
                         }
                     } catch (NumberFormatException | InputMismatchException e) {
                         System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                        sc.nextLine();
                     }
                 }
             }
@@ -122,5 +121,9 @@ public class DoUong extends SanPham implements INhapXuat {
     @Override
     public String toString() {
         return maSanPham + "," + tenSanPham + "," + giaSanPham + "," + loaiSanPham + "," + dungTich;
+    }
+
+    public int getDungTich() {
+        return dungTich;
     }
 }

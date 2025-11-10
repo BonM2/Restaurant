@@ -5,7 +5,6 @@ import DateTime.Time;
 import Interface_XuLy.IThemSuaXoa;
 
 import QuanLyNhaHang.QuanLyNhaHang;
-import QuanLySanPham.DanhSachSanPham;
 import QuanLySanPham.DoUong;
 import QuanLySanPham.MonAn;
 import QuanLySanPham.SanPham;
@@ -102,7 +101,6 @@ public class DanhSachHoaDon implements IThemSuaXoa {
             }
         } else
             System.out.println("Không tìm thấy hóa đơn của ngày: " + day);
-
         return tong;
     }
 
@@ -170,8 +168,7 @@ public class DanhSachHoaDon implements IThemSuaXoa {
                 int maBanAn = Integer.parseInt(dataThanhPhan[1]);
                 String tenNhanVienTao = dataThanhPhan[2];
 
-                int isTrue = Integer.parseInt(dataThanhPhan[3]);
-                boolean coVoucher = (isTrue == 1);
+                boolean coVoucher = Boolean.parseBoolean(dataThanhPhan[3]);
 
                 int phieuGiamGia = Integer.parseInt(dataThanhPhan[4]);
                 double tongTien = Double.parseDouble(dataThanhPhan[5]);

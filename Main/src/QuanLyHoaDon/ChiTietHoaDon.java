@@ -1,17 +1,22 @@
 package QuanLyHoaDon;
 
 import Interface_XuLy.INhapXuat;
+import QuanLySanPham.DoUong;
+import QuanLySanPham.MonAn;
 import QuanLySanPham.SanPham;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-
 public class ChiTietHoaDon implements INhapXuat {
     private Map<SanPham, Integer> dsGoi;
 
     public ChiTietHoaDon() {
         dsGoi = new HashMap<>();
+    }
+
+    public ChiTietHoaDon(Map<SanPham, Integer> dsGoi) {
+        this.dsGoi = dsGoi;
     }
 
 
@@ -54,6 +59,7 @@ public class ChiTietHoaDon implements INhapXuat {
             double giaTien = sanPham.getGiaSanPham() * soLuong;
 
             System.out.println(i + ". Tên: " + sanPham.getTenSanPham() + ". Số lượng: " + soLuong + ". Giá: " + giaTien);
+            i++;
         }
     }
 
@@ -74,19 +80,22 @@ public class ChiTietHoaDon implements INhapXuat {
             double giaTien = sanPham.getGiaSanPham() * soLuong;
 
             if (i < size - 1) {
-                if (sanPham.getLoaiSanPham().equals("MON_AN")) {
-                    str.append(sanPham.getTenSanPham()).append("|").append(soLuong).append("|").append(giaTien).append(";");
-                } else if (sanPham.getLoaiSanPham().equals("DO_UONG")) {
-                    str.append(sanPham.getTenSanPham()).append("|").append(soLuong).append("|").append(giaTien).append(";");
+                if (sanPham.getLoaiSanPham().equalsIgnoreCase("MON_AN")) {
+                    MonAn monAn = (MonAn) sanPham;
+                    str.append("MON_AN|").append(monAn.getTenSanPham()).append("|").append(giaTien).append("|").append(monAn.getViMonAn()).append("|").append(soLuong).append(";");
+                } else if (sanPham.getLoaiSanPham().equalsIgnoreCase("DO_UONG")) {
+                    DoUong doUong = (DoUong) sanPham;
+                    str.append("DO_UONG|").append(doUong.getTenSanPham()).append("|").append(giaTien).append("|").append(doUong.getDungTich()).append("|").append(soLuong).append(";");
                 }
             } else {
-                if (sanPham.getLoaiSanPham().equals("MON_AN")) {
-                    str.append(sanPham.getTenSanPham()).append("|").append(soLuong).append("|").append(giaTien);
-                } else if (sanPham.getLoaiSanPham().equals("DO_UONG")) {
-                    str.append(sanPham.getTenSanPham()).append("|").append(soLuong).append("|").append(giaTien);
+                if (sanPham.getLoaiSanPham().equalsIgnoreCase("MON_AN")) {
+                    MonAn monAn = (MonAn) sanPham;
+                    str.append("MON_AN|").append(monAn.getTenSanPham()).append("|").append(giaTien).append("|").append(monAn.getViMonAn()).append("|").append(soLuong);
+                } else if (sanPham.getLoaiSanPham().equalsIgnoreCase("DO_UONG")) {
+                    DoUong doUong = (DoUong) sanPham;
+                    str.append("DO_UONG|").append(doUong.getTenSanPham()).append("|").append(giaTien).append("|").append(doUong.getDungTich()).append("|").append(soLuong);
                 }
             }
-
             i++;
         }
         return str.toString();

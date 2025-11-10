@@ -34,7 +34,7 @@ public class MonAn extends SanPham implements INhapXuat {
     public void nhapThongTin(Scanner sc) {
         super.nhapThongTin(sc);
         loaiSanPham = "MON_AN";
-        System.out.print("Nhập vị món:");
+        System.out.print("Nhập vị món: ");
         viMonAn = sc.nextLine();
     }
 
@@ -94,5 +94,9 @@ public class MonAn extends SanPham implements INhapXuat {
     @Override
     public String toString() {
         return maSanPham + "," + tenSanPham + "," + giaSanPham + "," + loaiSanPham + "," + viMonAn;
+    }
+
+    public String getViMonAn() {
+        return viMonAn;
     }
 }

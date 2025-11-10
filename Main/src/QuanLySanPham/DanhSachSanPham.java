@@ -94,6 +94,22 @@ public class DanhSachSanPham implements IThemSuaXoa {
         }
     }
 
+    public void hienThiDanhSachMonAn() {
+        for (SanPham sp : dsSanPham) {
+            if (sp instanceof MonAn) {
+                sp.xuatThongTin();
+            }
+        }
+    }
+
+    public void hienThiDanhSachDoUong() {
+        for (SanPham sp : dsSanPham) {
+            if (sp instanceof DoUong) {
+                sp.xuatThongTin();
+            }
+        }
+    }
+
     // 6. Đọc file
     public void docFile() {
 

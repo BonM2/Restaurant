@@ -6,7 +6,8 @@ import java.util.Scanner;
 public class Time {
     private byte gio, phut, giay;
 
-    public Time() {}
+    public Time() {
+    }
 
     public Time(byte gio, byte phut, byte giay) {
         this.gio = gio;
@@ -20,43 +21,54 @@ public class Time {
     }
 
     public void nhapTime(Scanner sc) {
-        boolean valid = false;
 
-        while (!valid) {
+        // Nhập giờ
+        while (true) {
             try {
-                // Nhập giờ
                 System.out.print("\nNhập giờ: ");
                 this.gio = sc.nextByte();
-
-                // Kiểm tra giờ có hợp lệ không
-                if (gio > 24 || gio < 0) {
-                    throw new RuntimeException("Giờ không hợp lệ !!!");
+                if (gio < 0 || gio > 23) {
+                    System.out.println("Giờ không hợp lệ (0-23). Vui lòng nhập lại.");
+                    continue;
                 }
+                break; // hợp lệ thì thoát vòng lặp
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: phải nhập số nguyên. Nhập lại giờ.");
+                sc.nextLine(); // Xóa input lỗi
+            }
+        }
 
-                // Nhập phút
+        // Nhập phút
+        while (true) {
+            try {
                 System.out.print("Nhập phút: ");
                 this.phut = sc.nextByte();
-
-                // Kiểm tra phút có hợp lệ không
-                if (phut > 60 || phut < 0) {
-                    throw new RuntimeException("Phút không hợp lệ !!!");
+                if (phut < 0 || phut > 59) {
+                    System.out.println("Phút không hợp lệ (0-59). Vui lòng nhập lại.");
+                    continue;
                 }
+                break;
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: phải nhập số nguyên. Nhập lại phút.");
+                sc.nextLine();
+            }
+        }
 
-                // Nhập giây
+        // Nhập giây
+        while (true) {
+            try {
                 System.out.print("Nhập giây: ");
                 this.giay = sc.nextByte();
-
-                // Kiểm tra giây có hợp lệ không
-                if (giay > 60 || giay < 0) {
-                    throw new RuntimeException("Giây không hợp lệ !!!");
+                if (giay < 0 || giay > 59) {
+                    System.out.println("Giây không hợp lệ (0-59). Vui lòng nhập lại.");
+                    continue;
                 }
-
-                valid = true;
-
-            } catch (InputMismatchException e) {
-                System.out.println("Lỗi: input không hợp lệ. Vui lòng nhập lại.");
+                break;
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: phải nhập số nguyên. Nhập lại giây.");
                 sc.nextLine();
             }
         }
     }
+
 }

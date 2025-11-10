@@ -133,13 +133,15 @@ public class HoaDon implements INhapXuat {
             System.out.println("1. Món ăn.");
             System.out.println("2. Đồ uống.");
             System.out.println("0. Thoát.");
-            System.out.println("-----------------------");
+            System.out.print("Nhập lựa chọn: ");
             int choice = sc.nextInt();
+            sc.nextLine();
 
             DanhSachSanPham danhSachSanPham = QuanLyNhaHang.getDanhSachSanPham();
-            danhSachSanPham.hienthiSanPham();
 
             if (choice == 1) {
+                danhSachSanPham.hienThiDanhSachMonAn();
+                System.out.println("-----------------------");
                 SanPham sanPham = new MonAn();
                 sanPham.nhapThongTin(sc);
 
@@ -160,6 +162,8 @@ public class HoaDon implements INhapXuat {
                     }
                 }
             } else if (choice == 2) {
+                danhSachSanPham.hienThiDanhSachDoUong();
+                System.out.println("-----------------------");
                 SanPham sanPham = new DoUong();
                 sanPham.nhapThongTin(sc);
 
