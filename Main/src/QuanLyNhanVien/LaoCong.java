@@ -8,16 +8,10 @@ import java.util.Scanner;
 public class LaoCong extends NhanVien {
     private static int soLuong = 0;
     private final int luongCoBan = 4_800_000;
-    private final int phuCapChuyenCan = 300_000;
+    private int tongDiem;
 
     public LaoCong() {
         super();
-        chucVu = "LC";
-        soLuong++;
-    }
-
-    public LaoCong(String tenNhanVien, Date ngaySinh, String gioiTinh) {
-        super(tenNhanVien, ngaySinh, gioiTinh);
         chucVu = "LC";
         soLuong++;
     }
@@ -26,10 +20,6 @@ public class LaoCong extends NhanVien {
         super(maNhanVien, tenNhanVien, ngaySinh, gioiTinh);
         chucVu = "LC";
         soLuong++;
-    }
-
-    public void nhapThongTin(Scanner sc) {
-        super.nhapThongTin(sc);
     }
 
     @Override
@@ -42,8 +32,6 @@ public class LaoCong extends NhanVien {
     @Override
     public double tinhLuongThucTe() {
         Scanner sc = new Scanner(System.in);
-
-        int tongDiem;
 
         while (true) {
             try {

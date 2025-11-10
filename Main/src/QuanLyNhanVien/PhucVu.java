@@ -9,15 +9,10 @@ public class PhucVu extends NhanVien{
     private static int soLuong = 0;
     private final int luongCoBan = 5_200_000;
     private final int phuCap = 100_000;
+    private int soTienTip;
 
     public PhucVu() {
         super();
-        chucVu = "PV";
-        soLuong++;
-    }
-
-    public PhucVu(String tenNhanVien, Date ngaySinh, String gioiTinh) {
-        super(tenNhanVien, ngaySinh, gioiTinh);
         chucVu = "PV";
         soLuong++;
     }
@@ -26,11 +21,6 @@ public class PhucVu extends NhanVien{
         super(maNhanVien, tenNhanVien, ngaySinh, gioiTinh);
         chucVu = "PV";
         soLuong++;
-    }
-
-
-    public void nhapThongTin(Scanner sc) {
-        super.nhapThongTin(sc);
     }
 
     @Override
@@ -44,7 +34,6 @@ public class PhucVu extends NhanVien{
     public double tinhLuongThucTe() {
         Scanner sc = new Scanner(System.in);
 
-        int soTienTip;
         while (true) {
             try {
                 System.out.print("Mời nhập số tiền tip của phục vụ " + tenNhanVien + ": ");

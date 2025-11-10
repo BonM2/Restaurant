@@ -9,15 +9,10 @@ public class DauBep extends NhanVien{
     private static int soLuong = 0;
     private final int luongCoBan = 7_800_000;
     private final int phuCapTayNghe = 600_000;
+    private int soLuongMonDaNau;
 
     public DauBep() {
         super();
-        chucVu = "DB";
-        soLuong++;
-    }
-
-    public DauBep(String tenNhanVien, Date ngaySinh, String gioiTinh) {
-        super(tenNhanVien, ngaySinh, gioiTinh);
         chucVu = "DB";
         soLuong++;
     }
@@ -26,10 +21,6 @@ public class DauBep extends NhanVien{
         super(maNhanVien, tenNhanVien, ngaySinh, gioiTinh);
         chucVu = "DB";
         soLuong++;
-    }
-
-    public void nhapThongTin(Scanner sc) {
-        super.nhapThongTin(sc);
     }
 
     @Override
@@ -42,8 +33,6 @@ public class DauBep extends NhanVien{
     @Override
     public double tinhLuongThucTe() {
         Scanner sc = new Scanner(System.in);
-
-        int soLuongMonDaNau;
 
         while (true) {
             System.out.print("Số lượng món đầu bếp đã nấu: ");

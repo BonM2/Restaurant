@@ -28,19 +28,11 @@ public class TiepTan extends NhanVien{
         soLuong++;
     }
 
-    public void nhapThongTin(Scanner sc) {
-        super.nhapThongTin(sc);
-    }
-
     @Override
     public void xuatThongTin() {
         super.xuatThongTin();
         System.out.println("Lương cơ bản: " + luongCoBan);
         System.out.println("-------------------------------");
-    }
-
-    public void menuThuocTinh() {
-        super.menuThuocTinh();
     }
 
     @Override

@@ -104,15 +104,15 @@ public abstract class NhanVien implements INhapXuat {
 
             if (choice == 1) {
                 System.out.print("Nhập họ và tên mới: ");
-                String hoTen = sc.nextLine();
-                setTenNhanVien(hoTen);
+                tenNhanVien = sc.nextLine();
+                setTenNhanVien(tenNhanVien);
             } else if (choice == 2) {
                 while (true) {
                     System.out.print("Nhập giới tính mới (F/ M): ");
-                    String new_gioiTinh = sc.nextLine();
+                    gioiTinh = sc.nextLine();
 
-                    if (new_gioiTinh.equals("F") || new_gioiTinh.equals("M")) {
-                        setGioiTinh(new_gioiTinh);
+                    if (gioiTinh.equals("F") || gioiTinh.equals("M")) {
+                        setGioiTinh(gioiTinh);
                         break;
                     } else {
                         System.out.println("Lỗi: Chỉ nhập F hoặc M. Nhập lại!");
@@ -120,7 +120,6 @@ public abstract class NhanVien implements INhapXuat {
                 }
             } else if (choice == 3) {
                 System.out.print("Nhập ngày sinh mới: ");
-                Date ngaySinh = new Date();
                 ngaySinh.nhapDate(sc);
                 setNgaySinh(ngaySinh);
             }

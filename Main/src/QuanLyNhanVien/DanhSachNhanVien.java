@@ -18,14 +18,6 @@ public class DanhSachNhanVien implements IThemSuaXoa {
         dsNhanVien = new ArrayList<>();
     }
 
-    public DanhSachNhanVien(ArrayList<NhanVien> dsNhanVien) {
-        this.dsNhanVien = dsNhanVien;
-    }
-
-    public ArrayList<NhanVien> getDsNhanVien() {
-        return dsNhanVien;
-    }
-
     public void menuLoaiNhanVien() {
         System.out.println("____________LOẠI NHÂN VIÊN____________");
         System.out.println("1. Đầu bếp");

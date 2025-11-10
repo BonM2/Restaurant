@@ -66,10 +66,6 @@ public class Date {
         return (nam % 4 == 0 && nam % 100 != 0) || (nam % 400 == 0);
     }
 
-    public short getNgay() {
-        return ngay;
-    }
-
     public short getThang() {
         return thang;
     }

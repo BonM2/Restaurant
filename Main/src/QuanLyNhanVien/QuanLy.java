@@ -17,20 +17,10 @@ public class QuanLy extends NhanVien {
         soLuong++;
     }
 
-    public QuanLy(String tenNhanVien, Date ngaySinh, String gioiTinh) {
-        super(tenNhanVien, ngaySinh, gioiTinh);
-        chucVu = "QL";
-        soLuong++;
-    }
-
     public QuanLy(int maNhanVien, String tenNhanVien, Date ngaySinh, String gioiTinh) {
         super(maNhanVien, tenNhanVien, ngaySinh, gioiTinh);
         chucVu = "QL";
         soLuong++;
-    }
-
-    public void nhapThongTin(Scanner sc) {
-        super.nhapThongTin(sc);
     }
 
     @Override
@@ -40,14 +30,8 @@ public class QuanLy extends NhanVien {
         System.out.println("-------------------------------");
     }
 
-    public void menuThuocTinh() {
-        super.menuThuocTinh();
-    }
-
-    // (Lương cơ bản / số ngày đi làm thực tế) * số ngày đi làm thực tế + phụ cấp + thưởng doanh thu.
     @Override
     public double tinhLuongThucTe() {
-
         DanhSachHoaDon dsHoaDon = new DanhSachHoaDon();
 
         double tongDoanhThu = 0.0;
