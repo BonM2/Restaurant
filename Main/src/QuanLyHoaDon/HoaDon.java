@@ -142,45 +142,98 @@ public class HoaDon implements INhapXuat {
             if (choice == 1) {
                 danhSachSanPham.hienThiDanhSachMonAn();
                 System.out.println("-----------------------");
-                SanPham sanPham = new MonAn();
-                sanPham.nhapThongTin(sc);
+
+                int maSP;
 
                 while (true) {
                     try {
-                        System.out.print("Mời nhập số lượng món ăn: ");
-                        int soLuong = sc.nextInt();
+                        System.out.print("Nhập mã món ăn muốn chọn: ");
+                        maSP = sc.nextInt();
                         sc.nextLine();
 
-                        if (soLuong < 0) {
-                            System.out.println("Số lượng món ăn phải là số dương!!!");
+                        if (maSP < 0) {
+                            System.out.println("Mã món ăn phải là số dương!!!");
                         } else {
-                            chiTietHoaDon.nhapThongTin(sanPham, soLuong);
                             break;
                         }
                     } catch (NumberFormatException | InputMismatchException e) {
                         System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
                     }
                 }
+
+                SanPham sp = danhSachSanPham.timSanPham(maSP);
+
+                if (sp == null) {
+                    System.out.println("Mã món ăn không tồn tại");
+                } else {
+                    if (sp.getLoaiSanPham().equalsIgnoreCase("MON_AN")) {
+                        while (true) {
+                            try {
+                                System.out.print("Mời nhập số lượng món ăn: ");
+                                int soLuong = sc.nextInt();
+                                sc.nextLine();
+
+                                if (soLuong < 0) {
+                                    System.out.println("Số lượng món ăn phải là số dương!!!");
+                                } else {
+                                    chiTietHoaDon.nhapThongTin(sp, soLuong);
+                                    break;
+                                }
+                            } catch (NumberFormatException | InputMismatchException e) {
+                                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                            }
+                        }
+                    } else {
+                        System.out.println("Không thể thêm vào do đây là đồ uống!!!");
+                    }
+
+                }
             } else if (choice == 2) {
                 danhSachSanPham.hienThiDanhSachDoUong();
                 System.out.println("-----------------------");
-                SanPham sanPham = new DoUong();
-                sanPham.nhapThongTin(sc);
+                int maSP;
 
                 while (true) {
                     try {
-                        System.out.print("Mời nhập số lượng đồ uống: ");
-                        int soLuong = sc.nextInt();
+                        System.out.print("Nhập mã đồ uống muốn chọn: ");
+                        maSP = sc.nextInt();
                         sc.nextLine();
 
-                        if (soLuong < 0) {
-                            System.out.println("Số lượng món ăn phải là số dương!!!");
+                        if (maSP < 0) {
+                            System.out.println("Mã đồ uống phải là số dương!!!");
                         } else {
-                            chiTietHoaDon.nhapThongTin(sanPham, soLuong);
                             break;
                         }
                     } catch (NumberFormatException | InputMismatchException e) {
                         System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                    }
+                }
+
+                SanPham sp = danhSachSanPham.timSanPham(maSP);
+
+                if (sp == null) {
+                    System.out.println("Mã đồ uống không tồn tại!!!");
+                }
+                else {
+                    if (sp.getLoaiSanPham().equalsIgnoreCase("DO_UONG")) {
+                        while (true) {
+                            try {
+                                System.out.print("Mời nhập số lượng đồ uống: ");
+                                int soLuong = sc.nextInt();
+                                sc.nextLine();
+
+                                if (soLuong < 0) {
+                                    System.out.println("Số lượng món ăn phải là số dương!!!");
+                                } else {
+                                    chiTietHoaDon.nhapThongTin(sp, soLuong);
+                                    break;
+                                }
+                            } catch (NumberFormatException | InputMismatchException e) {
+                                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                            }
+                        }
+                    } else {
+                        System.out.println("Không thể thêm vào do đây là món ăn!!!");
                     }
                 }
 

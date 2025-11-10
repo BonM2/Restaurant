@@ -184,7 +184,6 @@ public class QuanLyNhaHang {
         }
     }
 
-
     public static void menuChucNangDatBan() {
         System.out.println("----------Quản lý đặt bàn----------");
         System.out.println("1/ Thêm yêu cầu đặt bàn");

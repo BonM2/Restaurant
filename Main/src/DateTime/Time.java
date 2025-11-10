@@ -33,7 +33,7 @@ public class Time {
                 }
                 break; // hợp lệ thì thoát vòng lặp
             } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Lỗi: phải nhập số nguyên. Nhập lại giờ.");
+                System.out.println("Lỗi: Nhập lại giờ.");
                 sc.nextLine(); // Xóa input lỗi
             }
         }
@@ -49,7 +49,7 @@ public class Time {
                 }
                 break;
             } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Lỗi: phải nhập số nguyên. Nhập lại phút.");
+                System.out.println("Lỗi: Nhập lại phút.");
                 sc.nextLine();
             }
         }
@@ -65,7 +65,7 @@ public class Time {
                 }
                 break;
             } catch (NumberFormatException | InputMismatchException e) {
-                System.out.println("Lỗi: phải nhập số nguyên. Nhập lại giây.");
+                System.out.println("Lỗi: Nhập lại giây.");
                 sc.nextLine();
             }
         }
