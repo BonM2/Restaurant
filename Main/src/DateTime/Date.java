@@ -21,18 +21,16 @@ public class Date {
             try {
                 System.out.print("\nNhập ngày: ");
                 this.ngay = sc.nextShort();
+                if (ngay < 1 || ngay > soNgayTrongThang(thang, nam))
+                    throw new RuntimeException("Ngày không hợp lệ!!!");
 
                 System.out.print("Nhập tháng: ");
                 this.thang = sc.nextShort();
-
-                System.out.print("Nhập năm: ");
-                this.nam = sc.nextShort();
-
                 if (thang < 1 || thang > 12)
                     throw new RuntimeException("Tháng không hợp lệ!!!");
 
-                if (ngay < 1 || ngay > soNgayTrongThang(thang, nam))
-                    throw new RuntimeException("Ngày không hợp lệ!!!");
+                System.out.print("Nhập năm: ");
+                this.nam = sc.nextShort();
 
                 if (nam < 0)
                     throw new RuntimeException("Năm không hợp lệ!!!");

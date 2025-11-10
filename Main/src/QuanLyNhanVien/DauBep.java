@@ -1,6 +1,8 @@
 package QuanLyNhanVien;
 
 import DateTime.Date;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DauBep extends NhanVien{
@@ -41,8 +43,23 @@ public class DauBep extends NhanVien{
     public double tinhLuongThucTe() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Số lượng món đầu bếp đã nấu: ");
-        int soLuongMonDaNau = sc.nextInt();
+        int soLuongMonDaNau;
+
+        while (true) {
+            System.out.print("Số lượng món đầu bếp đã nấu: ");
+            soLuongMonDaNau = sc.nextInt();
+
+            try {
+                if (soLuongMonDaNau < 0) {
+                    System.out.println("Số lượng món ăn đã nấu phải là số dương!!!");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                sc.nextLine();
+            }
+        }
 
         return 1.0 * luongCoBan + phuCapTayNghe + (soLuongMonDaNau * 5000);
     }

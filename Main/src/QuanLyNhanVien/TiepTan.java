@@ -45,7 +45,6 @@ public class TiepTan extends NhanVien{
 
     @Override
     public double tinhLuongThucTe() {
-        Scanner sc = new Scanner(System.in);
 
         DanhSachHoaDon dsHoaDon = new DanhSachHoaDon();
 

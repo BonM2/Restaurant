@@ -2,6 +2,7 @@ package QuanLyNhanVien;
 
 import DateTime.Date;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class LaoCong extends NhanVien {
@@ -42,8 +43,24 @@ public class LaoCong extends NhanVien {
     public double tinhLuongThucTe() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.print("Mời nhập số điểm tháng: ");
-        int tongDiem = sc.nextInt();
+        int tongDiem;
+
+        while (true) {
+            try {
+                System.out.print("Mời nhập số điểm tháng của lao công " + tenNhanVien + ": ");
+                tongDiem = sc.nextInt();
+                sc.nextLine();
+
+                if (tongDiem < 0) {
+                    System.out.println("Số điểm phải là số dương!!!");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
+                System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                sc.nextLine();
+            }
+        }
 
         return 1.0 * luongCoBan + (tongDiem * 10000);
     }
