@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DanhSachNhanVien implements IThemSuaXoa {
@@ -104,8 +105,8 @@ public class DanhSachNhanVien implements IThemSuaXoa {
             } else {
                 System.out.println("Không tồn tại mã nhân viên này.");
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (NumberFormatException | InputMismatchException e) {
+            System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
         }
     }
 

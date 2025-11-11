@@ -1,6 +1,6 @@
 package QuanLyHoaDon;
 
-import java.util.InputMismatchException;
+import  java.util.InputMismatchException;
 import java.util.Scanner;
 
 import DateTime.Date;
@@ -8,8 +8,6 @@ import DateTime.Time;
 import Interface_XuLy.INhapXuat;
 import QuanLyNhaHang.QuanLyNhaHang;
 import QuanLySanPham.DanhSachSanPham;
-import QuanLySanPham.DoUong;
-import QuanLySanPham.MonAn;
 import QuanLySanPham.SanPham;
 
 public class HoaDon implements INhapXuat {
@@ -35,19 +33,6 @@ public class HoaDon implements INhapXuat {
         tenNhanVienTao = "";
         thoiGianTao = new Time();
         ngayTao = new Date();
-    }
-
-    public HoaDon(int maBanAn, ChiTietHoaDon chiTietHoaDon, double tongTien, boolean coVoucher, int phieuGiamGia, String tenNhanVienTao, Time thoiGianTao, Date ngayTao) {
-        HoaDon.count++;
-        maHoaDon = HoaDon.count;
-        this.maBanAn = maBanAn;
-        this.chiTietHoaDon = chiTietHoaDon;
-        this.tongTien = tongTien;
-        this.coVoucher = coVoucher;
-        this.phieuGiamGia = phieuGiamGia;
-        this.tenNhanVienTao = tenNhanVienTao;
-        this.thoiGianTao = thoiGianTao;
-        this.ngayTao = ngayTao;
     }
 
     public HoaDon(int maHoaDon, int maBanAn, ChiTietHoaDon chiTietHoaDon, double tongTien, boolean coVoucher, int phieuGiamGia, String tenNhanVienTao, Time thoiGianTao, Date ngayTao) {

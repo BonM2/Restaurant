@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DanhSachDatBan implements IThemSuaXoa {
@@ -21,20 +22,16 @@ public class DanhSachDatBan implements IThemSuaXoa {
         dsDatBan = new ArrayList<>();
     }
 
-    public DanhSachDatBan(ArrayList<DatBan> dsDatBan) {
-        this.dsDatBan = dsDatBan;
-    }
-
     @Override
     public void themThongTin() {
 
-        DatBan new_DatBan = new DatBan();
+        DatBan datBan = new DatBan();
 
-        new_DatBan.nhapThongTin(QuanLyNhaHang.sc);
+        datBan.nhapThongTin(QuanLyNhaHang.sc);
 
-        dsDatBan.add(new_DatBan);
+        dsDatBan.add(datBan);
 
-        if (new_DatBan.getBanAn() != null) {
+        if (datBan.getBanAn() != null) {
             System.out.println("Thêm yêu cầu đặt bàn thành công!!!");
         } else {
             System.out.println("Thêm yêu cầu đặt bàn thất bại!!!");
@@ -72,8 +69,8 @@ public class DanhSachDatBan implements IThemSuaXoa {
             } else {
                 System.out.println("Không tồn tại mã đặt bàn này!!!");
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (NumberFormatException | InputMismatchException e) {
+            System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
         }
     }
 

@@ -290,7 +290,7 @@ public class QuanLyNhaHang {
                     }
                     break;
                 case 5:
-                    dsSanPham.hienthiSanPham();
+                    dsSanPham.hienThiDanhSachSanPham();
                     break;
                 case 6:
                     dsSanPham.docFile();

@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DanhSachHoaDon implements IThemSuaXoa {
@@ -71,8 +72,8 @@ public class DanhSachHoaDon implements IThemSuaXoa {
             } else {
                 System.out.println("Không tồn tại mã hóa đơn này!!!");
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (NumberFormatException | InputMismatchException e) {
+            System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
         }
 
     }
@@ -133,8 +134,7 @@ public class DanhSachHoaDon implements IThemSuaXoa {
             for (HoaDon hoaDon : hoaDonTheoThang) {
                 tongThang += hoaDon.getTongTien();
             }
-        }
-        else
+        } else
             System.out.println("Không  tìm thấy bất kỳ hóa đơn trong tháng: " + thang + "/" + nam);
 
         return tongThang;
@@ -162,6 +162,7 @@ public class DanhSachHoaDon implements IThemSuaXoa {
             for (int i = 0; i < n; i++) {
                 String[] dataThanhPhan = data[i].split(",");
 
+                int maHoaDon = Integer.parseInt(dataThanhPhan[0]);
                 int maBanAn = Integer.parseInt(dataThanhPhan[1]);
                 String tenNhanVienTao = dataThanhPhan[2];
 
@@ -190,7 +191,7 @@ public class DanhSachHoaDon implements IThemSuaXoa {
 
                 String[] listSP = chiTietStr.split(";");
 
-                for(String spStr : listSP) {
+                for (String spStr : listSP) {
                     String[] spParts = spStr.split("\\|");
 
                     String loaiSP = spParts[0];
@@ -212,15 +213,16 @@ public class DanhSachHoaDon implements IThemSuaXoa {
 
                 }
 
-                HoaDon hd = new HoaDon(maBanAn, chiTietHoaDon, tongTien, coVoucher, phieuGiamGia, tenNhanVienTao, thoiGianTao, ngayTao);
+                HoaDon hd = new HoaDon(maHoaDon, maBanAn, chiTietHoaDon, tongTien, coVoucher, phieuGiamGia, tenNhanVienTao, thoiGianTao, ngayTao);
                 dsHoaDon.add(hd);
 
-                System.out.println("Đọc file thành công!" );
+                System.out.println("Đọc file thành công!");
             }
         } catch (Exception e) {
             System.out.println("Đọc file thất bại. Vui lòng xem lại hàm đọc file!!!");
         }
     }
+
     //9.Ghi File
     public void ghiFile() {
         try {

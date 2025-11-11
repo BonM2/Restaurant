@@ -13,10 +13,6 @@ public class DanhSachSanPham implements IThemSuaXoa {
         dsSanPham = new ArrayList<>();
     }
 
-    public DanhSachSanPham(ArrayList<SanPham> dsSanPham) {
-        this.dsSanPham = dsSanPham;
-    }
-
     public void menuLoaiSanPham() {
         System.out.println("____________LOẠI SẢN PHẨM____________");
         System.out.println("1. Món ăn");
@@ -51,20 +47,20 @@ public class DanhSachSanPham implements IThemSuaXoa {
     }
 
     //2.xoa Mon An
-    public void xoaThongTin(int ma) {
-        SanPham sp = timSanPham(ma);
+    public void xoaThongTin(int maSanPham) {
+        SanPham sp = timSanPham(maSanPham);
         if (sp != null) {
             dsSanPham.remove(sp);
-            System.out.println("Xóa sản phẩm với mã: " + ma + " thành công!!!");
+            System.out.println("Xóa sản phẩm với mã: " + maSanPham + " thành công!!!");
         } else {
             System.out.println("Không tìm thấy mã sản phẩm này!!!");
         }
     }
 
     //3.tim kiem Mon An
-    public SanPham timSanPham(int ma) {
+    public SanPham timSanPham(int maSanPham) {
         for (SanPham sp : dsSanPham) {
-            if (sp.getMaSanPham() == ma) {
+            if (sp.getMaSanPham() == maSanPham) {
                 return sp;
             }
         }
@@ -72,7 +68,7 @@ public class DanhSachSanPham implements IThemSuaXoa {
     }
 
     //4.hien thi dsMonAn
-    public void hienthiSanPham() {
+    public void hienThiDanhSachSanPham() {
         System.out.println("Hiển thị danh sách sản phẩm:");
         for (SanPham sp : dsSanPham) {
             sp.xuatThongTin();
@@ -89,8 +85,8 @@ public class DanhSachSanPham implements IThemSuaXoa {
             } else {
                 System.out.println("Không tồn tại sản phẩm này.");
             }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (NumberFormatException | InputMismatchException e) {
+            System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
         }
     }
 
