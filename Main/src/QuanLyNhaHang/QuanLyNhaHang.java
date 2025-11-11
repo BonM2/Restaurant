@@ -357,9 +357,7 @@ public class QuanLyNhaHang {
                     System.out.println("Thông tin danh sách hóa đơn theo tháng: ");
 
                     for (HoaDon hd : dsHoaDonTheoThang) {
-                        if (hd != null) {
-                            hd.xuatThongTin();
-                        }
+                        hd.xuatThongTin();
                     }
                     break;
                 case 6:
@@ -370,9 +368,7 @@ public class QuanLyNhaHang {
 
                     System.out.println("Danh sách hóa đơn theo ngày: ");
                     for (HoaDon hd : dsHoaDonTheoNgay) {
-                        if (hd != null) {
-                            hd.xuatThongTin();
-                        }
+                        hd.xuatThongTin();
                     }
                     break;
                 case 7:
@@ -438,6 +434,10 @@ public class QuanLyNhaHang {
 
     public static DanhSachSanPham getDanhSachSanPham() {
         return dsSanPham;
+    }
+
+    public static DanhSachHoaDon getDanhSachHoaDon() {
+        return dsHoaDon;
     }
 
     public static void main(String[] args) {

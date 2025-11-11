@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class DanhSachHoaDon implements IThemSuaXoa {
@@ -95,7 +96,7 @@ public class DanhSachHoaDon implements IThemSuaXoa {
 
         if (!hoaDonTheoNgay.isEmpty()) {
             for (HoaDon hoaDon : hoaDonTheoNgay) {
-                tong += hoaDon.getTongTien();
+                tong += hoaDon.capNhatTongTien();
             }
         } else
             System.out.println("Không tìm thấy hóa đơn của ngày: " + day);
@@ -107,7 +108,7 @@ public class DanhSachHoaDon implements IThemSuaXoa {
         ArrayList<HoaDon> dsHoaDonTheoNgay = new ArrayList<>();
 
         for (HoaDon hoaDon : dsHoaDon) {
-            if (hoaDon.getNgayTao() == day)
+            if (hoaDon.getNgayTao().equals(day))
                 dsHoaDonTheoNgay.add(hoaDon);
         }
 
@@ -132,7 +133,7 @@ public class DanhSachHoaDon implements IThemSuaXoa {
 
         if (!hoaDonTheoThang.isEmpty()) {
             for (HoaDon hoaDon : hoaDonTheoThang) {
-                tongThang += hoaDon.getTongTien();
+                tongThang += hoaDon.capNhatTongTien();
             }
         } else
             System.out.println("Không  tìm thấy bất kỳ hóa đơn trong tháng: " + thang + "/" + nam);

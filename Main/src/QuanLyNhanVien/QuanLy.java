@@ -3,13 +3,11 @@ package QuanLyNhanVien;
 import DateTime.Date;
 import QuanLyHoaDon.DanhSachHoaDon;
 import QuanLyHoaDon.HoaDon;
-
-import java.util.Scanner;
+import QuanLyNhaHang.QuanLyNhaHang;
 
 public class QuanLy extends NhanVien {
     private static int soLuong = 0;
     private final int luongCoBan = 10_000_000;
-    private final int phuCap = 500_000;
 
     public QuanLy() {
         super();
@@ -32,12 +30,12 @@ public class QuanLy extends NhanVien {
 
     @Override
     public double tinhLuongThucTe() {
-        DanhSachHoaDon dsHoaDon = new DanhSachHoaDon();
+        DanhSachHoaDon dsHoaDon = QuanLyNhaHang.getDanhSachHoaDon();
 
         double tongDoanhThu = 0.0;
 
         for (HoaDon hoaDon : dsHoaDon.getDsHoaDon()) {
-            tongDoanhThu += hoaDon.getTongTien();
+            tongDoanhThu += hoaDon.capNhatTongTien();
         }
 
         return 1.0 * luongCoBan + (tongDoanhThu * 0.03);

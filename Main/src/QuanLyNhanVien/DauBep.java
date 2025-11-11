@@ -35,7 +35,7 @@ public class DauBep extends NhanVien{
         Scanner sc = new Scanner(System.in);
 
         while (true) {
-            System.out.print("Số lượng món đầu bếp đã nấu: ");
+            System.out.print("Số lượng món đầu bếp " + tenNhanVien + " đã nấu: ");
             soLuongMonDaNau = sc.nextInt();
 
             try {

@@ -407,7 +407,7 @@ public class HoaDon implements INhapXuat {
     }
 
     public double capNhatTongTien() {
-        double tongTien = chiTietHoaDon.tinhThanhTien();
+        tongTien = chiTietHoaDon.tinhThanhTien();
 
         if (coVoucher) {
             return tongTien * ((1.0 * 100 - phieuGiamGia) / 100);
@@ -435,10 +435,6 @@ public class HoaDon implements INhapXuat {
 
     public void setNgayTao(Date ngayTao) {
         this.ngayTao = ngayTao;
-    }
-
-    public double getTongTien() {
-        return tongTien;
     }
 
     public void setCoVoucher(boolean coVoucher) {

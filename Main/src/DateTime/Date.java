@@ -1,5 +1,6 @@
 package DateTime;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Date {
@@ -72,5 +73,18 @@ public class Date {
 
     public short getNam() {
         return nam;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Date date = (Date) obj;
+        return ngay == date.ngay && thang == date.thang && nam == date.nam;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ngay, thang, nam);
     }
 }
