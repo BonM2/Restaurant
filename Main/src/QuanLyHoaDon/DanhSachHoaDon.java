@@ -23,10 +23,6 @@ public class DanhSachHoaDon implements IThemSuaXoa {
         dsHoaDon = new ArrayList<>();
     }
 
-    public DanhSachHoaDon(ArrayList<HoaDon> dsHoaDon) {
-        this.dsHoaDon = dsHoaDon;
-    }
-
     public ArrayList<HoaDon> getDsHoaDon() {
         return dsHoaDon;
     }
@@ -57,7 +53,8 @@ public class DanhSachHoaDon implements IThemSuaXoa {
         HoaDon bill = timHoaDon(maHoaDon);
 
         if (bill != null) {
-            dsHoaDon.remove(maHoaDon);
+            dsHoaDon.remove(bill);
+            System.out.println("Xóa mã hóa đơn " + maHoaDon + " thành công!!!");
         } else {
             System.out.println("Không tìm thấy hóa đơn trên hệ thống !");
         }

@@ -13,10 +13,6 @@ public class DanhSachBanAn implements IThemSuaXoa {
         dsBanAn = new ArrayList<>();
     }
 
-    public DanhSachBanAn(ArrayList<BanAn> dsBanAn) {
-        this.dsBanAn = dsBanAn;
-    }
-
     public BanAn timBanAn(int maBan) {
         for (BanAn b : dsBanAn) {
             if (b.getMaBan() == maBan)

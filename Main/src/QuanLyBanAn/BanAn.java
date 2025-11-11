@@ -18,13 +18,6 @@ public class BanAn implements INhapXuat {
         trangThai = false;
     }
 
-    public BanAn(int soLuongChoNgoi, boolean trangThai) {
-        BanAn.count++;
-        maBan = BanAn.count;
-        this.soLuongChoNgoi = soLuongChoNgoi;
-        this.trangThai = trangThai;
-    }
-
     public BanAn(int maBan, int soLuongChoNgoi, boolean trangThai) {
         this.maBan = maBan;
         this.soLuongChoNgoi = soLuongChoNgoi;

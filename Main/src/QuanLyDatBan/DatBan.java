@@ -28,16 +28,6 @@ public class DatBan implements INhapXuat {
         thoiGianDatBan = new Time();
     }
 
-    public DatBan(int soLuongKhach, KhachHang khachHang, Date ngayDatBan, Time thoiGianDatBan) {
-        DatBan.count++;
-        maDatBan = DatBan.count;
-        DanhSachBanAn danhSachBanAn = new DanhSachBanAn();
-        banAn = danhSachBanAn.timBanTrong(soLuongKhach);
-        this.khachHang = khachHang;
-        this.ngayDatBan = ngayDatBan;
-        this.thoiGianDatBan = thoiGianDatBan;
-    }
-
     public DatBan(int maDatBan, BanAn banAn, KhachHang khachHang, Date ngayDatBan, Time thoiGianDatBan) {
         this.maDatBan = maDatBan;
         this.banAn = banAn;

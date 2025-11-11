@@ -24,16 +24,6 @@ public class KhachHang implements INhapXuat {
         this.phoneNumber = phoneNumber;
     }
 
-    public KhachHang(int maKhachHang, String tenKhachHang, String phoneNumber) {
-        this.maKhachHang = maKhachHang;
-        this.tenKhachHang = tenKhachHang;
-        this.phoneNumber = phoneNumber;
-
-        if (maKhachHang > KhachHang.count) {
-            KhachHang.count = maKhachHang;
-        }
-    }
-
     @Override
     public void nhapThongTin(Scanner sc) {
         System.out.print("Nhập tên khách hàng: ");
@@ -83,12 +73,12 @@ public class KhachHang implements INhapXuat {
 
             if (choice == 1) {
                 System.out.print("Mời nhập tên mới: ");
-                String new_name = sc.nextLine();
-                setTenKhachHang(new_name);
+                tenKhachHang = sc.nextLine();
+                setTenKhachHang(tenKhachHang);
             } else if (choice == 2) {
                 System.out.print("Mời nhập số điện thoại mới: ");
-                String new_phoneNumber = sc.nextLine();
-                setPhoneNumber(new_phoneNumber);
+                phoneNumber = sc.nextLine();
+                setPhoneNumber(phoneNumber);
             }
         } while(choice != 0);
     }
