@@ -1,7 +1,20 @@
 1,Cơm gà,30000.0,MON_AN,cay
-2,Bún mắm,60000.0,MON_AN,khong cay
-4,Thit cho,360000.0,MON_AN,cay
-5,Sting,10000.0,DO_UONG,500
-6,nem chua thanh hoa,36000.0,MON_AN,cay
-7,Thit meo,300000.0,MON_AN,cay
-8,Nước lọc,15000.0,DO_UONG,500
+2,Bún mắm,60000.0,MON_AN,không cay
+3,Thịt chó,360000.0,MON_AN,cay
+4,Sting,10000.0,DO_UONG,500
+5,Nem chua thanh hóa,36000.0,MON_AN,cay
+6,Nước lọc,15000.0,DO_UONG,500
+7,Trà sữa,30000.0,DO_UONG,500
+8,Coca,15000.0,DO_UONG,330
+9,Pepsi,16000.0,DO_UONG,330
+10,Sữa tươi,18000.0,DO_UONG,200
+11,Phở bò,45000.0,MON_AN,cay
+12,Bánh canh,35000.0,MON_AN,không cay
+13,Bún bò,40000.0,MON_AN,cay
+14,Bánh mì ốp la,25000.0,MON_AN,không cay
+15,Chè đậu xanh,20000.0,MON_AN,ngọt
+16,Cà phê sữa,25000.0,DO_UONG,150
+17,Nước cam,30000.0,DO_UONG,250
+18,Trà đào,28000.0,DO_UONG,350
+19,Bún riêu,37000.0,MON_AN,cay
+20,Miến gà,32000.0,MON_AN,nhạt
