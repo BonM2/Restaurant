@@ -81,6 +81,7 @@ public abstract class SanPham implements INhapXuat {
                 }
             } catch (NumberFormatException | InputMismatchException e) {
                 System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                sc.nextLine();
             }
         }
     }

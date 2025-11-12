@@ -55,10 +55,17 @@ public class BanAn implements INhapXuat {
         while (true) {
             try {
                 System.out.print("Nhập số lượng chỗ ngồi: ");
-                soLuongChoNgoi = Integer.parseInt(sc.nextLine());
-                break;
-            } catch (NumberFormatException e) {
+                soLuongChoNgoi = sc.nextInt();
+                sc.nextLine();
+
+                if (soLuongChoNgoi < 0) {
+                    System.out.println("Số lượng chỗ ngồi phải là số dương!!!");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException | InputMismatchException e) {
                 System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                sc.nextLine();
             }
         }
 
@@ -110,11 +117,16 @@ public class BanAn implements INhapXuat {
                 while (true) {
                     try {
                         System.out.print("Nhập số lượng chỗ ngồi mới: ");
-                        int new_SoLuong = Integer.parseInt(sc.nextLine());
-                        setSoLuongChoNgoi(new_SoLuong);
-                        break;
-                    } catch (NumberFormatException e) {
+                        soLuongChoNgoi = sc.nextInt();
+                        sc.nextLine();
+
+                        if (soLuongChoNgoi < 0) {
+                            System.out.println("Số lượng chỗ ngồi phải là số dương!!!");
+                        } else
+                            break;
+                    } catch (NumberFormatException | InputMismatchException e) {
                         System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                        sc.nextLine();
                     }
                 }
             } else if (choice == 2) {

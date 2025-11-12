@@ -8,6 +8,7 @@ import QuanLyBanAn.BanAn;
 import QuanLyBanAn.DanhSachBanAn;
 import QuanLyNhaHang.QuanLyNhaHang;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DatBan implements INhapXuat {
@@ -59,8 +60,9 @@ public class DatBan implements INhapXuat {
                     break;
                 }
 
-            } catch (NumberFormatException e) {
+            } catch (NumberFormatException | InputMismatchException e) {
                 System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                sc.nextLine();
             }
         }
 
@@ -129,6 +131,7 @@ public class DatBan implements INhapXuat {
                     try {
                         System.out.print("Số lượng khách hàng mới: ");
                         soLuongKhach = sc.nextInt();
+                        sc.nextLine();
 
                         if (soLuongKhach < 0) {
                             System.out.println("Số lượng khách hàng phải là số dương!!!. Mời nhập lại");
@@ -140,14 +143,15 @@ public class DatBan implements INhapXuat {
                                 banAn.setTrangThai(true);
                                 banAnOld.setTrangThai(false);
                                 System.out.println("Thay đổi số lượng khách hàng thành công!!!");
+                                break;
                             } else {
                                 System.out.println("***Thay đổi số lượng khách hàng không thành công do không tồn tại bàn ăn phù hợp***");
+                                break;
                             }
                         }
-
-                        break;
-                    } catch (NumberFormatException e) {
+                    } catch (NumberFormatException | InputMismatchException e) {
                         System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                        sc.nextLine();
                     }
                 }
             }
