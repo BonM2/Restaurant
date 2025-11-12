@@ -136,7 +136,7 @@ public class DanhSachHoaDon implements IThemSuaXoa {
                 tongThang += hoaDon.capNhatTongTien();
             }
         } else
-            System.out.println("Không  tìm thấy bất kỳ hóa đơn trong tháng: " + thang + "/" + nam);
+            System.out.println("Không tìm thấy bất kỳ hóa đơn trong tháng: " + thang + "/" + nam);
 
         return tongThang;
     }

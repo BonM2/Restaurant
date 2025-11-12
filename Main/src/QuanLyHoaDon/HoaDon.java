@@ -67,6 +67,7 @@ public class HoaDon implements INhapXuat {
                 }
             } catch (NumberFormatException | InputMismatchException e) {
                 System.out.println("Lỗi: Nhập sai kiểu dữ liệu. Vui lòng nhập lại!");
+                sc.nextLine();
             }
         }
 
@@ -410,7 +411,8 @@ public class HoaDon implements INhapXuat {
         tongTien = chiTietHoaDon.tinhThanhTien();
 
         if (coVoucher) {
-            return tongTien * ((1.0 * 100 - phieuGiamGia) / 100);
+            tongTien = tongTien * ((1.0 * 100 - phieuGiamGia) / 100);
+            return tongTien;
         }
 
         return tongTien;

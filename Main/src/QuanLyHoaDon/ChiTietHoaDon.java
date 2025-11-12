@@ -15,11 +15,6 @@ public class ChiTietHoaDon implements INhapXuat {
         dsGoi = new HashMap<>();
     }
 
-    public ChiTietHoaDon(Map<SanPham, Integer> dsGoi) {
-        this.dsGoi = dsGoi;
-    }
-
-
     public void nhapThongTin(SanPham sanPham, int soLuongSanPham) {
 
         if (sanPham == null || soLuongSanPham <= 0) {

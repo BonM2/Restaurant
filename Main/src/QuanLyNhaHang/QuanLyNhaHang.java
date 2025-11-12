@@ -354,10 +354,14 @@ public class QuanLyNhaHang {
                     sc.nextLine();
 
                     ArrayList<HoaDon> dsHoaDonTheoThang = dsHoaDon.timHoaDonTheoThang(thangTim, namTim);
-                    System.out.println("Thông tin danh sách hóa đơn theo tháng: ");
 
-                    for (HoaDon hd : dsHoaDonTheoThang) {
-                        hd.xuatThongTin();
+                    if (dsHoaDonTheoThang.isEmpty()) {
+                        System.out.println("Không có hóa đơn theo tháng này!!!");
+                    } else {
+                        System.out.println("Thông tin danh sách hóa đơn theo tháng: ");
+                        for (HoaDon hd : dsHoaDonTheoThang) {
+                            hd.xuatThongTin();
+                        }
                     }
                     break;
                 case 6:
@@ -366,9 +370,13 @@ public class QuanLyNhaHang {
                     ngayCanTim.nhapDate(sc);
                     ArrayList<HoaDon> dsHoaDonTheoNgay = dsHoaDon.timHoaDonTheoNgay(ngayCanTim);
 
-                    System.out.println("Danh sách hóa đơn theo ngày: ");
-                    for (HoaDon hd : dsHoaDonTheoNgay) {
-                        hd.xuatThongTin();
+                    if (dsHoaDonTheoNgay.isEmpty()) {
+                        System.out.println("Không có hóa đơn theo ngày này!!!");
+                    } else {
+                        System.out.println("Thông tin danh sách hóa đơn theo ngày: ");
+                        for (HoaDon hd : dsHoaDonTheoNgay) {
+                            hd.xuatThongTin();
+                        }
                     }
                     break;
                 case 7:

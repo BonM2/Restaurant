@@ -5,7 +5,7 @@ import DateTime.Date;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class DauBep extends NhanVien{
+public class DauBep extends NhanVien {
     private static int soLuong = 0;
     private final int luongCoBan = 7_800_000;
     private final int phuCapTayNghe = 600_000;
@@ -35,10 +35,11 @@ public class DauBep extends NhanVien{
         Scanner sc = new Scanner(System.in);
 
         while (true) {
-            System.out.print("Số lượng món đầu bếp " + tenNhanVien + " đã nấu: ");
-            soLuongMonDaNau = sc.nextInt();
-
             try {
+                System.out.print("Số lượng món đầu bếp " + tenNhanVien + " đã nấu: ");
+                soLuongMonDaNau = sc.nextInt();
+                sc.nextLine();
+
                 if (soLuongMonDaNau < 0) {
                     System.out.println("Số lượng món ăn đã nấu phải là số dương!!!");
                 } else {
