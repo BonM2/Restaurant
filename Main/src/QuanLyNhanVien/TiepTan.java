@@ -3,6 +3,7 @@ package QuanLyNhanVien;
 import DateTime.Date;
 import QuanLyHoaDon.DanhSachHoaDon;
 import QuanLyHoaDon.HoaDon;
+import QuanLyNhaHang.QuanLyNhaHang;
 
 import java.util.Scanner;
 
@@ -38,7 +39,7 @@ public class TiepTan extends NhanVien{
     @Override
     public double tinhLuongThucTe() {
 
-        DanhSachHoaDon dsHoaDon = new DanhSachHoaDon();
+        DanhSachHoaDon dsHoaDon = QuanLyNhaHang.getDanhSachHoaDon();
 
         int soHoaDonTiepNhan = 0;
 
